@@ -63,6 +63,17 @@ export default function EntryFormView({ initialDraft, onBack, onSave, theme, onT
         }
       />
 
+      <GlassPanel variant="strong" className="entry-context entry-context-premium">
+        <h3>Módulo de captura institucional</h3>
+        <p className="muted">
+          Registra contexto, ownership y prioridad con estructura ejecutiva estandarizada para
+          evitar pérdidas de información crítica.
+        </p>
+      </GlassPanel>
+
+      <GlassPanel variant="elevated" className="entry-main-panel entry-main-panel-premium">
+        <form className="entry-form entry-form-premium" onSubmit={handleSubmit}>
+          <label className="entry-note-field">
       <GlassPanel variant="strong" className="entry-context">
         <h3>Módulo de captura institucional</h3>
         <p className="muted">
@@ -78,11 +89,22 @@ export default function EntryFormView({ initialDraft, onBack, onSave, theme, onT
             <textarea
               value={draft.text}
               onChange={(event) => setDraft((prev) => ({ ...prev, text: event.target.value }))}
+              rows={11}
               rows={8}
               placeholder="Describe el contexto principal"
             />
           </label>
 
+          <div className="entry-grid entry-meta-grid entry-meta-premium-grid">
+            <label className="entry-meta-card">
+              Categoría
+              <input type="text" value={draft.category} onChange={(event) => setDraft((prev) => ({ ...prev, category: event.target.value }))} />
+            </label>
+            <label className="entry-meta-card">
+              Responsable
+              <input type="text" value={draft.owner} onChange={(event) => setDraft((prev) => ({ ...prev, owner: event.target.value }))} />
+            </label>
+            <label className="entry-meta-card">
           <div className="entry-grid entry-meta-grid">
             <label>
               Categoría
@@ -108,6 +130,7 @@ export default function EntryFormView({ initialDraft, onBack, onSave, theme, onT
 
           {error ? <p className="error-text">{error}</p> : null}
 
+          <div className="entry-actions entry-actions-premium">
           <div className="entry-actions">
             <button type="button" className="btn-secondary" onClick={onBack}>Cancelar</button>
             <button type="submit" className="btn-primary">Convertir en acciones</button>

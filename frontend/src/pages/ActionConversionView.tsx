@@ -33,7 +33,7 @@ export default function ActionConversionView({ entry, actions, onGoTracking, onE
       <TopBar
         eyebrow="Transformación inteligente"
         title="Entrada cruda → Acciones organizadas"
-        subtitle="Comparación directa entre contexto original y plan de acción estructurado."
+        subtitle="Composición comparativa de alto nivel entre contexto original y plan accionable."
         actions={
           <>
             <ThemeToggle theme={theme} onToggle={onToggleTheme} />
