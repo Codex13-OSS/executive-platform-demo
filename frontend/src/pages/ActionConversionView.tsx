@@ -29,47 +29,66 @@ export default function ActionConversionView({ entry, actions, onGoTracking, onE
   }
 
   return (
-    <PageShell>
-      <TopBar
-        eyebrow="Transformación inteligente"
-        title="Entrada cruda → Acciones organizadas"
-        subtitle="Conversión estructurada lista para seguimiento operativo."
-        actions={
-          <>
-            <ThemeToggle theme={theme} onToggle={onToggleTheme} />
-            <button type="button" className="btn-secondary" onClick={onEdit}>Volver a editar</button>
-            <button type="button" className="btn-primary" onClick={onGoTracking}>Ir a seguimiento</button>
-          </>
-        }
-      />
+    <main className="dashboard-layout">
+      <header className="dashboard-header panel glass">
+        <div>
+          <p className="eyebrow">Transformación completada</p>
+          <h1>La nota ya se convirtió en acciones</h1>
+          <p className="muted">De entrada libre a ejecución estructurada en segundos.</p>
+        </div>
+        <div className="header-actions">
+          <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+          <button type="button" className="ghost" onClick={onEdit}>
+            Volver a editar
+          </button>
+          <button type="button" onClick={onGoTracking}>
+            Ir a seguimiento
+          </button>
+        </div>
+      </header>
 
-      <section className="split-grid">
-        <GlassPanel variant="strong">
-          <p className="eyebrow">Entrada original</p>
-          <h3>{entry.category}</h3>
+      <section className="comparison-grid">
+        <article className="panel conversion-block glass">
+          <p className="eyebrow">Antes · Entrada</p>
+          <h2>{entry.category}</h2>
           <p>{entry.text}</p>
-          <p className="muted">Owner: {entry.owner}</p>
-        </GlassPanel>
+          <p className="muted small-text">Owner: {entry.owner}</p>
+        </article>
 
-        <GlassPanel variant="elevated">
-          <p className="eyebrow">Acciones generadas</p>
-          <h3>{actions.length} acciones detectadas</h3>
-          <div className="actions-stack">
-            {actions.map((action) => (
-              <article key={action.id} className="action-row">
-                <div>
-                  <strong>{action.title}</strong>
-                  <p className="muted small-text">{action.owner} · {action.category}</p>
-                </div>
-                <div className="chips">
-                  <StatusChip label={action.status} tone={action.status === 'confirmed' ? 'done' : action.status === 'assigned' ? 'active' : 'pending'} />
-                  <StatusChip label={action.priority} tone={action.priority === 'high' ? 'alert' : 'active'} />
-                </div>
-              </article>
-            ))}
-          </div>
-        </GlassPanel>
+        <article className="panel conversion-block glass">
+          <p className="eyebrow">Después · Acciones</p>
+          <h2>{actions.length} acciones detectadas</h2>
+          <p className="muted">
+            Lista local preparada para la siguiente fase de tracking y ejecución.
+          </p>
+        </article>
       </section>
-    </PageShell>
+
+      <section className="cards-grid" aria-label="Acciones generadas">
+        {actions.map((action) => (
+          <article key={action.id} className="panel action-card glass">
+            <div className="action-top">
+              <h3>{action.title}</h3>
+              <div className="chips">
+                <span className={`chip chip-priority-${action.priority}`}>{action.priority}</span>
+                <span className={`chip chip-status-${action.status}`}>{action.status}</span>
+              </div>
+            </div>
+            <p className="muted small-text">Categoría: {action.category}</p>
+            <p className="muted small-text">Responsable: {action.owner}</p>
+            <p>
+              <strong>Siguiente paso:</strong> {action.nextStep}
+            </p>
+          </article>
+        ))}
+      </section>
+
+      <section className="panel next-phase glass">
+        <p className="eyebrow">Siguiente paso de la demo</p>
+        <p>
+          Avanza a seguimiento para ver métricas y estado operativo de las acciones generadas.
+        </p>
+      </section>
+    </main>
   );
 }
