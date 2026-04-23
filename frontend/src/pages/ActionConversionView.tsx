@@ -43,8 +43,8 @@ export default function ActionConversionView({ entry, actions, onGoTracking, onE
         }
       />
 
-      <section className="split-grid split-dense conversion-premium-grid">
-        <GlassPanel variant="strong" className="source-panel source-panel-premium">
+      <section className="split-grid split-dense">
+        <GlassPanel variant="strong" className="source-panel">
           <p className="eyebrow">Entrada original</p>
           <h3>{entry.category}</h3>
           <p>{entry.text}</p>
@@ -52,31 +52,18 @@ export default function ActionConversionView({ entry, actions, onGoTracking, onE
             <StatusChip label={entry.priority} tone={entry.priority === 'high' ? 'alert' : 'active'} />
             <StatusChip label="capturada" tone="done" />
           </div>
-
-          <div className="conversion-source-metrics">
-            <article>
-              <strong>Owner</strong>
-              <span>{entry.owner}</span>
-            </article>
-            <article>
-              <strong>Timestamp</strong>
-              <span>{new Date(entry.createdAt).toLocaleString('es-ES')}</span>
-            </article>
-            <article>
-              <strong>Contexto</strong>
-              <span>Nota no estructurada en origen</span>
-            </article>
-          </div>
+          <p className="muted small-text">Owner: {entry.owner}</p>
+          <p className="muted small-text">Timestamp: {new Date(entry.createdAt).toLocaleString('es-ES')}</p>
         </GlassPanel>
 
-        <GlassPanel variant="elevated" className="conversion-results-panel">
+        <GlassPanel variant="elevated">
           <p className="eyebrow">Acciones generadas</p>
           <h3>{actions.length} acciones detectadas</h3>
-          <div className="action-cards-grid conversion-action-grid">
+          <div className="action-cards-grid">
             {actions.map((action) => (
-              <article key={action.id} className="action-row action-card-item conversion-action-card">
+              <article key={action.id} className="action-row action-card-item">
                 <div>
-                  <h4>{action.title}</h4>
+                  <strong>{action.title}</strong>
                   <p className="muted small-text">{action.owner} · {action.category}</p>
                   <p className="small-text"><strong>Siguiente paso:</strong> {action.nextStep}</p>
                 </div>

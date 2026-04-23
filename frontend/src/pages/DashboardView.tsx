@@ -36,11 +36,11 @@ export default function DashboardView({
   ];
 
   return (
-    <main className="dashboard-layout dashboard-premium-layout">
+    <main className="dashboard-layout">
       <TopBar
         eyebrow="Plataforma Ejecutiva de Coordinación"
-        title="Resumen estratégico del día"
-        subtitle={`Bienvenido, ${session.name}. Vista principal para coordinar ejecución institucional.`}
+        title="Resumen del día"
+        subtitle={`Bienvenido, ${session.name}.`}
         actions={
           <>
             <ThemeToggle theme={theme} onToggle={onToggleTheme} />
@@ -54,51 +54,30 @@ export default function DashboardView({
         }
       />
 
-      <section className="dashboard-hero-grid dashboard-balance dashboard-premium-hero">
-        <GlassPanel className="hero-copy dashboard-hero-copy" variant="strong">
-          <div className="hero-copy-main">
-            <p className="eyebrow">Control institucional</p>
-            <h2>Coordinación ejecutiva con trazabilidad inmediata</h2>
-            <p className="muted">
-              Centraliza decisiones, responsables y avance operativo en un tablero de alto nivel.
-              Menos ruido, más ejecución confiable para dirección.
-            </p>
-          </div>
-
-          <div className="hero-inline-stats dashboard-hero-stats">
+      <section className="dashboard-hero-grid dashboard-balance">
+        <GlassPanel className="hero-copy" variant="strong">
+          <p className="eyebrow">Control institucional</p>
+          <h2>Coordinación ejecutiva con trazabilidad inmediata</h2>
+          <p className="muted">
+            Unifica decisiones, responsables y avance operativo en una experiencia única para
+            dirección. Gestiona prioridades, seguimiento y foco de forma centralizada.
+          </p>
+          <div className="hero-inline-stats">
             <span>Operación diaria</span>
             <span>Flujo activo</span>
-            <span>Consolidación institucional</span>
+            <span>Modo demo</span>
           </div>
-
-          <div className="dashboard-hero-strip">
-            <article>
-              <strong>17</strong>
-              <p>iniciativas bajo seguimiento</p>
-            </article>
-            <article>
-              <strong>6</strong>
-              <p>frentes críticos hoy</p>
-            </article>
-            <article>
-              <strong>94%</strong>
-              <p>visibilidad de ownership</p>
-            </article>
-          </div>
-
           {flowCompleted ? (
             <div className="inline-badge">Flujo completado en la última iteración</div>
           ) : null}
         </GlassPanel>
-
-        <GlassPanel className="hero-rings dashboard-hero-rings" variant="elevated">
-          <p className="eyebrow">Estado agregado</p>
+        <GlassPanel className="hero-rings" variant="elevated">
           <ActivityRingsCluster values={ringValues} />
         </GlassPanel>
       </section>
 
       {latestEntry ? (
-        <GlassPanel className="last-entry dashboard-last-entry" variant="default">
+        <GlassPanel className="last-entry" variant="default">
           <p className="eyebrow">Última entrada capturada</p>
           <h3>{latestEntry.category}</h3>
           <p>{latestEntry.text}</p>
@@ -108,7 +87,7 @@ export default function DashboardView({
         </GlassPanel>
       ) : null}
 
-      <section className="metrics-grid dashboard-main-metrics" aria-label="Indicadores principales">
+      <section className="metrics-grid" aria-label="Indicadores principales">
         {cards.map((card) => (
           <MetricCard key={card.id} label={card.title} value={card.value} note={card.note} />
         ))}
