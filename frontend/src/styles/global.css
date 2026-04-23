@@ -22,7 +22,9 @@ p {
 }
 
 button,
-input {
+input,
+textarea,
+select {
   font: inherit;
 }
 
@@ -40,7 +42,9 @@ button:hover {
   filter: brightness(1.05);
 }
 
-input {
+input,
+textarea,
+select {
   width: 100%;
   margin-top: 0.5rem;
   border: 1px solid #d7dce8;
@@ -49,7 +53,14 @@ input {
   background: #fff;
 }
 
-input:focus {
+textarea {
+  resize: vertical;
+  min-height: 130px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
   outline: 2px solid #bec9ff;
   border-color: #8fa4ff;
 }
@@ -80,6 +91,11 @@ input:focus {
   align-items: start;
 }
 
+.header-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
 .panel {
   background: #fff;
   border: 1px solid #e8ebf2;
@@ -93,10 +109,23 @@ input:focus {
   padding: 2rem;
 }
 
-.auth-form {
+.auth-form,
+.entry-form {
   margin-top: 1.4rem;
   display: grid;
   gap: 1rem;
+}
+
+.entry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.entry-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
 }
 
 .cards-grid {
@@ -111,7 +140,8 @@ input:focus {
   margin: 0.3rem 0;
 }
 
-.next-phase {
+.next-phase,
+.last-entry {
   display: grid;
   gap: 0.8rem;
 }
@@ -128,6 +158,10 @@ input:focus {
   color: #6a748e;
 }
 
+.small-text {
+  font-size: 0.92rem;
+}
+
 .error-text {
   color: #b3261e;
   font-size: 0.95rem;
@@ -136,4 +170,15 @@ input:focus {
 .ghost {
   background: #eef1f8;
   color: #293250;
+}
+
+@media (max-width: 720px) {
+  .dashboard-header {
+    flex-direction: column;
+  }
+
+  .header-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
 }

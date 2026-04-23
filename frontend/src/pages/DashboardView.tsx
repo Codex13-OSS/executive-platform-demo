@@ -1,5 +1,6 @@
 import { DailySummaryCard } from '../data/mockDashboard';
 import { DemoSession } from '../lib/auth';
+import { RawEntry } from '../../../shared/types';
 
 type DashboardViewProps = {
   session: DemoSession;
@@ -16,10 +17,26 @@ export default function DashboardView({ session, cards, onLogout }: DashboardVie
           <h1>Resumen del día</h1>
           <p className="muted">Bienvenido, {session.name}.</p>
         </div>
-        <button type="button" className="ghost" onClick={onLogout}>
-          Cerrar sesión
-        </button>
+        <div className="header-actions">
+          <button type="button" onClick={onStartEntry}>
+            Capturar entrada
+          </button>
+          <button type="button" className="ghost" onClick={onLogout}>
+            Cerrar sesión
+          </button>
+        </div>
       </header>
+
+      {latestEntry ? (
+        <section className="panel last-entry">
+          <p className="eyebrow">Última entrada capturada</p>
+          <h2>{latestEntry.category}</h2>
+          <p>{latestEntry.text}</p>
+          <p className="muted small-text">
+            Responsable: {latestEntry.owner} · Prioridad: {latestEntry.priority}
+          </p>
+        </section>
+      ) : null}
 
       <section className="cards-grid" aria-label="Indicadores principales">
         {cards.map((card) => (
@@ -34,10 +51,9 @@ export default function DashboardView({ session, cards, onLogout }: DashboardVie
       <section className="panel next-phase">
         <h2>Siguiente fase de demo</h2>
         <p>
-          Este dashboard es un punto de arranque. En el siguiente paso conectaremos formularios,
-          conversión de acciones y trazabilidad end-to-end.
+          Capturamos entradas por una única puerta y dejamos preparado el estado para transformar
+          esta información en acciones en el próximo paso.
         </p>
-        <button type="button">Revisar plan de implementación</button>
       </section>
     </main>
   );
