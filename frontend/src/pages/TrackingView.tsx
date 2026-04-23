@@ -1,8 +1,10 @@
 import { ActionItem, RawEntry } from '../../../shared/types';
+import { TrackingSummary } from '../lib/demoApi';
 
 type TrackingViewProps = {
   entry: RawEntry | null;
   actions: ActionItem[];
+  summary: TrackingSummary;
   onFinish: () => void;
   onReset: () => void;
   onBackDashboard: () => void;
@@ -11,6 +13,7 @@ type TrackingViewProps = {
 export default function TrackingView({
   entry,
   actions,
+  summary,
   onFinish,
   onReset,
   onBackDashboard,
@@ -29,10 +32,6 @@ export default function TrackingView({
       </main>
     );
   }
-
-  const assigned = actions.filter((action) => action.status === 'assigned').length;
-  const pending = actions.filter((action) => action.status === 'pending').length;
-  const confirmed = actions.filter((action) => action.status === 'confirmed').length;
 
   return (
     <main className="dashboard-layout">
@@ -57,19 +56,19 @@ export default function TrackingView({
       <section className="summary-grid" aria-label="Resumen ejecutivo de seguimiento">
         <article className="panel summary-tile">
           <p className="muted">Total de acciones</p>
-          <p className="metric">{actions.length}</p>
+          <p className="metric">{summary.total}</p>
         </article>
         <article className="panel summary-tile">
           <p className="muted">Assigned</p>
-          <p className="metric">{assigned}</p>
+          <p className="metric">{summary.assigned}</p>
         </article>
         <article className="panel summary-tile">
           <p className="muted">Pending</p>
-          <p className="metric">{pending}</p>
+          <p className="metric">{summary.pending}</p>
         </article>
         <article className="panel summary-tile">
           <p className="muted">Confirmed</p>
-          <p className="metric">{confirmed}</p>
+          <p className="metric">{summary.confirmed}</p>
         </article>
       </section>
 
@@ -77,7 +76,7 @@ export default function TrackingView({
         <section className="panel flow-note">
           <p className="eyebrow">Resumen del flujo</p>
           <p>
-            La nota inicial de <strong>{entry.category}</strong> fue transformada en {actions.length}{' '}
+            La nota inicial de <strong>{entry.category}</strong> fue transformada en {summary.total}{' '}
             acciones con responsables y siguientes pasos concretos.
           </p>
         </section>
