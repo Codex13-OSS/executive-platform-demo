@@ -27,7 +27,7 @@ export default function TrackingView({
   if (actions.length === 0) {
     return (
       <main className="dashboard-layout">
-        <section className="panel empty-state glass">
+        <section className="panel empty-state">
           <p className="eyebrow">Seguimiento vacío</p>
           <h1>Aún no hay acciones para monitorear</h1>
           <p className="muted">Captura y convierte una entrada para activar este tablero de seguimiento.</p>

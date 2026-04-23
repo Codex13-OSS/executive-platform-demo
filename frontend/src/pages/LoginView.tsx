@@ -20,26 +20,11 @@ export default function LoginView({ onSubmit, theme, onToggleTheme }: LoginViewP
   };
 
   return (
-    <main className="login-layout">
-      <div className="login-ambient" aria-hidden="true">
-        <span className="orb orb-green" />
-        <span className="orb orb-red" />
-        <span className="orb orb-white" />
-        <span className="network-line line-a" />
-        <span className="network-line line-b" />
-        <span className="network-line line-c" />
-        <span className="network-node node-a" />
-        <span className="network-node node-b" />
-        <span className="network-node node-c" />
-      </div>
-
-      <section className="panel auth-panel glass">
-        <div className="login-topbar">
-          <p className="eyebrow">Acceso de demostración</p>
-          <ThemeToggle theme={theme} onToggle={onToggleTheme} />
-        </div>
+    <main className="view-center">
+      <section className="panel auth-panel">
+        <p className="eyebrow">Acceso de demostración</p>
         <h1>Plataforma Ejecutiva de Coordinación</h1>
-        <p className="muted">Conecta captura, conversión y seguimiento en una sola plataforma.</p>
+        <p className="muted">Inicia sesión con credenciales demo locales.</p>
 
         <form onSubmit={handleSubmit} className="auth-form">
           <label>
