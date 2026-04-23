@@ -22,89 +22,73 @@ export default function LoginView({ onSubmit, theme, onToggleTheme }: LoginViewP
   };
 
   return (
-    <main className="login-screen">
-      <div className="login-network-layer" aria-hidden="true">
+    <main className="login-grid">
+      <section className="login-hero">
         <AmbientNetwork />
-      </div>
-      <div className="login-screen-overlay" aria-hidden="true" />
+        <div className="login-hero-copy">
+          <p className="eyebrow">Sistema Institucional</p>
+          <h1>Plataforma Ejecutiva de Coordinación</h1>
+          <p>
+            Lo disperso se convierte en decisiones accionables con seguimiento ejecutivo en tiempo
+            real.
+          </p>
+          <ul>
+            <li>Captura unificada de información crítica.</li>
+            <li>Conversión inmediata en acciones estructuradas.</li>
+            <li>Visibilidad de responsables y próximos pasos.</li>
+          </ul>
 
-      <div className="login-grid premium-login-grid">
-        <section className="login-hero premium-login-hero">
-          <div className="login-hero-copy premium-login-copy">
-            <p className="eyebrow">Sistema Institucional</p>
-            <h1>Plataforma Ejecutiva de Coordinación</h1>
-            <p className="login-subtitle">
-              De notas dispersas a una operación ejecutiva trazable: captura, convierte y supervisa
-              decisiones en una sola experiencia institucional.
-            </p>
-
-            <ul className="login-value-list">
-              <li>Captura unificada de información crítica con contexto completo.</li>
-              <li>Conversión inmediata en acciones estructuradas con ownership explícito.</li>
-              <li>Visibilidad transversal del avance, riesgos y próximos pasos.</li>
-            </ul>
-
-            <div className="hero-footer-metrics login-metrics-grid">
-              <div>
-                <strong>+42%</strong>
-                <span>velocidad de coordinación</span>
-              </div>
-              <div>
-                <strong>24/7</strong>
-                <span>trazabilidad ejecutiva</span>
-              </div>
-              <div>
-                <strong>1 flujo</strong>
-                <span>una sola puerta de entrada</span>
-              </div>
-            </div>
+          <div className="hero-footer-metrics">
+            <div><strong>+42%</strong><span>velocidad de coordinación</span></div>
+            <div><strong>24/7</strong><span>trazabilidad ejecutiva</span></div>
+            <div><strong>1 flujo</strong><span>una sola puerta de entrada</span></div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="login-form-column premium-login-form-column">
-          <GlassPanel className="login-form-panel premium-login-panel" variant="elevated">
-            <div className="login-head">
-              <p className="eyebrow">Acceso demo</p>
-              <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+      <section className="login-form-column">
+        <GlassPanel className="login-form-panel" variant="elevated">
+          <div className="login-head">
+            <p className="eyebrow">Acceso demo</p>
+            <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+          </div>
+
+          <h2>Ingresar al entorno de demostración</h2>
+          <p className="muted">Credenciales locales para demo controlada.</p>
+
+          <form onSubmit={handleSubmit} className="auth-form">
+            <label>
+              Email
+              <input
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                placeholder="demo@plataforma.com"
+                autoComplete="email"
+              />
+            </label>
+
+            <label>
+              Contraseña
+              <input
+                type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                placeholder="••••••••"
+                autoComplete="current-password"
+              />
+            </label>
+
+            {error ? <p className="error-text">{error}</p> : null}
+
+            <button type="submit" className="btn-primary">Entrar</button>
+            <div className="demo-credentials">
+              <span>demo@plataforma.com</span>
+              <span>demo1234</span>
             </div>
-
-            <h2>Ingresar al entorno de demostración</h2>
-            <p className="muted">Autenticación local para recorrido ejecutivo completo del flujo demo.</p>
-
-            <form onSubmit={handleSubmit} className="auth-form premium-auth-form">
-              <label>
-                Email
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  placeholder="demo@plataforma.com"
-                  autoComplete="email"
-                />
-              </label>
-
-              <label>
-                Contraseña
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-                  placeholder="••••••••"
-                  autoComplete="current-password"
-                />
-              </label>
-
-              {error ? <p className="error-text">{error}</p> : null}
-
-              <button type="submit" className="btn-primary">Entrar</button>
-              <div className="demo-credentials premium-demo-credentials">
-                <span>demo@plataforma.com</span>
-                <span>demo1234</span>
-              </div>
-            </form>
-          </GlassPanel>
-        </section>
-      </div>
+          </form>
+        </GlassPanel>
+      </section>
     </main>
   );
 }
