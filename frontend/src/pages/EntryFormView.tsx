@@ -8,6 +8,7 @@ type EntryDraft = {
 };
 
 type EntryFormViewProps = {
+  initialDraft?: EntryDraft;
   onBack: () => void;
   onSave: (draft: Omit<EntryDraft, 'priority'> & { priority: 'low' | 'medium' | 'high' }) => void;
 };
@@ -133,7 +134,7 @@ export default function EntryFormView({ onBack, onSave }: EntryFormViewProps) {
             <button type="button" className="ghost" onClick={onBack}>
               Cancelar
             </button>
-            <button type="submit">Guardar entrada</button>
+            <button type="submit">Convertir en acciones</button>
           </div>
         </form>
       </section>

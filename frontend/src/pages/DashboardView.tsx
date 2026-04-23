@@ -5,10 +5,18 @@ import { RawEntry } from '../../../shared/types';
 type DashboardViewProps = {
   session: DemoSession;
   cards: DailySummaryCard[];
+  latestEntry: RawEntry | null;
+  onStartEntry: () => void;
   onLogout: () => void;
 };
 
-export default function DashboardView({ session, cards, onLogout }: DashboardViewProps) {
+export default function DashboardView({
+  session,
+  cards,
+  latestEntry,
+  onStartEntry,
+  onLogout,
+}: DashboardViewProps) {
   return (
     <main className="dashboard-layout">
       <header className="dashboard-header">

@@ -17,6 +17,7 @@ body {
 
 h1,
 h2,
+h3,
 p {
   margin: 0;
 }
@@ -116,7 +117,8 @@ select:focus {
   gap: 1rem;
 }
 
-.entry-grid {
+.entry-grid,
+.comparison-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1rem;
@@ -141,9 +143,63 @@ select:focus {
 }
 
 .next-phase,
-.last-entry {
+.last-entry,
+.empty-state,
+.conversion-block,
+.action-card {
   display: grid;
   gap: 0.8rem;
+}
+
+.action-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: start;
+}
+
+.chips {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.chip {
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+.chip-priority-low {
+  color: #1f5a3f;
+  background: #dff7ec;
+}
+
+.chip-priority-medium {
+  color: #6c4c0d;
+  background: #fff4d6;
+}
+
+.chip-priority-high {
+  color: #7d221f;
+  background: #ffe3df;
+}
+
+.chip-status-assigned {
+  color: #1f3d79;
+  background: #e6edff;
+}
+
+.chip-status-pending {
+  color: #4e3f08;
+  background: #fbf2cd;
+}
+
+.chip-status-confirmed {
+  color: #245c43;
+  background: #def6ea;
 }
 
 .eyebrow {
@@ -180,5 +236,9 @@ select:focus {
   .header-actions {
     width: 100%;
     flex-wrap: wrap;
+  }
+
+  .action-top {
+    flex-direction: column;
   }
 }
