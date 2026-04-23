@@ -26,7 +26,9 @@ export default function TrackingView({ entry, actions, summary, onFinish, onRese
       <PageShell>
         <GlassPanel className="empty-state" variant="strong">
           <h2>Aún no hay acciones para monitorear</h2>
-          <button type="button" className="btn-primary" onClick={onBackDashboard}>Volver al dashboard</button>
+          <button type="button" className="btn-primary" onClick={onBackDashboard}>
+            Volver al dashboard
+          </button>
         </GlassPanel>
       </PageShell>
     );
