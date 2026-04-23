@@ -118,7 +118,8 @@ select:focus {
 }
 
 .entry-grid,
-.comparison-grid {
+.comparison-grid,
+.summary-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1rem;
@@ -146,7 +147,10 @@ select:focus {
 .last-entry,
 .empty-state,
 .conversion-block,
-.action-card {
+.action-card,
+.flow-note,
+.summary-tile,
+.completion-banner {
   display: grid;
   gap: 0.8rem;
 }

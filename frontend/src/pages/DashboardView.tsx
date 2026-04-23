@@ -6,6 +6,7 @@ type DashboardViewProps = {
   session: DemoSession;
   cards: DailySummaryCard[];
   latestEntry: RawEntry | null;
+  flowCompleted: boolean;
   onStartEntry: () => void;
   onLogout: () => void;
 };
@@ -14,6 +15,7 @@ export default function DashboardView({
   session,
   cards,
   latestEntry,
+  flowCompleted,
   onStartEntry,
   onLogout,
 }: DashboardViewProps) {
@@ -34,6 +36,15 @@ export default function DashboardView({
           </button>
         </div>
       </header>
+
+      {flowCompleted ? (
+        <section className="panel completion-banner">
+          <p className="eyebrow">Flujo completado</p>
+          <p className="muted">
+            La última entrada ya pasó por captura, conversión y seguimiento.
+          </p>
+        </section>
+      ) : null}
 
       {latestEntry ? (
         <section className="panel last-entry">

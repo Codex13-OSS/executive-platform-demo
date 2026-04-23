@@ -3,7 +3,7 @@ import { ActionItem, RawEntry } from '../../../shared/types';
 type ActionConversionViewProps = {
   entry: RawEntry | null;
   actions: ActionItem[];
-  onContinue: () => void;
+  onGoTracking: () => void;
   onEdit: () => void;
   onGoDashboard: () => void;
 };
@@ -11,7 +11,7 @@ type ActionConversionViewProps = {
 export default function ActionConversionView({
   entry,
   actions,
-  onContinue,
+  onGoTracking,
   onEdit,
   onGoDashboard,
 }: ActionConversionViewProps) {
@@ -42,8 +42,8 @@ export default function ActionConversionView({
           <button type="button" className="ghost" onClick={onEdit}>
             Volver a editar
           </button>
-          <button type="button" onClick={onContinue}>
-            Continuar
+          <button type="button" onClick={onGoTracking}>
+            Ir a seguimiento
           </button>
         </div>
       </header>
@@ -87,8 +87,7 @@ export default function ActionConversionView({
       <section className="panel next-phase">
         <p className="eyebrow">Siguiente paso de la demo</p>
         <p>
-          El botón continuar vuelve al dashboard mientras preservamos esta conversión en estado
-          local para enlazar TrackingView en el siguiente incremento.
+          Avanza a seguimiento para ver métricas y estado operativo de las acciones generadas.
         </p>
       </section>
     </main>
