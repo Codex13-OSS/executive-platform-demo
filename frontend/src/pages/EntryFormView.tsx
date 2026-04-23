@@ -1,4 +1,7 @@
 import { FormEvent, useMemo, useState } from 'react';
+import GlassPanel from '../components/GlassPanel';
+import PageShell from '../components/PageShell';
+import TopBar from '../components/TopBar';
 import ThemeToggle from '../components/ThemeToggle';
 import { ThemeMode } from '../lib/theme';
 
@@ -24,43 +27,18 @@ const defaultDraft: EntryDraft = {
   priority: 'medium',
 };
 
-export default function EntryFormView({
-  initialDraft,
-  onBack,
-  onSave,
-  theme,
-  onToggleTheme,
-}: EntryFormViewProps) {
+export default function EntryFormView({ initialDraft, onBack, onSave, theme, onToggleTheme }: EntryFormViewProps) {
   const [draft, setDraft] = useState<EntryDraft>(initialDraft ?? defaultDraft);
   const [error, setError] = useState<string | null>(null);
 
-  const subtitle = useMemo(
-    () => 'Lo que antes llegaba disperso, aquí entra por una sola puerta.',
-    [],
-  );
+  const subtitle = useMemo(() => 'Lo que antes llegaba disperso, aquí entra por una sola puerta.', []);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    if (!draft.text.trim()) {
-      setError('La nota es obligatoria.');
-      return;
-    }
-
-    if (!draft.category.trim()) {
-      setError('La categoría es obligatoria.');
-      return;
-    }
-
-    if (!draft.owner.trim()) {
-      setError('El responsable es obligatorio.');
-      return;
-    }
-
-    if (!draft.priority) {
-      setError('Selecciona una prioridad.');
-      return;
-    }
+    if (!draft.text.trim()) return setError('La nota es obligatoria.');
+    if (!draft.category.trim()) return setError('La categoría es obligatoria.');
+    if (!draft.owner.trim()) return setError('El responsable es obligatorio.');
+    if (!draft.priority) return setError('Selecciona una prioridad.');
 
     setError(null);
     onSave({
@@ -72,29 +50,27 @@ export default function EntryFormView({
   };
 
   return (
-    <main className="dashboard-layout">
-      <header className="dashboard-header panel glass">
-        <div>
-          <p className="eyebrow">Nueva entrada ejecutiva</p>
-          <h1>Captura inicial</h1>
-          <p className="muted">{subtitle}</p>
-        </div>
-        <div className="header-actions">
-          <ThemeToggle theme={theme} onToggle={onToggleTheme} />
-          <button type="button" className="ghost" onClick={onBack}>
-            Volver al dashboard
-          </button>
-        </div>
-      </header>
+    <PageShell narrow>
+      <TopBar
+        eyebrow="Nueva entrada ejecutiva"
+        title="Captura inicial"
+        subtitle={subtitle}
+        actions={
+          <>
+            <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+            <button type="button" className="btn-secondary" onClick={onBack}>Volver</button>
+          </>
+        }
+      />
 
-      <section className="panel glass">
+      <GlassPanel variant="elevated">
         <form className="entry-form" onSubmit={handleSubmit}>
           <label>
             Nota en bruto
             <textarea
               value={draft.text}
               onChange={(event) => setDraft((prev) => ({ ...prev, text: event.target.value }))}
-              rows={6}
+              rows={7}
               placeholder="Describe el contexto principal"
             />
           </label>
@@ -102,36 +78,17 @@ export default function EntryFormView({
           <div className="entry-grid">
             <label>
               Categoría
-              <input
-                type="text"
-                value={draft.category}
-                onChange={(event) =>
-                  setDraft((prev) => ({ ...prev, category: event.target.value }))
-                }
-                placeholder="Ej. Comité / Permisos / Operación"
-              />
+              <input type="text" value={draft.category} onChange={(event) => setDraft((prev) => ({ ...prev, category: event.target.value }))} />
             </label>
-
             <label>
               Responsable
-              <input
-                type="text"
-                value={draft.owner}
-                onChange={(event) => setDraft((prev) => ({ ...prev, owner: event.target.value }))}
-                placeholder="Equipo o persona responsable"
-              />
+              <input type="text" value={draft.owner} onChange={(event) => setDraft((prev) => ({ ...prev, owner: event.target.value }))} />
             </label>
-
             <label>
               Prioridad
               <select
                 value={draft.priority}
-                onChange={(event) =>
-                  setDraft((prev) => ({
-                    ...prev,
-                    priority: event.target.value as EntryDraft['priority'],
-                  }))
-                }
+                onChange={(event) => setDraft((prev) => ({ ...prev, priority: event.target.value as EntryDraft['priority'] }))}
               >
                 <option value="">Seleccionar</option>
                 <option value="low">low</option>
@@ -144,13 +101,11 @@ export default function EntryFormView({
           {error ? <p className="error-text">{error}</p> : null}
 
           <div className="entry-actions">
-            <button type="button" className="ghost" onClick={onBack}>
-              Cancelar
-            </button>
-            <button type="submit">Convertir en acciones</button>
+            <button type="button" className="btn-secondary" onClick={onBack}>Cancelar</button>
+            <button type="submit" className="btn-primary">Convertir en acciones</button>
           </div>
         </form>
-      </section>
-    </main>
+      </GlassPanel>
+    </PageShell>
   );
 }

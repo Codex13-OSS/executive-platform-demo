@@ -1,3 +1,7 @@
+import ActivityRingsCluster from '../components/ActivityRingsCluster';
+import GlassPanel from '../components/GlassPanel';
+import MetricCard from '../components/MetricCard';
+import TopBar from '../components/TopBar';
 import ThemeToggle from '../components/ThemeToggle';
 import { DailySummaryCard } from '../data/mockDashboard';
 import { DemoSession } from '../lib/auth';
@@ -25,61 +29,63 @@ export default function DashboardView({
   theme,
   onToggleTheme,
 }: DashboardViewProps) {
+  const ringValues = [
+    { label: 'Ejecución', sublabel: 'día', progress: 0.82, color: '#0F8A5F' },
+    { label: 'Riesgo', sublabel: 'atención', progress: 0.56, color: '#C63D3D' },
+    { label: 'Cadencia', sublabel: 'operación', progress: 0.74, color: '#12A372' },
+  ];
+
   return (
     <main className="dashboard-layout">
-      <header className="dashboard-header panel glass">
-        <div>
-          <p className="eyebrow">Plataforma Ejecutiva de Coordinación</p>
-          <h1>Resumen del día</h1>
-          <p className="muted">Bienvenido, {session.name}.</p>
-        </div>
-        <div className="header-actions">
-          <ThemeToggle theme={theme} onToggle={onToggleTheme} />
-          <button type="button" onClick={onStartEntry}>
-            Capturar entrada
-          </button>
-          <button type="button" className="ghost" onClick={onLogout}>
-            Cerrar sesión
-          </button>
-        </div>
-      </header>
+      <TopBar
+        eyebrow="Plataforma Ejecutiva de Coordinación"
+        title="Resumen del día"
+        subtitle={`Bienvenido, ${session.name}.`}
+        actions={
+          <>
+            <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+            <button type="button" className="btn-primary" onClick={onStartEntry}>
+              Capturar entrada
+            </button>
+            <button type="button" className="btn-secondary" onClick={onLogout}>
+              Cerrar sesión
+            </button>
+          </>
+        }
+      />
 
-      {flowCompleted ? (
-        <section className="panel completion-banner glass">
-          <p className="eyebrow">Flujo completado</p>
+      <section className="dashboard-hero-grid">
+        <GlassPanel className="hero-copy" variant="strong">
+          <p className="eyebrow">Control institucional</p>
+          <h2>Coordinación ejecutiva con trazabilidad inmediata</h2>
           <p className="muted">
-            La última entrada ya pasó por captura, conversión y seguimiento.
+            Unifica decisiones, responsables y avance operativo en una experiencia única para
+            dirección.
           </p>
-        </section>
-      ) : null}
+          {flowCompleted ? (
+            <div className="inline-badge">Flujo completado en la última iteración</div>
+          ) : null}
+        </GlassPanel>
+        <GlassPanel className="hero-rings" variant="elevated">
+          <ActivityRingsCluster values={ringValues} />
+        </GlassPanel>
+      </section>
 
       {latestEntry ? (
-        <section className="panel last-entry glass">
+        <GlassPanel className="last-entry" variant="default">
           <p className="eyebrow">Última entrada capturada</p>
-          <h2>{latestEntry.category}</h2>
+          <h3>{latestEntry.category}</h3>
           <p>{latestEntry.text}</p>
           <p className="muted small-text">
             Responsable: {latestEntry.owner} · Prioridad: {latestEntry.priority}
           </p>
-        </section>
+        </GlassPanel>
       ) : null}
 
-      <section className="cards-grid" aria-label="Indicadores principales">
+      <section className="metrics-grid" aria-label="Indicadores principales">
         {cards.map((card) => (
-          <article key={card.id} className="panel summary-card glass">
-            <p className="muted">{card.title}</p>
-            <p className="metric">{card.value}</p>
-            <p>{card.note}</p>
-          </article>
+          <MetricCard key={card.id} label={card.title} value={card.value} note={card.note} />
         ))}
-      </section>
-
-      <section className="panel next-phase glass">
-        <h2>Siguiente fase de demo</h2>
-        <p>
-          Capturamos entradas por una única puerta y dejamos preparado el estado para transformar
-          esta información en acciones en el próximo paso.
-        </p>
       </section>
     </main>
   );

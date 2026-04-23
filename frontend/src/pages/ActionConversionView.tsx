@@ -1,3 +1,7 @@
+import GlassPanel from '../components/GlassPanel';
+import PageShell from '../components/PageShell';
+import StatusChip from '../components/StatusChip';
+import TopBar from '../components/TopBar';
 import ThemeToggle from '../components/ThemeToggle';
 import { ThemeMode } from '../lib/theme';
 import { ActionItem, RawEntry } from '../../../shared/types';
@@ -12,27 +16,15 @@ type ActionConversionViewProps = {
   onToggleTheme: () => void;
 };
 
-export default function ActionConversionView({
-  entry,
-  actions,
-  onGoTracking,
-  onEdit,
-  onGoDashboard,
-  theme,
-  onToggleTheme,
-}: ActionConversionViewProps) {
+export default function ActionConversionView({ entry, actions, onGoTracking, onEdit, onGoDashboard, theme, onToggleTheme }: ActionConversionViewProps) {
   if (!entry) {
     return (
-      <main className="dashboard-layout">
-        <section className="panel empty-state glass">
-          <p className="eyebrow">Sin entrada activa</p>
-          <h1>No hay nota para convertir</h1>
-          <p className="muted">Regresa al dashboard para crear una nueva entrada ejecutiva.</p>
-          <button type="button" onClick={onGoDashboard}>
-            Ir al dashboard
-          </button>
-        </section>
-      </main>
+      <PageShell>
+        <GlassPanel className="empty-state" variant="strong">
+          <h2>No hay nota para convertir</h2>
+          <button type="button" className="btn-primary" onClick={onGoDashboard}>Ir al dashboard</button>
+        </GlassPanel>
+      </PageShell>
     );
   }
 

@@ -1,4 +1,6 @@
 import { FormEvent, useState } from 'react';
+import AmbientNetwork from '../components/AmbientNetwork';
+import GlassPanel from '../components/GlassPanel';
 import ThemeToggle from '../components/ThemeToggle';
 import { ThemeMode } from '../lib/theme';
 

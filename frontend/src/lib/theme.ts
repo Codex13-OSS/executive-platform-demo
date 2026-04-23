@@ -1,6 +1,6 @@
 export type ThemeMode = 'light' | 'dark';
 
-const THEME_KEY = 'executive-platform-theme';
+const THEME_KEY = 'exec-theme';
 
 export function getInitialTheme(): ThemeMode {
   const stored = localStorage.getItem(THEME_KEY);
