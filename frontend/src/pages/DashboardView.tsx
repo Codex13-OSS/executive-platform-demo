@@ -36,11 +36,11 @@ export default function DashboardView({
   ];
 
   return (
-    <main className="dashboard-layout">
+    <main className="dashboard-layout dashboard-premium-layout">
       <TopBar
         eyebrow="Plataforma Ejecutiva de Coordinación"
-        title="Resumen del día"
-        subtitle={`Bienvenido, ${session.name}.`}
+        title="Resumen estratégico del día"
+        subtitle={`Bienvenido, ${session.name}. Vista principal para coordinar ejecución institucional.`}
         actions={
           <>
             <ThemeToggle theme={theme} onToggle={onToggleTheme} />

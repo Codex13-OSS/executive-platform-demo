@@ -43,8 +43,8 @@ export default function ActionConversionView({ entry, actions, onGoTracking, onE
         }
       />
 
-      <section className="split-grid split-dense">
-        <GlassPanel variant="strong" className="source-panel">
+      <section className="split-grid split-dense conversion-premium-grid">
+        <GlassPanel variant="strong" className="source-panel source-panel-premium">
           <p className="eyebrow">Entrada original</p>
           <h3>{entry.category}</h3>
           <p>{entry.text}</p>

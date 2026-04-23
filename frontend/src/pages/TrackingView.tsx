@@ -55,6 +55,13 @@ export default function TrackingView({ entry, actions, summary, onFinish, onRese
         }
       />
 
+      <section className="dashboard-hero-grid tracking-balance tracking-premium-hero">
+        <GlassPanel variant="elevated" className="tracking-rings-panel">
+          <p className="eyebrow">Pulso operativo</p>
+          <ActivityRingsCluster values={ringValues} />
+        </GlassPanel>
+
+        <GlassPanel variant="strong" className="metrics-grid compact-metrics metric-surface tracking-metrics-panel">
       <section className="dashboard-hero-grid tracking-balance">
         <GlassPanel variant="elevated"><ActivityRingsCluster values={ringValues} /></GlassPanel>
         <GlassPanel variant="strong" className="metrics-grid compact-metrics metric-surface">
@@ -78,6 +85,10 @@ export default function TrackingView({ entry, actions, summary, onFinish, onRese
         </GlassPanel>
       ) : null}
 
+      <GlassPanel variant="elevated" className="tracking-actions-panel">
+        <div className="action-cards-grid tracking-cards tracking-cards-premium">
+          {actions.map((action) => (
+            <article key={action.id} className="action-row action-card-item tracking-action-card">
       <GlassPanel variant="elevated">
         <div className="action-cards-grid tracking-cards">
           {actions.map((action) => (
