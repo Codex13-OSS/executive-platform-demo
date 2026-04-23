@@ -421,7 +421,6 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
   .login-grid { grid-template-columns: 1fr; }
   .login-hero { min-height: 46vh; padding: var(--space-xl); }
   .login-form-column { min-height: auto; padding-top: 0; }
-  .hero-footer-metrics { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 760px) {
