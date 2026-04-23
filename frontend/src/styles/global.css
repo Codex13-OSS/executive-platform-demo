@@ -210,9 +210,9 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
   display: grid;
   gap: var(--space-md);
 }
-.login-hero-copy h1 { font-size: clamp(2.2rem, 4vw, 3.8rem); }
-.login-hero-copy p { color: #cad8ef; }
-.login-hero-copy ul { padding-left: 1.1rem; display: grid; gap: 0.45rem; color: #d1dcf3; }
+.login-hero-copy h1 { font-size: clamp(2.4rem, 4.4vw, 4.1rem); line-height: 1.05; }
+.login-hero-copy p { color: #d4e1f8; font-size: 1.05rem; max-width: 56ch; }
+.login-hero-copy ul { padding-left: 1.1rem; display: grid; gap: 0.62rem; color: #dbe5f8; font-size: 1rem; }
 
 .ambient-network { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.95; }
 .network-link { stroke: rgba(142, 196, 175, 0.44); stroke-width: 0.2; }
@@ -232,18 +232,20 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
   min-height: 100vh;
 }
 .login-form-panel {
-  width: min(100%, 560px);
-  padding: clamp(1.2rem, 2.2vw, 2rem);
+  width: min(100%, 500px);
+  padding: clamp(1.6rem, 2.6vw, 2.4rem);
 }
 .login-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-md); }
 .auth-form, .entry-form, .actions-stack { display: grid; gap: var(--space-md); margin-top: var(--space-md); }
 .demo-credentials {
   display: flex;
   justify-content: space-between;
-  border: 1px dashed var(--border-medium);
+  border: 1px solid color-mix(in srgb, var(--brand-green) 22%, var(--border-medium) 78%);
   border-radius: var(--radius-md);
-  padding: 0.55rem 0.7rem;
-  color: var(--text-tertiary);
+  padding: 0.68rem 0.8rem;
+  background: color-mix(in srgb, var(--surface-glass-strong) 72%, transparent 28%);
+  color: var(--text-secondary);
+  font-weight: 600;
 }
 
 .dashboard-hero-grid, .metrics-grid, .entry-grid, .summary-grid, .split-grid {
@@ -299,6 +301,39 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
 .ring-center small { font-size: 0.68rem; color: var(--text-tertiary); }
 
 .entry-actions, .chips { display: flex; gap: var(--space-sm); flex-wrap: wrap; }
+
+.entry-context {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.entry-main-panel {
+  padding: clamp(1.4rem, 2vw, 2.1rem);
+}
+
+.entry-meta-grid > label {
+  display: grid;
+  gap: 0.25rem;
+  align-content: start;
+}
+
+.source-panel {
+  display: grid;
+  align-content: start;
+  gap: 0.8rem;
+}
+
+.flow-highlight {
+  background: linear-gradient(130deg, color-mix(in srgb, var(--brand-green) 14%, transparent 86%), var(--surface-glass));
+}
+
+.metric-surface .metric-card {
+  background: color-mix(in srgb, var(--surface-glass-strong) 82%, transparent 18%);
+}
+
+.tracking-cards .action-card-item {
+  min-height: 170px;
+}
 .entry-actions { justify-content: flex-end; }
 
 .status-chip {

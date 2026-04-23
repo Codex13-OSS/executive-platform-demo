@@ -50,7 +50,7 @@ export default function EntryFormView({ initialDraft, onBack, onSave, theme, onT
   };
 
   return (
-    <PageShell narrow>
+    <PageShell>
       <TopBar
         eyebrow="Nueva entrada ejecutiva"
         title="Captura inicial"
@@ -63,19 +63,27 @@ export default function EntryFormView({ initialDraft, onBack, onSave, theme, onT
         }
       />
 
-      <GlassPanel variant="elevated">
+      <GlassPanel variant="strong" className="entry-context">
+        <h3>Módulo de captura institucional</h3>
+        <p className="muted">
+          Registra contexto, ownership y prioridad con una estructura única para evitar pérdida de
+          información operativa.
+        </p>
+      </GlassPanel>
+
+      <GlassPanel variant="elevated" className="entry-main-panel">
         <form className="entry-form" onSubmit={handleSubmit}>
           <label>
             Nota en bruto
             <textarea
               value={draft.text}
               onChange={(event) => setDraft((prev) => ({ ...prev, text: event.target.value }))}
-              rows={7}
+              rows={8}
               placeholder="Describe el contexto principal"
             />
           </label>
 
-          <div className="entry-grid">
+          <div className="entry-grid entry-meta-grid">
             <label>
               Categoría
               <input type="text" value={draft.category} onChange={(event) => setDraft((prev) => ({ ...prev, category: event.target.value }))} />

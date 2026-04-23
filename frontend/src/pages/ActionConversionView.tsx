@@ -16,23 +16,13 @@ type ActionConversionViewProps = {
   onToggleTheme: () => void;
 };
 
-export default function ActionConversionView({
-  entry,
-  actions,
-  onGoTracking,
-  onEdit,
-  onGoDashboard,
-  theme,
-  onToggleTheme,
-}: ActionConversionViewProps) {
+export default function ActionConversionView({ entry, actions, onGoTracking, onEdit, onGoDashboard, theme, onToggleTheme }: ActionConversionViewProps) {
   if (!entry) {
     return (
       <PageShell>
         <GlassPanel className="empty-state" variant="strong">
           <h2>No hay nota para convertir</h2>
-          <button type="button" className="btn-primary" onClick={onGoDashboard}>
-            Ir al dashboard
-          </button>
+          <button type="button" className="btn-primary" onClick={onGoDashboard}>Ir al dashboard</button>
         </GlassPanel>
       </PageShell>
     );
@@ -47,12 +37,8 @@ export default function ActionConversionView({
         actions={
           <>
             <ThemeToggle theme={theme} onToggle={onToggleTheme} />
-            <button type="button" className="btn-secondary" onClick={onEdit}>
-              Volver a editar
-            </button>
-            <button type="button" className="btn-primary" onClick={onGoTracking}>
-              Ir a seguimiento
-            </button>
+            <button type="button" className="btn-secondary" onClick={onEdit}>Volver a editar</button>
+            <button type="button" className="btn-primary" onClick={onGoTracking}>Ir a seguimiento</button>
           </>
         }
       />
@@ -62,7 +48,12 @@ export default function ActionConversionView({
           <p className="eyebrow">Entrada original</p>
           <h3>{entry.category}</h3>
           <p>{entry.text}</p>
-          <p className="muted">Owner: {entry.owner}</p>
+          <div className="chips">
+            <StatusChip label={entry.priority} tone={entry.priority === 'high' ? 'alert' : 'active'} />
+            <StatusChip label="capturada" tone="done" />
+          </div>
+          <p className="muted small-text">Owner: {entry.owner}</p>
+          <p className="muted small-text">Timestamp: {new Date(entry.createdAt).toLocaleString('es-ES')}</p>
         </GlassPanel>
 
         <GlassPanel variant="elevated">
@@ -73,24 +64,11 @@ export default function ActionConversionView({
               <article key={action.id} className="action-row action-card-item">
                 <div>
                   <strong>{action.title}</strong>
-                  <p className="muted small-text">
-                    {action.owner} · {action.category}
-                  </p>
-                  <p className="small-text">
-                    <strong>Siguiente paso:</strong> {action.nextStep}
-                  </p>
+                  <p className="muted small-text">{action.owner} · {action.category}</p>
+                  <p className="small-text"><strong>Siguiente paso:</strong> {action.nextStep}</p>
                 </div>
                 <div className="chips">
-                  <StatusChip
-                    label={action.status}
-                    tone={
-                      action.status === 'confirmed'
-                        ? 'done'
-                        : action.status === 'assigned'
-                          ? 'active'
-                          : 'pending'
-                    }
-                  />
+                  <StatusChip label={action.status} tone={action.status === 'confirmed' ? 'done' : action.status === 'assigned' ? 'active' : 'pending'} />
                   <StatusChip label={action.priority} tone={action.priority === 'high' ? 'alert' : 'active'} />
                 </div>
               </article>
