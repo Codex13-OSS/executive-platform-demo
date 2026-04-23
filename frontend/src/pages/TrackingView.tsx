@@ -32,87 +32,107 @@ export default function TrackingView({
 }: TrackingViewProps) {
   if (actions.length === 0) {
     return (
-      <main className="dashboard-layout">
-        <section className="panel empty-state">
-          <p className="eyebrow">Seguimiento vacío</p>
-          <h1>Aún no hay acciones para monitorear</h1>
-          <p className="muted">Captura y convierte una entrada para activar este tablero de seguimiento.</p>
-          <button type="button" onClick={onBackDashboard}>
+      <PageShell>
+        <GlassPanel className="empty-state" variant="strong">
+          <h2>Aún no hay acciones para monitorear</h2>
+          <button type="button" className="btn-primary" onClick={onBackDashboard}>
             Volver al dashboard
           </button>
-        </section>
-      </main>
+        </GlassPanel>
+      </PageShell>
     );
   }
 
-  return (
-    <main className="dashboard-layout">
-      <header className="dashboard-header panel glass">
-        <div>
-          <p className="eyebrow">Seguimiento ejecutivo</p>
-          <h1>Ahora todo tiene seguimiento</h1>
-          <p className="muted">
-            Entrada capturada, acciones estructuradas y responsables visibles en una sola vista.
-          </p>
-        </div>
-        <div className="header-actions">
-          <ThemeToggle theme={theme} onToggle={onToggleTheme} />
-          <button type="button" className="ghost" onClick={onReset}>
-            Resetear demo
-          </button>
-          <button type="button" onClick={onFinish}>
-            Finalizar demo
-          </button>
-        </div>
-      </header>
+  const ringValues = [
+    {
+      label: 'Assigned',
+      sublabel: 'propiedad',
+      progress: summary.assigned / Math.max(summary.total, 1),
+      color: '#0F8A5F',
+    },
+    {
+      label: 'Pending',
+      sublabel: 'atención',
+      progress: summary.pending / Math.max(summary.total, 1),
+      color: '#C63D3D',
+    },
+    {
+      label: 'Confirmed',
+      sublabel: 'cierre',
+      progress: summary.confirmed / Math.max(summary.total, 1),
+      color: '#12A372',
+    },
+  ];
 
-      <section className="summary-grid" aria-label="Resumen ejecutivo de seguimiento">
-        <article className="panel summary-tile glass">
-          <p className="muted">Total de acciones</p>
-          <p className="metric">{summary.total}</p>
-        </article>
-        <article className="panel summary-tile glass">
-          <p className="muted">Assigned</p>
-          <p className="metric">{summary.assigned}</p>
-        </article>
-        <article className="panel summary-tile glass">
-          <p className="muted">Pending</p>
-          <p className="metric">{summary.pending}</p>
-        </article>
-        <article className="panel summary-tile glass">
-          <p className="muted">Confirmed</p>
-          <p className="metric">{summary.confirmed}</p>
-        </article>
+  return (
+    <PageShell>
+      <TopBar
+        eyebrow="Seguimiento ejecutivo"
+        title="Ahora todo tiene seguimiento"
+        subtitle="Estatus, ownership y próximos pasos en una vista institucional única."
+        actions={
+          <>
+            <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+            <button type="button" className="btn-secondary" onClick={onReset}>
+              Resetear demo
+            </button>
+            <button type="button" className="btn-primary" onClick={onFinish}>
+              Finalizar demo
+            </button>
+          </>
+        }
+      />
+
+      <section className="dashboard-hero-grid tracking-balance">
+        <GlassPanel variant="elevated">
+          <ActivityRingsCluster values={ringValues} />
+        </GlassPanel>
+        <GlassPanel variant="strong" className="metrics-grid compact-metrics">
+          <MetricCard label="Total" value={String(summary.total)} note="acciones" />
+          <MetricCard label="Assigned" value={String(summary.assigned)} note="en propiedad" />
+          <MetricCard label="Pending" value={String(summary.pending)} note="en seguimiento" />
+          <MetricCard label="Confirmed" value={String(summary.confirmed)} note="cerradas" />
+        </GlassPanel>
       </section>
 
       {entry ? (
-        <section className="panel flow-note glass">
-          <p className="eyebrow">Resumen del flujo</p>
+        <GlassPanel className="flow-note" variant="default">
           <p>
-            La nota inicial de <strong>{entry.category}</strong> fue transformada en {summary.total}{' '}
-            acciones con responsables y siguientes pasos concretos.
+            <strong>{entry.category}</strong> se transformó en {summary.total} acciones ejecutables.
           </p>
-        </section>
+        </GlassPanel>
       ) : null}
 
-      <section className="cards-grid" aria-label="Acciones en seguimiento">
-        {actions.map((action) => (
-          <article key={action.id} className="panel action-card glass">
-            <div className="action-top">
-              <h3>{action.title}</h3>
-              <div className="chips">
-                <span className={`chip chip-priority-${action.priority}`}>{action.priority}</span>
-                <span className={`chip chip-status-${action.status}`}>{action.status}</span>
+      <GlassPanel variant="elevated">
+        <div className="action-cards-grid">
+          {actions.map((action) => (
+            <article key={action.id} className="action-row action-card-item">
+              <div>
+                <h3>{action.title}</h3>
+                <p className="muted small-text">
+                  {action.owner} · {action.category}
+                </p>
+                <p>
+                  <strong>Siguiente paso:</strong> {action.nextStep}
+                </p>
               </div>
-            </div>
-            <p className="muted small-text">Owner: {action.owner}</p>
-            <p className="muted small-text">Categoría: {action.category}</p>
-            <p>
-              <strong>Siguiente paso:</strong> {action.nextStep}
-            </p>
-          </article>
-        ))}
-      </section>
-    </main>
+              <div className="chips">
+                <StatusChip
+                  label={action.status}
+                  tone={
+                    action.status === 'confirmed'
+                      ? 'done'
+                      : action.status === 'assigned'
+                        ? 'active'
+                        : 'pending'
+                  }
+                />
+                <StatusChip label={action.priority} tone={action.priority === 'high' ? 'alert' : 'active'} />
+              </div>
+            </article>
+          ))}
+        </div>
+      </GlassPanel>
+    </PageShell>
   );
 }

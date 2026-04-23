@@ -5,18 +5,41 @@ type ActivityRingsClusterProps = {
 };
 
 export default function ActivityRingsCluster({ values }: ActivityRingsClusterProps) {
+  const [primary, secondary, tertiary] = values.slice(0, 3);
+
   return (
     <div className="rings-cluster" aria-label="Resumen de actividad ejecutiva">
-      {values.slice(0, 3).map((item, index) => (
-        <ActivityRing
-          key={item.label}
-          label={item.label}
-          sublabel={item.sublabel}
-          progress={item.progress}
-          color={item.color}
-          size={index === 0 ? 220 : 170}
-        />
-      ))}
+      <div className="rings-main">
+        {primary ? (
+          <ActivityRing
+            label={primary.label}
+            sublabel={primary.sublabel}
+            progress={primary.progress}
+            color={primary.color}
+            size={230}
+          />
+        ) : null}
+      </div>
+      <div className="rings-side">
+        {secondary ? (
+          <ActivityRing
+            label={secondary.label}
+            sublabel={secondary.sublabel}
+            progress={secondary.progress}
+            color={secondary.color}
+            size={160}
+          />
+        ) : null}
+        {tertiary ? (
+          <ActivityRing
+            label={tertiary.label}
+            sublabel={tertiary.sublabel}
+            progress={tertiary.progress}
+            color={tertiary.color}
+            size={160}
+          />
+        ) : null}
+      </div>
     </div>
   );
 }

@@ -22,40 +22,66 @@ export default function LoginView({ onSubmit, theme, onToggleTheme }: LoginViewP
   };
 
   return (
-    <main className="view-center">
-      <section className="panel auth-panel">
-        <p className="eyebrow">Acceso de demostración</p>
-        <h1>Plataforma Ejecutiva de Coordinación</h1>
-        <p className="muted">Inicia sesión con credenciales demo locales.</p>
+    <main className="login-grid">
+      <section className="login-hero">
+        <AmbientNetwork />
+        <div className="login-hero-copy">
+          <p className="eyebrow">Sistema Institucional</p>
+          <h1>Plataforma Ejecutiva de Coordinación</h1>
+          <p>
+            Lo disperso se convierte en decisiones accionables con seguimiento ejecutivo en tiempo
+            real.
+          </p>
+          <ul>
+            <li>Captura unificada de información crítica.</li>
+            <li>Conversión inmediata en acciones estructuradas.</li>
+            <li>Visibilidad de responsables y próximos pasos.</li>
+          </ul>
+        </div>
+      </section>
 
-        <form onSubmit={handleSubmit} className="auth-form">
-          <label>
-            Email
-            <input
-              type="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              placeholder="demo@plataforma.com"
-              autoComplete="email"
-            />
-          </label>
+      <section className="login-form-column">
+        <GlassPanel className="login-form-panel" variant="elevated">
+          <div className="login-head">
+            <p className="eyebrow">Acceso demo</p>
+            <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+          </div>
 
-          <label>
-            Contraseña
-            <input
-              type="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              placeholder="••••••••"
-              autoComplete="current-password"
-            />
-          </label>
+          <h2>Ingresar al entorno de demostración</h2>
+          <p className="muted">Credenciales locales para demo controlada.</p>
 
-          {error ? <p className="error-text">{error}</p> : null}
+          <form onSubmit={handleSubmit} className="auth-form">
+            <label>
+              Email
+              <input
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                placeholder="demo@plataforma.com"
+                autoComplete="email"
+              />
+            </label>
 
-          <button type="submit">Entrar</button>
-          <p className="muted small-text">Demo: demo@plataforma.com / demo1234</p>
-        </form>
+            <label>
+              Contraseña
+              <input
+                type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                placeholder="••••••••"
+                autoComplete="current-password"
+              />
+            </label>
+
+            {error ? <p className="error-text">{error}</p> : null}
+
+            <button type="submit" className="btn-primary">Entrar</button>
+            <div className="demo-credentials">
+              <span>demo@plataforma.com</span>
+              <span>demo1234</span>
+            </div>
+          </form>
+        </GlassPanel>
       </section>
     </main>
   );

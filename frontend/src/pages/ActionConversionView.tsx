@@ -16,79 +16,88 @@ type ActionConversionViewProps = {
   onToggleTheme: () => void;
 };
 
-export default function ActionConversionView({ entry, actions, onGoTracking, onEdit, onGoDashboard, theme, onToggleTheme }: ActionConversionViewProps) {
+export default function ActionConversionView({
+  entry,
+  actions,
+  onGoTracking,
+  onEdit,
+  onGoDashboard,
+  theme,
+  onToggleTheme,
+}: ActionConversionViewProps) {
   if (!entry) {
     return (
       <PageShell>
         <GlassPanel className="empty-state" variant="strong">
           <h2>No hay nota para convertir</h2>
-          <button type="button" className="btn-primary" onClick={onGoDashboard}>Ir al dashboard</button>
+          <button type="button" className="btn-primary" onClick={onGoDashboard}>
+            Ir al dashboard
+          </button>
         </GlassPanel>
       </PageShell>
     );
   }
 
   return (
-    <main className="dashboard-layout">
-      <header className="dashboard-header panel glass">
-        <div>
-          <p className="eyebrow">Transformación completada</p>
-          <h1>La nota ya se convirtió en acciones</h1>
-          <p className="muted">De entrada libre a ejecución estructurada en segundos.</p>
-        </div>
-        <div className="header-actions">
-          <ThemeToggle theme={theme} onToggle={onToggleTheme} />
-          <button type="button" className="ghost" onClick={onEdit}>
-            Volver a editar
-          </button>
-          <button type="button" onClick={onGoTracking}>
-            Ir a seguimiento
-          </button>
-        </div>
-      </header>
+    <PageShell>
+      <TopBar
+        eyebrow="Transformación inteligente"
+        title="Entrada cruda → Acciones organizadas"
+        subtitle="Comparación directa entre contexto original y plan de acción estructurado."
+        actions={
+          <>
+            <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+            <button type="button" className="btn-secondary" onClick={onEdit}>
+              Volver a editar
+            </button>
+            <button type="button" className="btn-primary" onClick={onGoTracking}>
+              Ir a seguimiento
+            </button>
+          </>
+        }
+      />
 
-      <section className="comparison-grid">
-        <article className="panel conversion-block glass">
-          <p className="eyebrow">Antes · Entrada</p>
-          <h2>{entry.category}</h2>
+      <section className="split-grid split-dense">
+        <GlassPanel variant="strong" className="source-panel">
+          <p className="eyebrow">Entrada original</p>
+          <h3>{entry.category}</h3>
           <p>{entry.text}</p>
-          <p className="muted small-text">Owner: {entry.owner}</p>
-        </article>
+          <p className="muted">Owner: {entry.owner}</p>
+        </GlassPanel>
 
-        <article className="panel conversion-block glass">
-          <p className="eyebrow">Después · Acciones</p>
-          <h2>{actions.length} acciones detectadas</h2>
-          <p className="muted">
-            Lista local preparada para la siguiente fase de tracking y ejecución.
-          </p>
-        </article>
+        <GlassPanel variant="elevated">
+          <p className="eyebrow">Acciones generadas</p>
+          <h3>{actions.length} acciones detectadas</h3>
+          <div className="action-cards-grid">
+            {actions.map((action) => (
+              <article key={action.id} className="action-row action-card-item">
+                <div>
+                  <strong>{action.title}</strong>
+                  <p className="muted small-text">
+                    {action.owner} · {action.category}
+                  </p>
+                  <p className="small-text">
+                    <strong>Siguiente paso:</strong> {action.nextStep}
+                  </p>
+                </div>
+                <div className="chips">
+                  <StatusChip
+                    label={action.status}
+                    tone={
+                      action.status === 'confirmed'
+                        ? 'done'
+                        : action.status === 'assigned'
+                          ? 'active'
+                          : 'pending'
+                    }
+                  />
+                  <StatusChip label={action.priority} tone={action.priority === 'high' ? 'alert' : 'active'} />
+                </div>
+              </article>
+            ))}
+          </div>
+        </GlassPanel>
       </section>
-
-      <section className="cards-grid" aria-label="Acciones generadas">
-        {actions.map((action) => (
-          <article key={action.id} className="panel action-card glass">
-            <div className="action-top">
-              <h3>{action.title}</h3>
-              <div className="chips">
-                <span className={`chip chip-priority-${action.priority}`}>{action.priority}</span>
-                <span className={`chip chip-status-${action.status}`}>{action.status}</span>
-              </div>
-            </div>
-            <p className="muted small-text">Categoría: {action.category}</p>
-            <p className="muted small-text">Responsable: {action.owner}</p>
-            <p>
-              <strong>Siguiente paso:</strong> {action.nextStep}
-            </p>
-          </article>
-        ))}
-      </section>
-
-      <section className="panel next-phase glass">
-        <p className="eyebrow">Siguiente paso de la demo</p>
-        <p>
-          Avanza a seguimiento para ver métricas y estado operativo de las acciones generadas.
-        </p>
-      </section>
-    </main>
+    </PageShell>
   );
 }

@@ -54,14 +54,19 @@ export default function DashboardView({
         }
       />
 
-      <section className="dashboard-hero-grid">
+      <section className="dashboard-hero-grid dashboard-balance">
         <GlassPanel className="hero-copy" variant="strong">
           <p className="eyebrow">Control institucional</p>
           <h2>Coordinación ejecutiva con trazabilidad inmediata</h2>
           <p className="muted">
             Unifica decisiones, responsables y avance operativo en una experiencia única para
-            dirección.
+            dirección. Gestiona prioridades, seguimiento y foco de forma centralizada.
           </p>
+          <div className="hero-inline-stats">
+            <span>Operación diaria</span>
+            <span>Flujo activo</span>
+            <span>Modo demo</span>
+          </div>
           {flowCompleted ? (
             <div className="inline-badge">Flujo completado en la última iteración</div>
           ) : null}
