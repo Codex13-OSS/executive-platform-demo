@@ -20,8 +20,8 @@ const defaultDraft: EntryDraft = {
   priority: 'medium',
 };
 
-export default function EntryFormView({ initialDraft, onBack, onSave }: EntryFormViewProps) {
-  const [draft, setDraft] = useState<EntryDraft>(initialDraft ?? defaultDraft);
+export default function EntryFormView({ onBack, onSave }: EntryFormViewProps) {
+  const [draft, setDraft] = useState<EntryDraft>(defaultDraft);
   const [error, setError] = useState<string | null>(null);
 
   const subtitle = useMemo(
