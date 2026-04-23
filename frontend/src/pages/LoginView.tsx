@@ -37,6 +37,12 @@ export default function LoginView({ onSubmit, theme, onToggleTheme }: LoginViewP
             <li>Conversión inmediata en acciones estructuradas.</li>
             <li>Visibilidad de responsables y próximos pasos.</li>
           </ul>
+
+          <div className="hero-footer-metrics">
+            <div><strong>+42%</strong><span>velocidad de coordinación</span></div>
+            <div><strong>24/7</strong><span>trazabilidad ejecutiva</span></div>
+            <div><strong>1 flujo</strong><span>una sola puerta de entrada</span></div>
+          </div>
         </div>
       </section>
 

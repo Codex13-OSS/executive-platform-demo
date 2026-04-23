@@ -16,7 +16,7 @@ export default function ActivityRingsCluster({ values }: ActivityRingsClusterPro
             sublabel={primary.sublabel}
             progress={primary.progress}
             color={primary.color}
-            size={230}
+            size={270}
           />
         ) : null}
       </div>
@@ -27,7 +27,7 @@ export default function ActivityRingsCluster({ values }: ActivityRingsClusterPro
             sublabel={secondary.sublabel}
             progress={secondary.progress}
             color={secondary.color}
-            size={160}
+            size={190}
           />
         ) : null}
         {tertiary ? (
@@ -36,7 +36,7 @@ export default function ActivityRingsCluster({ values }: ActivityRingsClusterPro
             sublabel={tertiary.sublabel}
             progress={tertiary.progress}
             color={tertiary.color}
-            size={160}
+            size={190}
           />
         ) : null}
       </div>
