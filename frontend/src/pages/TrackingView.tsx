@@ -1,5 +1,7 @@
-import { ActionItem, RawEntry } from '../../../shared/types';
+import ThemeToggle from '../components/ThemeToggle';
 import { TrackingSummary } from '../lib/demoApi';
+import { ThemeMode } from '../lib/theme';
+import { ActionItem, RawEntry } from '../../../shared/types';
 
 type TrackingViewProps = {
   entry: RawEntry | null;
@@ -8,6 +10,8 @@ type TrackingViewProps = {
   onFinish: () => void;
   onReset: () => void;
   onBackDashboard: () => void;
+  theme: ThemeMode;
+  onToggleTheme: () => void;
 };
 
 export default function TrackingView({
@@ -17,6 +21,8 @@ export default function TrackingView({
   onFinish,
   onReset,
   onBackDashboard,
+  theme,
+  onToggleTheme,
 }: TrackingViewProps) {
   if (actions.length === 0) {
     return (
@@ -35,7 +41,7 @@ export default function TrackingView({
 
   return (
     <main className="dashboard-layout">
-      <header className="dashboard-header">
+      <header className="dashboard-header panel glass">
         <div>
           <p className="eyebrow">Seguimiento ejecutivo</p>
           <h1>Ahora todo tiene seguimiento</h1>
@@ -44,6 +50,7 @@ export default function TrackingView({
           </p>
         </div>
         <div className="header-actions">
+          <ThemeToggle theme={theme} onToggle={onToggleTheme} />
           <button type="button" className="ghost" onClick={onReset}>
             Resetear demo
           </button>
@@ -54,26 +61,26 @@ export default function TrackingView({
       </header>
 
       <section className="summary-grid" aria-label="Resumen ejecutivo de seguimiento">
-        <article className="panel summary-tile">
+        <article className="panel summary-tile glass">
           <p className="muted">Total de acciones</p>
           <p className="metric">{summary.total}</p>
         </article>
-        <article className="panel summary-tile">
+        <article className="panel summary-tile glass">
           <p className="muted">Assigned</p>
           <p className="metric">{summary.assigned}</p>
         </article>
-        <article className="panel summary-tile">
+        <article className="panel summary-tile glass">
           <p className="muted">Pending</p>
           <p className="metric">{summary.pending}</p>
         </article>
-        <article className="panel summary-tile">
+        <article className="panel summary-tile glass">
           <p className="muted">Confirmed</p>
           <p className="metric">{summary.confirmed}</p>
         </article>
       </section>
 
       {entry ? (
-        <section className="panel flow-note">
+        <section className="panel flow-note glass">
           <p className="eyebrow">Resumen del flujo</p>
           <p>
             La nota inicial de <strong>{entry.category}</strong> fue transformada en {summary.total}{' '}
@@ -84,7 +91,7 @@ export default function TrackingView({
 
       <section className="cards-grid" aria-label="Acciones en seguimiento">
         {actions.map((action) => (
-          <article key={action.id} className="panel action-card">
+          <article key={action.id} className="panel action-card glass">
             <div className="action-top">
               <h3>{action.title}</h3>
               <div className="chips">

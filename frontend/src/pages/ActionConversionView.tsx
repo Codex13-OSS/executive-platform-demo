@@ -1,3 +1,5 @@
+import ThemeToggle from '../components/ThemeToggle';
+import { ThemeMode } from '../lib/theme';
 import { ActionItem, RawEntry } from '../../../shared/types';
 
 type ActionConversionViewProps = {
@@ -6,6 +8,8 @@ type ActionConversionViewProps = {
   onGoTracking: () => void;
   onEdit: () => void;
   onGoDashboard: () => void;
+  theme: ThemeMode;
+  onToggleTheme: () => void;
 };
 
 export default function ActionConversionView({
@@ -14,11 +18,13 @@ export default function ActionConversionView({
   onGoTracking,
   onEdit,
   onGoDashboard,
+  theme,
+  onToggleTheme,
 }: ActionConversionViewProps) {
   if (!entry) {
     return (
       <main className="dashboard-layout">
-        <section className="panel empty-state">
+        <section className="panel empty-state glass">
           <p className="eyebrow">Sin entrada activa</p>
           <h1>No hay nota para convertir</h1>
           <p className="muted">Regresa al dashboard para crear una nueva entrada ejecutiva.</p>
@@ -32,13 +38,14 @@ export default function ActionConversionView({
 
   return (
     <main className="dashboard-layout">
-      <header className="dashboard-header">
+      <header className="dashboard-header panel glass">
         <div>
           <p className="eyebrow">Transformación completada</p>
           <h1>La nota ya se convirtió en acciones</h1>
           <p className="muted">De entrada libre a ejecución estructurada en segundos.</p>
         </div>
         <div className="header-actions">
+          <ThemeToggle theme={theme} onToggle={onToggleTheme} />
           <button type="button" className="ghost" onClick={onEdit}>
             Volver a editar
           </button>
@@ -49,14 +56,14 @@ export default function ActionConversionView({
       </header>
 
       <section className="comparison-grid">
-        <article className="panel conversion-block">
+        <article className="panel conversion-block glass">
           <p className="eyebrow">Antes · Entrada</p>
           <h2>{entry.category}</h2>
           <p>{entry.text}</p>
           <p className="muted small-text">Owner: {entry.owner}</p>
         </article>
 
-        <article className="panel conversion-block">
+        <article className="panel conversion-block glass">
           <p className="eyebrow">Después · Acciones</p>
           <h2>{actions.length} acciones detectadas</h2>
           <p className="muted">
@@ -67,7 +74,7 @@ export default function ActionConversionView({
 
       <section className="cards-grid" aria-label="Acciones generadas">
         {actions.map((action) => (
-          <article key={action.id} className="panel action-card">
+          <article key={action.id} className="panel action-card glass">
             <div className="action-top">
               <h3>{action.title}</h3>
               <div className="chips">
@@ -84,7 +91,7 @@ export default function ActionConversionView({
         ))}
       </section>
 
-      <section className="panel next-phase">
+      <section className="panel next-phase glass">
         <p className="eyebrow">Siguiente paso de la demo</p>
         <p>
           Avanza a seguimiento para ver métricas y estado operativo de las acciones generadas.

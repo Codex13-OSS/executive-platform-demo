@@ -14,6 +14,7 @@ import {
   resetDemoFlow,
   type TrackingSummary,
 } from './lib/demoApi';
+import { applyTheme, getInitialTheme, toggleTheme, type ThemeMode } from './lib/theme';
 import { RawEntry } from '../../shared/types';
 
 type AppView = 'dashboard' | 'entry-form' | 'action-conversion' | 'tracking';
@@ -54,6 +55,7 @@ function mapSummaryToCards(summary: {
 }
 
 export default function App() {
+  const [theme, setTheme] = useState<ThemeMode>(() => getInitialTheme());
   const [session, setSession] = useState<DemoSession | null>(() => getSession());
   const [currentView, setCurrentView] = useState<AppView>('dashboard');
   const [cards, setCards] = useState<DailySummaryCard[]>([]);
@@ -61,6 +63,10 @@ export default function App() {
   const [actions, setActions] = useState([] as Awaited<ReturnType<typeof convertEntry>>);
   const [trackingSummary, setTrackingSummary] = useState<TrackingSummary>(EMPTY_TRACKING_SUMMARY);
   const [flowCompleted, setFlowCompleted] = useState(false);
+
+  useEffect(() => {
+    applyTheme(theme);
+  }, [theme]);
 
   useEffect(() => {
     let mounted = true;
@@ -122,9 +128,10 @@ export default function App() {
   };
 
   const latestEntry = useMemo(() => entries[0] ?? null, [entries]);
+  const handleToggleTheme = () => setTheme((current) => toggleTheme(current));
 
   if (!session) {
-    return <LoginView onSubmit={handleLogin} />;
+    return <LoginView onSubmit={handleLogin} theme={theme} onToggleTheme={handleToggleTheme} />;
   }
 
   if (currentView === 'entry-form') {
@@ -139,6 +146,8 @@ export default function App() {
 
     return (
       <EntryFormView
+        theme={theme}
+        onToggleTheme={handleToggleTheme}
         initialDraft={initialDraft}
         onBack={() => setCurrentView('dashboard')}
         onSave={(draft) => {
@@ -151,6 +160,8 @@ export default function App() {
   if (currentView === 'action-conversion') {
     return (
       <ActionConversionView
+        theme={theme}
+        onToggleTheme={handleToggleTheme}
         entry={latestEntry}
         actions={actions}
         onGoTracking={() => setCurrentView('tracking')}
@@ -163,6 +174,8 @@ export default function App() {
   if (currentView === 'tracking') {
     return (
       <TrackingView
+        theme={theme}
+        onToggleTheme={handleToggleTheme}
         entry={latestEntry}
         actions={actions}
         summary={trackingSummary}
@@ -180,6 +193,8 @@ export default function App() {
 
   return (
     <DashboardView
+      theme={theme}
+      onToggleTheme={handleToggleTheme}
       session={session}
       cards={cards}
       latestEntry={latestEntry}

@@ -1,4 +1,6 @@
 import { FormEvent, useMemo, useState } from 'react';
+import ThemeToggle from '../components/ThemeToggle';
+import { ThemeMode } from '../lib/theme';
 
 type EntryDraft = {
   text: string;
@@ -11,6 +13,8 @@ type EntryFormViewProps = {
   initialDraft?: EntryDraft;
   onBack: () => void;
   onSave: (draft: Omit<EntryDraft, 'priority'> & { priority: 'low' | 'medium' | 'high' }) => void;
+  theme: ThemeMode;
+  onToggleTheme: () => void;
 };
 
 const defaultDraft: EntryDraft = {
@@ -20,7 +24,13 @@ const defaultDraft: EntryDraft = {
   priority: 'medium',
 };
 
-export default function EntryFormView({ initialDraft, onBack, onSave }: EntryFormViewProps) {
+export default function EntryFormView({
+  initialDraft,
+  onBack,
+  onSave,
+  theme,
+  onToggleTheme,
+}: EntryFormViewProps) {
   const [draft, setDraft] = useState<EntryDraft>(initialDraft ?? defaultDraft);
   const [error, setError] = useState<string | null>(null);
 
@@ -63,18 +73,21 @@ export default function EntryFormView({ initialDraft, onBack, onSave }: EntryFor
 
   return (
     <main className="dashboard-layout">
-      <header className="dashboard-header">
+      <header className="dashboard-header panel glass">
         <div>
           <p className="eyebrow">Nueva entrada ejecutiva</p>
           <h1>Captura inicial</h1>
           <p className="muted">{subtitle}</p>
         </div>
-        <button type="button" className="ghost" onClick={onBack}>
-          Volver al dashboard
-        </button>
+        <div className="header-actions">
+          <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+          <button type="button" className="ghost" onClick={onBack}>
+            Volver al dashboard
+          </button>
+        </div>
       </header>
 
-      <section className="panel">
+      <section className="panel glass">
         <form className="entry-form" onSubmit={handleSubmit}>
           <label>
             Nota en bruto

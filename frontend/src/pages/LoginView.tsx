@@ -1,10 +1,14 @@
 import { FormEvent, useState } from 'react';
+import ThemeToggle from '../components/ThemeToggle';
+import { ThemeMode } from '../lib/theme';
 
 type LoginViewProps = {
   onSubmit: (email: string, password: string) => string | null;
+  theme: ThemeMode;
+  onToggleTheme: () => void;
 };
 
-export default function LoginView({ onSubmit }: LoginViewProps) {
+export default function LoginView({ onSubmit, theme, onToggleTheme }: LoginViewProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -48,6 +52,7 @@ export default function LoginView({ onSubmit }: LoginViewProps) {
           {error ? <p className="error-text">{error}</p> : null}
 
           <button type="submit">Entrar</button>
+          <p className="muted small-text">Demo: demo@plataforma.com / demo1234</p>
         </form>
       </section>
     </main>
