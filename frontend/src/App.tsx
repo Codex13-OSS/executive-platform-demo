@@ -150,6 +150,10 @@ export default function App() {
     'Dashboard sincronizado.',
     'Esperando instrucción ejecutiva.',
   ]);
+  const [activityFeed, setActivityFeed] = useState(activity);
+  const [documentsList, setDocumentsList] = useState(documents);
+  const [alertsList, setAlertsList] = useState(alerts);
+  const [livePulse, setLivePulse] = useState(0);
 
   const pushJarvisLog = (text: string) => {
     const time = new Date().toLocaleTimeString('es-MX', {
@@ -160,7 +164,34 @@ export default function App() {
     setJarvisLog((prev) => [`${time} · ${text}`, ...prev].slice(0, 4));
   };
 
-  const runJarvisAction = (instruction: string, result: string) => {
+  const addActivity = (text: string) => {
+    setActivityFeed((prev) => [text, ...prev].slice(0, 5));
+  };
+
+  const addDocument = (title = 'Documento generado por Jarvis') => {
+    const stamp = new Date().toLocaleTimeString('es-MX', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+
+    setDocumentsList((prev) => [
+      [title, `Generado ${stamp}`, 'Listo para revisión'],
+      ...prev,
+    ].slice(0, 6));
+
+    setView('documents');
+  };
+
+  const addAlert = (title = 'Nuevo recordatorio ejecutivo') => {
+    setAlertsList((prev) => [
+      ['Alta', title, 'Jarvis creó una alerta mock y requiere confirmación humana.'],
+      ...prev,
+    ].slice(0, 6));
+
+    setView('alerts');
+  };
+
+  const runJarvisAction = (instruction: string, result: string, onConfirm?: () => void) => {
     setJarvisState('Analizando contexto');
     pushJarvisLog(`Recibido: ${instruction}`);
 
@@ -172,18 +203,44 @@ export default function App() {
     setTimeout(() => {
       setJarvisState('Confirmado');
       pushJarvisLog(result);
+      setLivePulse((prev) => prev + 1);
+      onConfirm?.();
     }, 1500);
 
     setTimeout(() => setJarvisState('En línea'), 2800);
   };
 
   const sendJarvis = () => {
-    if (!message.trim()) return;
+    const clean = message.trim();
+    if (!clean) return;
 
-    runJarvisAction(
-      message.trim(),
-      'Solicitud procesada en modo demo. El dashboard fue actualizado visualmente.'
-    );
+    const lower = clean.toLowerCase();
+
+    if (lower.includes('documento') || lower.includes('reporte') || lower.includes('contrato')) {
+      runJarvisAction(
+        clean,
+        'Documento generado y agregado al módulo documental.',
+        () => addDocument(clean.length > 34 ? `${clean.slice(0, 34)}…` : clean)
+      );
+    } else if (lower.includes('recordatorio') || lower.includes('alerta')) {
+      runJarvisAction(
+        clean,
+        'Recordatorio creado y agregado al centro de alertas.',
+        () => addAlert(clean.length > 36 ? `${clean.slice(0, 36)}…` : clean)
+      );
+    } else if (lower.includes('briefing') || lower.includes('agenda')) {
+      runJarvisAction(
+        clean,
+        'Briefing generado y registrado en actividad reciente.',
+        () => addActivity('Jarvis generó un briefing ejecutivo solicitado por texto.')
+      );
+    } else {
+      runJarvisAction(
+        clean,
+        'Solicitud procesada en modo demo. El dashboard fue actualizado visualmente.',
+        () => addActivity(`Jarvis procesó: ${clean.length > 44 ? `${clean.slice(0, 44)}…` : clean}`)
+      );
+    }
 
     setMessage('');
   };
@@ -258,7 +315,7 @@ export default function App() {
               <div className="card"><p>Reuniones hoy</p><strong>4</strong><span>2 requieren briefing</span></div>
               <div className="card"><p>Acciones críticas</p><strong>8</strong><span>3 en riesgo</span></div>
               <div className="card"><p>Documentos</p><strong>12</strong><span>4 generados por Jarvis</span></div>
-              <div className="card"><p>Operación</p><strong>87%</strong><span>cadencia estable</span></div>
+              <div className="card live-card"><p>Operación</p><strong>{87 + Math.min(livePulse, 6)}%</strong><span>{livePulse > 0 ? 'actualizado por Jarvis' : 'cadencia estable'}</span></div>
             </section>
 
             <section className="dashboard-grid">
@@ -285,7 +342,7 @@ export default function App() {
 
               <div className="panel activity">
                 <p className="eyebrow">ACTIVIDAD RECIENTE</p>
-                {activity.map((item) => <div className="activity-item" key={item}>{item}</div>)}
+                {activityFeed.map((item, index) => <div className="activity-item" key={`${item}-${index}`}>{item}</div>)}
               </div>
             </section>
           </>
@@ -324,7 +381,8 @@ export default function App() {
                 onClick={() =>
                   runJarvisAction(
                     'Generar briefing de agenda',
-                    'Briefing generado: contexto, riesgos y puntos sugeridos listos.'
+                    'Briefing generado: contexto, riesgos y puntos sugeridos listos.',
+                    () => addActivity('Jarvis generó briefing contextual para la agenda inteligente.')
                   )
                 }
               >
@@ -368,7 +426,7 @@ export default function App() {
               </p>
             </div>
 
-            {documents.map(([title, type, status]) => (
+            {documentsList.map(([title, type, status]) => (
               <div className="panel document-card" key={`doc-${title}`}>
                 <p className="eyebrow">{type}</p>
                 <h4>{title}</h4>
@@ -400,7 +458,7 @@ export default function App() {
             </div>
 
             <div className="panel alerts-list">
-              {alerts.map(([level, title, detail]) => (
+              {alertsList.map(([level, title, detail]) => (
                 <div className="alert-row" key={`alert-${title}`}>
                   <span className={`alert-severity ${level.toLowerCase()}`}>{level}</span>
                   <div>
@@ -439,7 +497,8 @@ export default function App() {
             onClick={() =>
               runJarvisAction(
                 'Briefing de hoy',
-                'Briefing ejecutivo listo: 4 reuniones, 3 acciones críticas y 2 documentos pendientes.'
+                'Briefing ejecutivo listo: 4 reuniones, 3 acciones críticas y 2 documentos pendientes.',
+                () => addActivity('Briefing ejecutivo del día generado por Jarvis.')
               )
             }
           >
@@ -449,7 +508,8 @@ export default function App() {
             onClick={() =>
               runJarvisAction(
                 'Crear recordatorio',
-                'Recordatorio mock programado y registrado en el centro de alertas.'
+                'Recordatorio mock programado y registrado en el centro de alertas.',
+                () => addAlert('Recordatorio ejecutivo creado por Jarvis')
               )
             }
           >
@@ -459,7 +519,8 @@ export default function App() {
             onClick={() =>
               runJarvisAction(
                 'Generar documento',
-                'Documento mock generado y agregado al módulo de documentos.'
+                'Documento mock generado y agregado al módulo de documentos.',
+                () => addDocument('Documento generado por Jarvis')
               )
             }
           >
@@ -469,7 +530,8 @@ export default function App() {
             onClick={() =>
               runJarvisAction(
                 'Estado operativo',
-                'Estado operativo: 87% estable, 1 proceso en riesgo y 1 retrasado.'
+                'Estado operativo recalculado: operación estable con seguimiento activo.',
+                () => addActivity('Jarvis recalculó el estado operativo general.')
               )
             }
           >
@@ -730,6 +792,18 @@ nav{display:grid;gap:8px;margin-top:34px}
 }
 .jarvis-log::-webkit-scrollbar{width:5px}
 .jarvis-log::-webkit-scrollbar-thumb{background:rgba(56,189,248,.25);border-radius:999px}
+
+.live-card{
+  border-color:rgba(34,211,238,.24)!important;
+  box-shadow:0 0 60px rgba(34,211,238,.08), inset 0 1px 0 rgba(255,255,255,.04);
+}
+.live-card strong{
+  animation:livePulseGlow 1.8s ease-in-out infinite;
+}
+@keyframes livePulseGlow{
+  0%,100%{text-shadow:0 0 24px rgba(56,189,248,.22)}
+  50%{text-shadow:0 0 34px rgba(34,211,238,.48)}
+}
 @media(max-height:760px){
   .main-panel{padding:14px 20px}
   .topbar{padding:12px 14px;margin-bottom:12px}
