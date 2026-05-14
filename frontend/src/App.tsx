@@ -145,16 +145,47 @@ export default function App() {
   const [view, setView] = useState<View>('dashboard');
   const [jarvisState, setJarvisState] = useState('En línea');
   const [message, setMessage] = useState('');
+  const [jarvisLog, setJarvisLog] = useState([
+    'Núcleo cognitivo iniciado.',
+    'Dashboard sincronizado.',
+    'Esperando instrucción ejecutiva.',
+  ]);
+
+  const pushJarvisLog = (text: string) => {
+    const time = new Date().toLocaleTimeString('es-MX', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+
+    setJarvisLog((prev) => [`${time} · ${text}`, ...prev].slice(0, 4));
+  };
+
+  const runJarvisAction = (instruction: string, result: string) => {
+    setJarvisState('Analizando contexto');
+    pushJarvisLog(`Recibido: ${instruction}`);
+
+    setTimeout(() => {
+      setJarvisState('Ejecutando acción');
+      pushJarvisLog('Validación ejecutiva completada.');
+    }, 700);
+
+    setTimeout(() => {
+      setJarvisState('Confirmado');
+      pushJarvisLog(result);
+    }, 1500);
+
+    setTimeout(() => setJarvisState('En línea'), 2800);
+  };
 
   const sendJarvis = () => {
     if (!message.trim()) return;
-    setJarvisState('Analizando contexto');
-    setTimeout(() => setJarvisState('Ejecutando acción'), 800);
-    setTimeout(() => {
-      setJarvisState('Confirmado');
-      setMessage('');
-    }, 1600);
-    setTimeout(() => setJarvisState('En línea'), 2800);
+
+    runJarvisAction(
+      message.trim(),
+      'Solicitud procesada en modo demo. El dashboard fue actualizado visualmente.'
+    );
+
+    setMessage('');
   };
 
   if (!logged) {
@@ -288,7 +319,17 @@ export default function App() {
               <span className="muted">
                 Jarvis puede preparar historial, temas pendientes, riesgos y puntos sugeridos antes de cada sesión.
               </span>
-              <button className="primary compact">Generar briefing</button>
+              <button
+                className="primary compact"
+                onClick={() =>
+                  runJarvisAction(
+                    'Generar briefing de agenda',
+                    'Briefing generado: contexto, riesgos y puntos sugeridos listos.'
+                  )
+                }
+              >
+                Generar briefing
+              </button>
             </div>
           </section>
         )}
@@ -332,7 +373,17 @@ export default function App() {
                 <p className="eyebrow">{type}</p>
                 <h4>{title}</h4>
                 <span>{status}</span>
-                <button className="secondary compact">Ver documento</button>
+                <button
+                  className="secondary compact"
+                  onClick={() =>
+                    runJarvisAction(
+                      `Abrir documento: ${title}`,
+                      `Preview mock listo para ${title}.`
+                    )
+                  }
+                >
+                  Ver documento
+                </button>
               </div>
             ))}
           </section>
@@ -369,15 +420,68 @@ export default function App() {
         </div>
         <p className="eyebrow">JARVIS COGNITIVE CORE</p>
         <h3>{jarvisState}</h3>
+        <div className={`jarvis-state ${jarvisState.toLowerCase().replace(/\s+/g, '-')}`}>
+          <span />
+          {jarvisState === 'En línea'
+            ? 'Listo para recibir instrucciones'
+            : jarvisState === 'Analizando contexto'
+              ? 'Leyendo intención y contexto'
+              : jarvisState === 'Ejecutando acción'
+                ? 'Aplicando cambios en modo demo'
+                : 'Acción registrada correctamente'}
+        </div>
         <p className="muted">
           Núcleo IA integrado para agenda, seguimiento, documentos, recordatorios y decisiones ejecutivas.
         </p>
 
         <div className="quick-actions">
-          <button>Briefing de hoy</button>
-          <button>Crear recordatorio</button>
-          <button>Generar documento</button>
-          <button>Estado operativo</button>
+          <button
+            onClick={() =>
+              runJarvisAction(
+                'Briefing de hoy',
+                'Briefing ejecutivo listo: 4 reuniones, 3 acciones críticas y 2 documentos pendientes.'
+              )
+            }
+          >
+            Briefing de hoy
+          </button>
+          <button
+            onClick={() =>
+              runJarvisAction(
+                'Crear recordatorio',
+                'Recordatorio mock programado y registrado en el centro de alertas.'
+              )
+            }
+          >
+            Crear recordatorio
+          </button>
+          <button
+            onClick={() =>
+              runJarvisAction(
+                'Generar documento',
+                'Documento mock generado y agregado al módulo de documentos.'
+              )
+            }
+          >
+            Generar documento
+          </button>
+          <button
+            onClick={() =>
+              runJarvisAction(
+                'Estado operativo',
+                'Estado operativo: 87% estable, 1 proceso en riesgo y 1 retrasado.'
+              )
+            }
+          >
+            Estado operativo
+          </button>
+        </div>
+
+        <div className="jarvis-log">
+          <p className="eyebrow">BITÁCORA IA</p>
+          {jarvisLog.map((item, index) => (
+            <div className="jarvis-log-item" key={`${item}-${index}`}>{item}</div>
+          ))}
         </div>
 
         <div className="jarvis-input">
@@ -564,6 +668,68 @@ nav{display:grid;gap:8px;margin-top:34px}
 .alert-severity.alta{background:rgba(239,68,68,.14);color:#fca5a5;border:1px solid rgba(239,68,68,.24)}
 .alert-severity.media{background:rgba(251,191,36,.13);color:#fde68a;border:1px solid rgba(251,191,36,.22)}
 .alert-severity.baja{background:rgba(34,197,94,.12);color:#86efac;border:1px solid rgba(34,197,94,.22)}
+
+.jarvis-log{
+  border:1px solid rgba(125,211,252,.12);
+  border-radius:18px;
+  background:rgba(255,255,255,.025);
+  padding:12px;
+  display:grid;
+  gap:8px;
+}
+.jarvis-log-item{
+  border-bottom:1px solid rgba(125,211,252,.07);
+  color:rgba(234,246,255,.64);
+  font-size:12px;
+  line-height:1.35;
+  padding-bottom:7px;
+}
+.jarvis-log-item:last-child{
+  border-bottom:0;
+  padding-bottom:0;
+}
+
+.jarvis-state{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  width:max-content;
+  max-width:100%;
+  border:1px solid rgba(125,211,252,.16);
+  background:rgba(56,189,248,.07);
+  color:rgba(234,246,255,.78);
+  border-radius:999px;
+  padding:7px 10px;
+  font-size:12px;
+  line-height:1;
+}
+.jarvis-state span{
+  width:8px;
+  height:8px;
+  border-radius:999px;
+  background:#22c55e;
+  box-shadow:0 0 18px rgba(34,197,94,.75);
+}
+.jarvis-state.analizando-contexto span{
+  background:#fbbf24;
+  box-shadow:0 0 18px rgba(251,191,36,.75);
+}
+.jarvis-state.ejecutando-acción span{
+  background:#38bdf8;
+  box-shadow:0 0 18px rgba(56,189,248,.85);
+}
+.jarvis-state.confirmado span{
+  background:#22c55e;
+  box-shadow:0 0 18px rgba(34,197,94,.85);
+}
+.jarvis-log{
+  max-height:168px;
+  overflow:auto;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(56,189,248,.25) transparent;
+}
+.jarvis-log::-webkit-scrollbar{width:5px}
+.jarvis-log::-webkit-scrollbar-thumb{background:rgba(56,189,248,.25);border-radius:999px}
 @media(max-height:760px){
   .main-panel{padding:14px 20px}
   .topbar{padding:12px 14px;margin-bottom:12px}
