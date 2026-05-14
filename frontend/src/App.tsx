@@ -126,6 +126,20 @@ const activity = [
   'Seguimiento actualizado sin recargar dashboard.',
 ];
 
+const documents = [
+  ['Contrato inteligente', 'Word / PDF', 'Listo para revisión'],
+  ['Acta ejecutiva', 'Documento interno', 'Generado por Jarvis'],
+  ['Reporte operativo', 'Resumen semanal', 'Pendiente de aprobación'],
+  ['Propuesta comercial', 'Versión beta', 'Borrador activo'],
+];
+
+const alerts = [
+  ['Alta', 'Acción crítica sin confirmar', 'Requiere autorización antes de ejecutar.'],
+  ['Media', 'Briefing pendiente', 'Reunión próxima sin contexto generado.'],
+  ['Media', 'Documento esperando revisión', 'Jarvis preparó un borrador para validar.'],
+  ['Baja', 'Cadencia estable', 'Operación dentro de parámetros esperados.'],
+];
+
 export default function App() {
   const [logged, setLogged] = useState(false);
   const [view, setView] = useState<View>('dashboard');
@@ -246,11 +260,105 @@ export default function App() {
           </>
         )}
 
-        {view !== 'dashboard' && (
-          <section className="module-placeholder">
-            <p className="eyebrow">MÓDULO BETA</p>
-            <h3>{nav.find(([id]) => id === view)?.[1]}</h3>
-            <p className="muted">Vista preparada para integrar datos reales, Supabase, Socket.IO y workflows de Jarvis.</p>
+        {view === 'agenda' && (
+          <section className="module-grid">
+            <div className="panel module-header">
+              <p className="eyebrow">AGENDA INTELIGENTE</p>
+              <h3>Agenda ejecutiva contextual</h3>
+              <p className="muted">
+                Vista preparada para briefings automáticos, prioridades, responsables y confirmaciones críticas.
+              </p>
+            </div>
+
+            <div className="panel module-list">
+              {agenda.map(([time, title, priority]) => (
+                <div className="module-row" key={`agenda-${title}`}>
+                  <div>
+                    <b>{time}</b>
+                    <span>{title}</span>
+                  </div>
+                  <em>{priority}</em>
+                </div>
+              ))}
+            </div>
+
+            <div className="panel briefing-card">
+              <p className="eyebrow">BRIEFING JARVIS</p>
+              <strong>2 reuniones requieren contexto</strong>
+              <span className="muted">
+                Jarvis puede preparar historial, temas pendientes, riesgos y puntos sugeridos antes de cada sesión.
+              </span>
+              <button className="primary compact">Generar briefing</button>
+            </div>
+          </section>
+        )}
+
+        {view === 'tracking' && (
+          <section className="module-grid">
+            <div className="panel module-header">
+              <p className="eyebrow">SEGUIMIENTO OPERATIVO</p>
+              <h3>Procesos activos bajo control</h3>
+              <p className="muted">
+                Semáforos, porcentaje de avance, responsables y cambios visibles en tiempo real.
+              </p>
+            </div>
+
+            {tracking.map(([name, pct, status]) => (
+              <div className="panel process-card" key={`process-${name}`}>
+                <div className="process-head">
+                  <span>{name}</span>
+                  <b>{status}</b>
+                </div>
+                <strong>{pct}%</strong>
+                <div className="bar"><i style={{ width: `${pct}%` }} /></div>
+                <p className="muted">Última actualización registrada por Jarvis.</p>
+              </div>
+            ))}
+          </section>
+        )}
+
+        {view === 'documents' && (
+          <section className="module-grid">
+            <div className="panel module-header">
+              <p className="eyebrow">DOCUMENTOS INTELIGENTES</p>
+              <h3>Generación documental asistida</h3>
+              <p className="muted">
+                Contratos, actas, reportes y propuestas generadas desde instrucciones conversacionales.
+              </p>
+            </div>
+
+            {documents.map(([title, type, status]) => (
+              <div className="panel document-card" key={`doc-${title}`}>
+                <p className="eyebrow">{type}</p>
+                <h4>{title}</h4>
+                <span>{status}</span>
+                <button className="secondary compact">Ver documento</button>
+              </div>
+            ))}
+          </section>
+        )}
+
+        {view === 'alerts' && (
+          <section className="module-grid">
+            <div className="panel module-header">
+              <p className="eyebrow">ALERTAS Y CONFIRMACIONES</p>
+              <h3>Centro de control preventivo</h3>
+              <p className="muted">
+                Ninguna acción crítica se ejecuta sin validación humana y trazabilidad.
+              </p>
+            </div>
+
+            <div className="panel alerts-list">
+              {alerts.map(([level, title, detail]) => (
+                <div className="alert-row" key={`alert-${title}`}>
+                  <span className={`alert-severity ${level.toLowerCase()}`}>{level}</span>
+                  <div>
+                    <b>{title}</b>
+                    <p>{detail}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </section>
         )}
       </section>
@@ -428,6 +536,34 @@ nav{display:grid;gap:8px;margin-top:34px}
 }
 @keyframes liaSpin{to{transform:rotate(360deg)}}
 
+
+.module-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.module-header{grid-column:1/-1}
+.module-header h3{font-size:32px;letter-spacing:-.05em;margin-bottom:6px}
+.module-list{display:grid;gap:2px}
+.module-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 0;border-bottom:1px solid rgba(125,211,252,.08)}
+.module-row div{display:grid;gap:4px}
+.module-row b{color:#7dd3fc;font-size:13px}
+.module-row span{color:#eaf6ff}
+.module-row em{font-style:normal;color:#fbbf24;font-size:12px}
+.briefing-card{display:grid;align-content:start;gap:14px}
+.briefing-card strong{font-size:28px;line-height:1.05;color:#7dd3fc;letter-spacing:-.05em}
+.compact{width:max-content;margin-top:4px;padding:10px 13px!important}
+.process-card{display:grid;gap:12px}
+.process-head{display:flex;justify-content:space-between;gap:12px;color:rgba(234,246,255,.72);font-size:13px}
+.process-head b{color:#7dd3fc}
+.process-card strong{font-size:42px;line-height:1;color:#7dd3fc;letter-spacing:-.06em}
+.document-card{display:grid;gap:12px;align-content:start}
+.document-card h4{margin:0;font-size:24px;letter-spacing:-.04em}
+.document-card span{color:rgba(234,246,255,.58)}
+.alerts-list{grid-column:1/-1;display:grid;gap:10px}
+.alert-row{display:grid;grid-template-columns:76px 1fr;gap:14px;align-items:start;padding:14px;border:1px solid rgba(125,211,252,.10);border-radius:18px;background:rgba(255,255,255,.025)}
+.alert-row b{display:block;color:#eaf6ff;margin-bottom:4px}
+.alert-row p{margin:0;color:rgba(234,246,255,.55)}
+.alert-severity{display:inline-grid;place-items:center;border-radius:999px;padding:6px 8px;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+.alert-severity.alta{background:rgba(239,68,68,.14);color:#fca5a5;border:1px solid rgba(239,68,68,.24)}
+.alert-severity.media{background:rgba(251,191,36,.13);color:#fde68a;border:1px solid rgba(251,191,36,.22)}
+.alert-severity.baja{background:rgba(34,197,94,.12);color:#86efac;border:1px solid rgba(34,197,94,.22)}
 @media(max-height:760px){
   .main-panel{padding:14px 20px}
   .topbar{padding:12px 14px;margin-bottom:12px}
