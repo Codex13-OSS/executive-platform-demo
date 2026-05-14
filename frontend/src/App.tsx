@@ -154,6 +154,12 @@ export default function App() {
   const [documentsList, setDocumentsList] = useState(documents);
   const [alertsList, setAlertsList] = useState(alerts);
   const [livePulse, setLivePulse] = useState(0);
+  const [jarvisMessages, setJarvisMessages] = useState<Array<{ role: 'user' | 'assistant'; text: string }>>([
+    {
+      role: 'assistant',
+      text: 'Estoy en línea. Puedo ayudarte con agenda, documentos, alertas y seguimiento ejecutivo.',
+    },
+  ]);
 
   const pushJarvisLog = (text: string) => {
     const time = new Date().toLocaleTimeString('es-MX', {
@@ -192,6 +198,11 @@ export default function App() {
   };
 
   const runJarvisAction = (instruction: string, result: string, onConfirm?: () => void) => {
+    setJarvisMessages((prev) => [
+      ...prev,
+      { role: 'user' as const, text: instruction },
+    ].slice(-6));
+
     setJarvisState('Analizando contexto');
     pushJarvisLog(`Recibido: ${instruction}`);
 
@@ -203,6 +214,10 @@ export default function App() {
     setTimeout(() => {
       setJarvisState('Confirmado');
       pushJarvisLog(result);
+      setJarvisMessages((prev) => [
+        ...prev,
+        { role: 'assistant' as const, text: result },
+      ].slice(-6));
       setLivePulse((prev) => prev + 1);
       onConfirm?.();
     }, 1500);
@@ -491,6 +506,17 @@ export default function App() {
         <p className="muted">
           Núcleo IA integrado para agenda, seguimiento, documentos, recordatorios y decisiones ejecutivas.
         </p>
+
+        <div className="jarvis-chat">
+          <p className="eyebrow">CONVERSACIÓN</p>
+          <div className="jarvis-chat-stream">
+            {jarvisMessages.map((item, index) => (
+              <div className={`jarvis-bubble ${item.role}`} key={`${item.role}-${index}-${item.text}`}>
+                {item.text}
+              </div>
+            ))}
+          </div>
+        </div>
 
         <div className="quick-actions">
           <button
@@ -804,6 +830,46 @@ nav{display:grid;gap:8px;margin-top:34px}
   0%,100%{text-shadow:0 0 24px rgba(56,189,248,.22)}
   50%{text-shadow:0 0 34px rgba(34,211,238,.48)}
 }
+
+.jarvis-chat{
+  border:1px solid rgba(125,211,252,.12);
+  border-radius:20px;
+  background:linear-gradient(180deg,rgba(15,23,42,.42),rgba(7,17,31,.24));
+  padding:12px;
+  display:grid;
+  gap:10px;
+}
+.jarvis-chat-stream{
+  display:grid;
+  gap:8px;
+  max-height:190px;
+  overflow:auto;
+  padding-right:2px;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(56,189,248,.25) transparent;
+}
+.jarvis-chat-stream::-webkit-scrollbar{width:5px}
+.jarvis-chat-stream::-webkit-scrollbar-thumb{background:rgba(56,189,248,.25);border-radius:999px}
+.jarvis-bubble{
+  width:fit-content;
+  max-width:92%;
+  border-radius:16px;
+  padding:9px 11px;
+  font-size:12px;
+  line-height:1.38;
+  border:1px solid rgba(125,211,252,.12);
+}
+.jarvis-bubble.assistant{
+  background:rgba(56,189,248,.08);
+  color:rgba(234,246,255,.78);
+  box-shadow:0 0 24px rgba(56,189,248,.05);
+}
+.jarvis-bubble.user{
+  justify-self:end;
+  background:linear-gradient(135deg,rgba(14,165,233,.28),rgba(34,211,238,.18));
+  color:#eaf6ff;
+  border-color:rgba(125,211,252,.22);
+}
 @media(max-height:760px){
   .main-panel{padding:14px 20px}
   .topbar{padding:12px 14px;margin-bottom:12px}
@@ -824,6 +890,63 @@ nav{display:grid;gap:8px;margin-top:34px}
   .quick-actions{gap:7px}
   .quick-actions button{padding:8px;font-size:12px}
   .jarvis-input input{padding:10px}
+}
+
+@media(max-height:760px){
+  .jarvis-orb{
+    width:130px!important;
+    height:130px!important;
+    min-width:130px!important;
+    min-height:130px!important;
+  }
+  .jarvis-panel{
+    gap:8px!important;
+    padding:12px 14px!important;
+  }
+  .jarvis-panel h3{
+    font-size:20px!important;
+  }
+  .jarvis-panel > .muted{
+    display:none;
+  }
+  .jarvis-state{
+    font-size:10px;
+    padding:5px 8px;
+  }
+  .jarvis-chat{
+    padding:9px;
+    gap:7px;
+  }
+  .jarvis-chat-stream{
+    max-height:118px;
+  }
+  .jarvis-bubble{
+    font-size:11px;
+    padding:7px 9px;
+    border-radius:13px;
+  }
+  .quick-actions{
+    gap:6px!important;
+  }
+  .quick-actions button{
+    padding:7px!important;
+    font-size:11px!important;
+  }
+  .jarvis-log{
+    max-height:110px;
+    padding:9px;
+  }
+  .jarvis-log-item{
+    font-size:10px;
+    padding-bottom:5px;
+  }
+  .jarvis-input input{
+    padding:9px!important;
+    font-size:12px;
+  }
+  .jarvis-input button{
+    width:40px;
+  }
 }
 @media(max-width:1100px){.os-shell{grid-template-columns:1fr}.sidebar,.jarvis-panel{display:none}.kpi-grid,.dashboard-grid{grid-template-columns:1fr}.main-panel{padding:18px}}
 `;
