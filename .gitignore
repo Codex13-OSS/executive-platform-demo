@@ -1,0 +1,14 @@
+.DS_Store
+node_modules/
+dist/
+build/
+coverage/
+.env
+.env.*
+!.env.example
+
+# Local backups
+backups/
+
+# TypeScript build cache
+*.tsbuildinfo
