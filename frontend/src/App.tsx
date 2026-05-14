@@ -160,6 +160,10 @@ export default function App() {
       text: 'Estoy en línea. Puedo ayudarte con agenda, documentos, alertas y seguimiento ejecutivo.',
     },
   ]);
+  const [mobileOrbListening, setMobileOrbListening] = useState(false);
+  const [mobileJarvisOpen, setMobileJarvisOpen] = useState(false);
+  const mobileInputRef = useRef<HTMLInputElement | null>(null);
+  const orbTimeoutRef = useRef<number | null>(null);
 
   const pushJarvisLog = (text: string) => {
     const time = new Date().toLocaleTimeString('es-MX', {
@@ -260,6 +264,27 @@ export default function App() {
     setMessage('');
   };
 
+  const activateMobileOrb = () => {
+    if (orbTimeoutRef.current) window.clearTimeout(orbTimeoutRef.current);
+    setMobileJarvisOpen(true);
+    setMobileOrbListening(true);
+    setJarvisState('Escuchando...');
+    setJarvisMessages((prev) => [
+      ...prev,
+      { role: 'assistant' as const, text: 'Jarvis lista. ¿Qué necesitas?' },
+    ].slice(-6));
+    pushJarvisLog('Interacción móvil activada.');
+    window.setTimeout(() => mobileInputRef.current?.focus(), 120);
+    orbTimeoutRef.current = window.setTimeout(() => {
+      setMobileOrbListening(false);
+      setJarvisState('En línea');
+    }, 2400);
+  };
+
+  useEffect(() => () => {
+    if (orbTimeoutRef.current) window.clearTimeout(orbTimeoutRef.current);
+  }, []);
+
   if (!logged) {
     return (
       <main className="login-os">
@@ -288,6 +313,7 @@ export default function App() {
   ] as const;
 
   return (
+    <>
     <main className="os-shell">
       <style>{styles}</style>
 
@@ -583,6 +609,37 @@ export default function App() {
         </div>
       </aside>
     </main>
+    <section className={`mobile-jarvis ${mobileJarvisOpen ? 'open' : ''}`}>
+      <button className={`mobile-jarvis-orb ${mobileOrbListening ? 'listening' : ''}`} onClick={activateMobileOrb}>
+        <NeuralCore />
+      </button>
+      <div className="mobile-jarvis-status">
+        <strong>{mobileOrbListening ? 'Escuchando...' : 'En línea'}</strong>
+        <span>{mobileOrbListening ? 'Jarvis activa' : 'Toca para activar a Jarvis'}</span>
+      </div>
+      {mobileJarvisOpen && (
+        <div className="mobile-jarvis-body">
+          <div className="mobile-jarvis-stream">
+            {jarvisMessages.slice(-3).map((item, index) => (
+              <div className={`jarvis-bubble ${item.role}`} key={`mobile-${item.role}-${index}-${item.text}`}>
+                {item.text}
+              </div>
+            ))}
+          </div>
+          <div className="jarvis-input mobile">
+            <input
+              ref={mobileInputRef}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && sendJarvis()}
+              placeholder="Habla con Jarvis..."
+            />
+            <button onClick={sendJarvis}>↑</button>
+          </div>
+        </div>
+      )}
+    </section>
+    </>
   );
 }
 
@@ -949,4 +1006,53 @@ nav{display:grid;gap:8px;margin-top:34px}
   }
 }
 @media(max-width:1100px){.os-shell{grid-template-columns:1fr}.sidebar,.jarvis-panel{display:none}.kpi-grid,.dashboard-grid{grid-template-columns:1fr}.main-panel{padding:18px}}
+.mobile-jarvis{display:none}
+@media(max-width:1100px){
+  .mobile-jarvis{
+    display:grid;
+    grid-template-columns:auto 1fr;
+    align-items:center;
+    gap:10px;
+    position:fixed;
+    left:12px;
+    right:12px;
+    bottom:12px;
+    border:1px solid rgba(125,211,252,.24);
+    border-radius:24px;
+    background:rgba(2,6,23,.82);
+    backdrop-filter:blur(18px);
+    padding:10px;
+    z-index:20;
+    box-shadow:0 20px 60px rgba(0,0,0,.45),0 0 40px rgba(34,211,238,.12);
+  }
+  .mobile-jarvis.open{grid-template-columns:auto 1fr}
+  .mobile-jarvis-orb{
+    width:76px;height:76px;border-radius:999px;border:1px solid rgba(125,211,252,.42);padding:0;position:relative;cursor:pointer;
+    background:radial-gradient(circle at 35% 28%,rgba(186,230,253,.34),rgba(14,165,233,.12) 40%,rgba(2,6,23,.94) 70%);
+    box-shadow:inset 0 0 34px rgba(125,211,252,.3),0 0 30px rgba(56,189,248,.32),0 0 60px rgba(34,211,238,.18);
+    overflow:hidden;isolation:isolate;animation:orbFloat 4s ease-in-out infinite;
+  }
+  .mobile-jarvis-orb::before{
+    content:'';position:absolute;inset:8px;border-radius:999px;border:1px solid rgba(186,230,253,.2);pointer-events:none;
+    box-shadow:0 0 20px rgba(125,211,252,.16) inset;
+  }
+  .mobile-jarvis-orb::after{
+    content:'';position:absolute;inset:-14px;border-radius:999px;pointer-events:none;
+    background:radial-gradient(circle,rgba(56,189,248,.28),transparent 62%);opacity:.6;animation:orbSpark 1.8s ease-in-out infinite;
+  }
+  .mobile-jarvis-orb.listening{
+    box-shadow:inset 0 0 42px rgba(125,211,252,.38),0 0 44px rgba(56,189,248,.45),0 0 85px rgba(34,211,238,.32);
+    animation:orbPulse .9s ease-in-out infinite;
+  }
+  .mobile-jarvis-orb.listening .neural-core{filter:drop-shadow(0 0 18px rgba(56,189,248,.7));transform:scale(1.16)}
+  .mobile-jarvis-status strong{display:block;font-size:14px;color:#7dd3fc}
+  .mobile-jarvis-status span{font-size:11px;color:rgba(234,246,255,.62)}
+  .mobile-jarvis-body{grid-column:1 / -1;display:grid;gap:8px}
+  .mobile-jarvis-stream{display:grid;gap:6px;max-height:92px;overflow:auto}
+  .jarvis-input.mobile{margin-top:0}
+  .main-panel{padding-bottom:190px}
+}
+@keyframes orbFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes orbSpark{0%,100%{opacity:.5}50%{opacity:.9}}
+@keyframes orbPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
 `;
