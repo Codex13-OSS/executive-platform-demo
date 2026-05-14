@@ -27,14 +27,24 @@ const defaultDraft: EntryDraft = {
   priority: 'medium',
 };
 
-export default function EntryFormView({ initialDraft, onBack, onSave, theme, onToggleTheme }: EntryFormViewProps) {
+export default function EntryFormView({
+  initialDraft,
+  onBack,
+  onSave,
+  theme,
+  onToggleTheme,
+}: EntryFormViewProps) {
   const [draft, setDraft] = useState<EntryDraft>(initialDraft ?? defaultDraft);
   const [error, setError] = useState<string | null>(null);
 
-  const subtitle = useMemo(() => 'Lo que antes llegaba disperso, aquí entra por una sola puerta.', []);
+  const subtitle = useMemo(
+    () => 'Lo que antes llegaba disperso, aquí entra por una sola puerta.',
+    []
+  );
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     if (!draft.text.trim()) return setError('La nota es obligatoria.');
     if (!draft.category.trim()) return setError('La categoría es obligatoria.');
     if (!draft.owner.trim()) return setError('El responsable es obligatorio.');
@@ -58,7 +68,9 @@ export default function EntryFormView({ initialDraft, onBack, onSave, theme, onT
         actions={
           <>
             <ThemeToggle theme={theme} onToggle={onToggleTheme} />
-            <button type="button" className="btn-secondary" onClick={onBack}>Volver</button>
+            <button type="button" className="btn-secondary" onClick={onBack}>
+              Volver
+            </button>
           </>
         }
       />
@@ -66,30 +78,17 @@ export default function EntryFormView({ initialDraft, onBack, onSave, theme, onT
       <GlassPanel variant="strong" className="entry-context entry-context-premium">
         <h3>Módulo de captura institucional</h3>
         <p className="muted">
-          Registra contexto, ownership y prioridad con estructura ejecutiva estandarizada para
-          evitar pérdidas de información crítica.
+          Registra contexto, responsable y prioridad con estructura ejecutiva estandarizada para evitar pérdidas de información crítica.
         </p>
       </GlassPanel>
 
       <GlassPanel variant="elevated" className="entry-main-panel entry-main-panel-premium">
         <form className="entry-form entry-form-premium" onSubmit={handleSubmit}>
           <label className="entry-note-field">
-      <GlassPanel variant="strong" className="entry-context">
-        <h3>Módulo de captura institucional</h3>
-        <p className="muted">
-          Registra contexto, ownership y prioridad con una estructura única para evitar pérdida de
-          información operativa.
-        </p>
-      </GlassPanel>
-
-      <GlassPanel variant="elevated" className="entry-main-panel">
-        <form className="entry-form" onSubmit={handleSubmit}>
-          <label>
             Nota en bruto
             <textarea
               value={draft.text}
               onChange={(event) => setDraft((prev) => ({ ...prev, text: event.target.value }))}
-              rows={11}
               rows={8}
               placeholder="Describe el contexto principal"
             />
@@ -98,32 +97,34 @@ export default function EntryFormView({ initialDraft, onBack, onSave, theme, onT
           <div className="entry-grid entry-meta-grid entry-meta-premium-grid">
             <label className="entry-meta-card">
               Categoría
-              <input type="text" value={draft.category} onChange={(event) => setDraft((prev) => ({ ...prev, category: event.target.value }))} />
+              <input
+                type="text"
+                value={draft.category}
+                onChange={(event) => setDraft((prev) => ({ ...prev, category: event.target.value }))}
+              />
             </label>
+
             <label className="entry-meta-card">
               Responsable
-              <input type="text" value={draft.owner} onChange={(event) => setDraft((prev) => ({ ...prev, owner: event.target.value }))} />
+              <input
+                type="text"
+                value={draft.owner}
+                onChange={(event) => setDraft((prev) => ({ ...prev, owner: event.target.value }))}
+              />
             </label>
+
             <label className="entry-meta-card">
-          <div className="entry-grid entry-meta-grid">
-            <label>
-              Categoría
-              <input type="text" value={draft.category} onChange={(event) => setDraft((prev) => ({ ...prev, category: event.target.value }))} />
-            </label>
-            <label>
-              Responsable
-              <input type="text" value={draft.owner} onChange={(event) => setDraft((prev) => ({ ...prev, owner: event.target.value }))} />
-            </label>
-            <label>
               Prioridad
               <select
                 value={draft.priority}
-                onChange={(event) => setDraft((prev) => ({ ...prev, priority: event.target.value as EntryDraft['priority'] }))}
+                onChange={(event) =>
+                  setDraft((prev) => ({ ...prev, priority: event.target.value as EntryDraft['priority'] }))
+                }
               >
                 <option value="">Seleccionar</option>
-                <option value="low">low</option>
-                <option value="medium">medium</option>
-                <option value="high">high</option>
+                <option value="low">Baja</option>
+                <option value="medium">Media</option>
+                <option value="high">Alta</option>
               </select>
             </label>
           </div>
@@ -131,9 +132,12 @@ export default function EntryFormView({ initialDraft, onBack, onSave, theme, onT
           {error ? <p className="error-text">{error}</p> : null}
 
           <div className="entry-actions entry-actions-premium">
-          <div className="entry-actions">
-            <button type="button" className="btn-secondary" onClick={onBack}>Cancelar</button>
-            <button type="submit" className="btn-primary">Convertir en acciones</button>
+            <button type="button" className="btn-secondary" onClick={onBack}>
+              Cancelar
+            </button>
+            <button type="submit" className="btn-primary">
+              Convertir en acciones
+            </button>
           </div>
         </form>
       </GlassPanel>

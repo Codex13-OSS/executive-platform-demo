@@ -20,7 +20,16 @@ type TrackingViewProps = {
   onToggleTheme: () => void;
 };
 
-export default function TrackingView({ entry, actions, summary, onFinish, onReset, onBackDashboard, theme, onToggleTheme }: TrackingViewProps) {
+export default function TrackingView({
+  entry,
+  actions,
+  summary,
+  onFinish,
+  onReset,
+  onBackDashboard,
+  theme,
+  onToggleTheme,
+}: TrackingViewProps) {
   if (actions.length === 0) {
     return (
       <PageShell>
@@ -35,9 +44,24 @@ export default function TrackingView({ entry, actions, summary, onFinish, onRese
   }
 
   const ringValues = [
-    { label: 'Assigned', sublabel: 'propiedad', progress: summary.assigned / Math.max(summary.total, 1), color: '#0F8A5F' },
-    { label: 'Pending', sublabel: 'atención', progress: summary.pending / Math.max(summary.total, 1), color: '#C63D3D' },
-    { label: 'Confirmed', sublabel: 'cierre', progress: summary.confirmed / Math.max(summary.total, 1), color: '#12A372' },
+    {
+      label: 'Asignadas',
+      sublabel: 'propiedad',
+      progress: summary.assigned / Math.max(summary.total, 1),
+      color: '#00B4D8',
+    },
+    {
+      label: 'Pendientes',
+      sublabel: 'atención',
+      progress: summary.pending / Math.max(summary.total, 1),
+      color: '#F59E0B',
+    },
+    {
+      label: 'Confirmadas',
+      sublabel: 'cierre',
+      progress: summary.confirmed / Math.max(summary.total, 1),
+      color: '#22C55E',
+    },
   ];
 
   return (
@@ -45,12 +69,16 @@ export default function TrackingView({ entry, actions, summary, onFinish, onRese
       <TopBar
         eyebrow="Seguimiento ejecutivo"
         title="Ahora todo tiene seguimiento"
-        subtitle="Estatus, ownership y próximos pasos en una vista institucional única."
+        subtitle="Estatus, responsables y próximos pasos en una vista institucional única."
         actions={
           <>
             <ThemeToggle theme={theme} onToggle={onToggleTheme} />
-            <button type="button" className="btn-secondary" onClick={onReset}>Resetear demo</button>
-            <button type="button" className="btn-primary" onClick={onFinish}>Finalizar demo</button>
+            <button type="button" className="btn-secondary" onClick={onReset}>
+              Resetear demo
+            </button>
+            <button type="button" className="btn-primary" onClick={onFinish}>
+              Finalizar demo
+            </button>
           </>
         }
       />
@@ -62,13 +90,10 @@ export default function TrackingView({ entry, actions, summary, onFinish, onRese
         </GlassPanel>
 
         <GlassPanel variant="strong" className="metrics-grid compact-metrics metric-surface tracking-metrics-panel">
-      <section className="dashboard-hero-grid tracking-balance">
-        <GlassPanel variant="elevated"><ActivityRingsCluster values={ringValues} /></GlassPanel>
-        <GlassPanel variant="strong" className="metrics-grid compact-metrics metric-surface">
           <MetricCard label="Total" value={String(summary.total)} note="acciones" />
-          <MetricCard label="Assigned" value={String(summary.assigned)} note="en propiedad" />
-          <MetricCard label="Pending" value={String(summary.pending)} note="en seguimiento" />
-          <MetricCard label="Confirmed" value={String(summary.confirmed)} note="cerradas" />
+          <MetricCard label="Asignadas" value={String(summary.assigned)} note="en propiedad" />
+          <MetricCard label="Pendientes" value={String(summary.pending)} note="en seguimiento" />
+          <MetricCard label="Confirmadas" value={String(summary.confirmed)} note="cerradas" />
         </GlassPanel>
       </section>
 
@@ -76,11 +101,13 @@ export default function TrackingView({ entry, actions, summary, onFinish, onRese
         <GlassPanel className="flow-note flow-highlight" variant="default">
           <p className="eyebrow">Resumen ejecutivo</p>
           <h3>{entry.category}</h3>
-          <p><strong>{summary.total}</strong> acciones activas con propietarios definidos y próximos pasos listos para ejecución.</p>
+          <p>
+            <strong>{summary.total}</strong> acciones activas con responsables definidos y próximos pasos listos.
+          </p>
           <div className="chips">
-            <StatusChip label={`${summary.assigned} assigned`} tone="active" />
-            <StatusChip label={`${summary.pending} pending`} tone="pending" />
-            <StatusChip label={`${summary.confirmed} confirmed`} tone="done" />
+            <StatusChip label={`${summary.assigned} asignadas`} tone="active" />
+            <StatusChip label={`${summary.pending} pendientes`} tone="pending" />
+            <StatusChip label={`${summary.confirmed} confirmadas`} tone="done" />
           </div>
         </GlassPanel>
       ) : null}
@@ -89,17 +116,27 @@ export default function TrackingView({ entry, actions, summary, onFinish, onRese
         <div className="action-cards-grid tracking-cards tracking-cards-premium">
           {actions.map((action) => (
             <article key={action.id} className="action-row action-card-item tracking-action-card">
-      <GlassPanel variant="elevated">
-        <div className="action-cards-grid tracking-cards">
-          {actions.map((action) => (
-            <article key={action.id} className="action-row action-card-item">
               <div>
                 <h3>{action.title}</h3>
-                <p className="muted small-text">{action.owner} · {action.category}</p>
-                <p><strong>Siguiente paso:</strong> {action.nextStep}</p>
+                <p className="muted small-text">
+                  {action.owner} · {action.category}
+                </p>
+                <p>
+                  <strong>Siguiente paso:</strong> {action.nextStep}
+                </p>
               </div>
+
               <div className="chips">
-                <StatusChip label={action.status} tone={action.status === 'confirmed' ? 'done' : action.status === 'assigned' ? 'active' : 'pending'} />
+                <StatusChip
+                  label={action.status}
+                  tone={
+                    action.status === 'confirmed'
+                      ? 'done'
+                      : action.status === 'assigned'
+                        ? 'active'
+                        : 'pending'
+                  }
+                />
                 <StatusChip label={action.priority} tone={action.priority === 'high' ? 'alert' : 'active'} />
               </div>
             </article>

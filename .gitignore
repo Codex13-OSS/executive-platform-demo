@@ -6,3 +6,9 @@ coverage/
 .env
 .env.*
 !.env.example
+
+# Local backups
+backups/
+
+# TypeScript build cache
+*.tsbuildinfo
