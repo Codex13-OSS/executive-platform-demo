@@ -637,3 +637,20 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
 .jarvis-input-mini button{border:0;border-radius:12px;padding:.5rem .7rem;background:linear-gradient(135deg,#0284c7,#22d3ee);color:#00111f;font-weight:700}
 
 .module-grid .glass-panel,.alerts-list .glass-panel{border-color:rgba(125,211,252,.16)}
+
+.status-chip{display:inline-flex;align-items:center;padding:.22rem .58rem;border-radius:999px;font-size:.7rem;font-weight:700;letter-spacing:.04em;border:1px solid rgba(125,211,252,.22)}
+.tone-active{background:rgba(34,211,238,.16);color:#a5f3fc;border-color:rgba(34,211,238,.38)}
+
+.orbit-node{cursor:pointer;transition:transform .2s ease,filter .2s ease}
+.orbit-node.active circle{stroke:#a5f3fc;stroke-width:.48;filter:drop-shadow(0 0 6px rgba(125,211,252,.95))}
+.active-link .curve-link{stroke:rgba(125,211,252,.72);stroke-width:.38}
+.cognitive-insights-v2 .insight-head{font-size:.86rem;color:#dbeafe}
+.insight-actions{display:grid;grid-template-columns:1fr;gap:.45rem}
+.insight-actions button{border:1px solid rgba(125,211,252,.24);background:linear-gradient(165deg,rgba(8,17,31,.9),rgba(10,21,40,.62));color:#dbeafe;padding:.42rem .56rem;border-radius:11px;text-align:left;font-size:.78rem}
+
+.premium-sidebar{padding:1rem 1.05rem}
+.command-list li{padding:.35rem .1rem;border-bottom:1px solid rgba(125,211,252,.1)}
+.command-list li:last-child{border-bottom:0}
+.jarvis-core-panel{padding:1rem 1.05rem;box-shadow:0 20px 45px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.04)}
+.jarvis-log-mini{border:1px solid rgba(125,211,252,.14);border-radius:12px;padding:.55rem;background:rgba(2,6,23,.3)}
+.jarvis-input-mini input:focus{box-shadow:0 0 0 2px rgba(34,211,238,.18)}
