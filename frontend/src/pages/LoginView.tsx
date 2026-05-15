@@ -1,6 +1,5 @@
 import { FormEvent, useState } from 'react';
-import AmbientNetwork from '../components/AmbientNetwork';
-import GlassPanel from '../components/GlassPanel';
+import NeuralCore from '../components/NeuralCore';
 import ThemeToggle from '../components/ThemeToggle';
 import { ThemeMode } from '../lib/theme';
 
@@ -22,73 +21,70 @@ export default function LoginView({ onSubmit, theme, onToggleTheme }: LoginViewP
   };
 
   return (
-    <main className="login-grid">
-      <section className="login-hero">
-        <AmbientNetwork />
-        <div className="login-hero-copy">
-          <p className="eyebrow">Sistema Institucional</p>
-          <h1>Plataforma Ejecutiva de Coordinación</h1>
-          <p>
-            Lo disperso se convierte en decisiones accionables con seguimiento ejecutivo en tiempo
-            real.
-          </p>
-          <ul>
-            <li>Captura unificada de información crítica.</li>
-            <li>Conversión inmediata en acciones estructuradas.</li>
-            <li>Visibilidad de responsables y próximos pasos.</li>
-          </ul>
+    <main className="lia-login-premium">
+      <div className="login-cinematic-bg" aria-hidden="true" />
 
-          <div className="hero-footer-metrics">
-            <div><strong>+42%</strong><span>velocidad de coordinación</span></div>
-            <div><strong>24/7</strong><span>trazabilidad ejecutiva</span></div>
-            <div><strong>1 flujo</strong><span>una sola puerta de entrada</span></div>
-          </div>
+      <header className="login-brand-premium">
+        <strong>LÍA O.S</strong>
+        <span>Executive Command Center</span>
+      </header>
+
+      <aside className="login-sync-panel">
+        <p className="eyebrow">SINCRONIZANDO</p>
+        <h1>NÚCLEO COGNITIVO</h1>
+        <p>Acceso ejecutivo seguro</p>
+        <small>Verificación contextual activa para sesiones críticas.</small>
+        <ul>
+          <li>Neural Sync 98%</li>
+          <li>Mapa Cognitivo Enlazado</li>
+          <li>Módulos Listos</li>
+        </ul>
+      </aside>
+
+      <section className="login-orb-stage" aria-hidden="true">
+        <div className="orb-halo-system">
+          <NeuralCore />
         </div>
       </section>
 
-      <section className="login-form-column">
-        <GlassPanel className="login-form-panel" variant="elevated">
-          <div className="login-head">
-            <p className="eyebrow">Acceso demo</p>
-            <ThemeToggle theme={theme} onToggle={onToggleTheme} />
-          </div>
+      <section className="executive-access-panel">
+        <div className="login-head">
+          <p className="eyebrow">ACCESO EJECUTIVO</p>
+          <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+        </div>
+        <h2>Verificación requerida</h2>
 
-          <h2>Ingresar al entorno de demostración</h2>
-          <p className="muted">Credenciales locales para demo controlada.</p>
+        <form onSubmit={handleSubmit} className="auth-form">
+          <label>
+            Correo ejecutivo
+            <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="demo@plataforma.com" autoComplete="email" />
+          </label>
 
-          <form onSubmit={handleSubmit} className="auth-form">
-            <label>
-              Email
-              <input
-                type="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                placeholder="demo@plataforma.com"
-                autoComplete="email"
-              />
-            </label>
+          <label>
+            Clave de acceso
+            <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="••••••••" autoComplete="current-password" />
+          </label>
 
-            <label>
-              Contraseña
-              <input
-                type="password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                placeholder="••••••••"
-                autoComplete="current-password"
-              />
-            </label>
+          {error ? <p className="error-text">{error}</p> : null}
 
-            {error ? <p className="error-text">{error}</p> : null}
+          <label className="remember-row">
+            <input type="checkbox" />
+            Recordar sesión
+          </label>
 
-            <button type="submit" className="btn-primary">Entrar</button>
-            <div className="demo-credentials">
-              <span>demo@plataforma.com</span>
-              <span>demo1234</span>
-            </div>
-          </form>
-        </GlassPanel>
+          <button type="submit" className="btn-primary login-primary-btn">Iniciar sesión</button>
+          <button type="button" className="btn-secondary biometric-btn">Acceso biométrico</button>
+        </form>
       </section>
+
+      <div className="login-system-status"><span>ESTADO DEL SISTEMA</span><strong>ÓPTIMO</strong></div>
+
+      <footer className="login-security-footer">
+        <span>LÍA CORE OS</span>
+        <span>Cifrado ejecutivo</span>
+        <span>Protección multinivel</span>
+        <span>Sesión segura</span>
+      </footer>
     </main>
   );
 }
