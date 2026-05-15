@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { CognitiveGraph } from './components/CognitiveGraph';
 import { NeuralCore } from './components/NeuralCore';
 import { activity, agenda, alerts, documents, tracking } from './data/liaOsDemoData';
 import { mobileJarvisFixStyles, styles } from './styles/liaOsStyles';
@@ -231,6 +232,8 @@ export default function App() {
               <div className="card"><p>Documentos</p><strong>12</strong><span>4 generados por Jarvis</span></div>
               <div className="card live-card"><p>Operación</p><strong>{87 + Math.min(livePulse, 6)}%</strong><span>{livePulse > 0 ? 'actualizado por Jarvis' : 'cadencia estable'}</span></div>
             </section>
+
+            <CognitiveGraph />
 
             <section className="dashboard-grid">
               <div className="panel">
