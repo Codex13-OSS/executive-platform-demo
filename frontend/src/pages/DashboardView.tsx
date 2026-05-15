@@ -5,6 +5,7 @@ import GlassPanel from '../components/GlassPanel';
 import MetricCard from '../components/MetricCard';
 import StatusChip from '../components/StatusChip';
 import TopBar from '../components/TopBar';
+import StatusChip from '../components/StatusChip';
 import ThemeToggle from '../components/ThemeToggle';
 import { DailySummaryCard } from '../data/mockDashboard';
 import { DemoSession } from '../lib/auth';
