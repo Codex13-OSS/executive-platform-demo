@@ -23,13 +23,13 @@ export default function LoginView({ onSubmit, theme, onToggleTheme }: LoginViewP
   };
 
   return (
-    <main className="login-premium-shell">
+    <main className="login-premium-shell lia-login-premium">
       <AmbientNetwork />
 
-      <header className="login-premium-brand">LÍA O.S</header>
+      <header className="login-premium-brand login-brand-premium">LÍA O.S</header>
       <div className="login-status-chip">Núcleo cognitivo · En línea</div>
 
-      <section className="login-premium-copy">
+      <section className="login-premium-copy login-sync-panel">
         <p className="eyebrow">CENTRO DE COMANDO EJECUTIVO</p>
         <h1>Sincronizando núcleo cognitivo</h1>
         <p>
@@ -38,12 +38,12 @@ export default function LoginView({ onSubmit, theme, onToggleTheme }: LoginViewP
         </p>
       </section>
 
-      <div className="login-premium-core" aria-hidden="true">
+      <div className="login-premium-core login-orb-stage" aria-hidden="true">
         <NeuralCore />
       </div>
 
       <section className="login-premium-panel-wrap">
-        <GlassPanel className="login-form-panel login-premium-panel" variant="elevated">
+        <GlassPanel className="login-form-panel login-premium-panel executive-access-panel" variant="elevated">
           <div className="login-head">
             <p className="eyebrow">Acceso ejecutivo</p>
             <ThemeToggle theme={theme} onToggle={onToggleTheme} />
@@ -64,7 +64,8 @@ export default function LoginView({ onSubmit, theme, onToggleTheme }: LoginViewP
 
             {error ? <p className="error-text">{error}</p> : null}
 
-            <button type="submit" className="btn-primary">Entrar</button>
+            <button type="submit" className="btn-primary">Iniciar sesión</button>
+            <button type="button" className="btn-secondary biometric-btn">Acceso biométrico</button>
             <div className="demo-credentials">
               <span>demo@plataforma.com</span>
               <span>demo1234</span>

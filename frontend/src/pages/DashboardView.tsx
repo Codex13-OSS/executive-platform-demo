@@ -76,6 +76,24 @@ export default function DashboardView({
 
       <CognitiveGraph />
 
+
+      <section className="dashboard-command-grid">
+        <GlassPanel className="premium-sidebar" variant="default">
+          <p className="eyebrow">LÍNEAS ACTIVAS</p>
+          <ul className="command-list">
+            <li>Agenda estratégica sincronizada</li>
+            <li>Alertas con validación humana</li>
+            <li>Documentos críticos en revisión</li>
+          </ul>
+        </GlassPanel>
+
+        <GlassPanel className="jarvis-core-panel" variant="elevated">
+          <p className="eyebrow">JARVIS COGNITIVE CORE</p>
+          <div className="mini-core-wrap"><span className="mini-core-dot" /></div>
+          <p className="muted small-text">En línea · Analizando contexto operativo.</p>
+        </GlassPanel>
+      </section>
+
       {latestEntry ? (
         <GlassPanel className="last-entry" variant="default">
           <p className="eyebrow">Última entrada capturada</p>

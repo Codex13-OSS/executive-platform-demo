@@ -13,17 +13,18 @@ const nodes: Node[] = [
 
 export function CognitiveGraph() {
   return (
-    <section className="cognitive-panel-v2" aria-label="Mapa Cognitivo Ejecutivo">
+    <section className="cognitive-panel-v2 cognitive-3d-panel" aria-label="Mapa Cognitivo Ejecutivo">
       <header className="cognitive-title-row">
         <div>
           <p className="eyebrow">MAPA COGNITIVO EJECUTIVO</p>
-          <h3>Neural Command Graph</h3>
+          <h3>MAPA COGNITIVO EJECUTIVO</h3>
+          <p className="muted">LIA Core prioriza contexto y riesgo en tiempo real.</p>
         </div>
         <span className="cognitive-badge">Núcleo en sincronía</span>
       </header>
 
       <div className="cognitive-body-v2">
-        <div className="cognitive-viewport">
+        <div className="cognitive-viewport cognitive-orbital-stage">
           <svg className="cognitive-svg" viewBox="0 0 100 100" role="img" aria-label="LIA Core conectando áreas ejecutivas">
             <defs>
               <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
