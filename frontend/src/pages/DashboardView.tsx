@@ -1,7 +1,9 @@
 import ActivityRingsCluster from '../components/ActivityRingsCluster';
+import CognitiveGraph from '../components/CognitiveGraph';
 import GlassPanel from '../components/GlassPanel';
 import MetricCard from '../components/MetricCard';
 import TopBar from '../components/TopBar';
+import StatusChip from '../components/StatusChip';
 import ThemeToggle from '../components/ThemeToggle';
 import { DailySummaryCard } from '../data/mockDashboard';
 import { DemoSession } from '../lib/auth';
@@ -56,16 +58,13 @@ export default function DashboardView({
 
       <section className="dashboard-hero-grid dashboard-balance">
         <GlassPanel className="hero-copy" variant="strong">
-          <p className="eyebrow">Control institucional</p>
-          <h2>Coordinación ejecutiva con trazabilidad inmediata</h2>
-          <p className="muted">
-            Unifica decisiones, responsables y avance operativo en una experiencia única para
-            dirección. Gestiona prioridades, seguimiento y foco de forma centralizada.
-          </p>
+          <p className="eyebrow">Centro de comando</p>
+          <h2>Estado operativo y priorización inteligente</h2>
+          <p className="muted">LÍA correlaciona contexto ejecutivo, riesgos y ejecución para sostener decisiones con trazabilidad continua.</p>
           <div className="hero-inline-stats">
-            <span>Operación diaria</span>
-            <span>Flujo activo</span>
-            <span>Modo demo</span>
+            <span>Operación viva</span>
+            <span>Nodo IA activo</span>
+            <span>Lectura ejecutiva</span>
           </div>
           {flowCompleted ? (
             <div className="inline-badge">Flujo completado en la última iteración</div>
@@ -73,6 +72,28 @@ export default function DashboardView({
         </GlassPanel>
         <GlassPanel className="hero-rings" variant="elevated">
           <ActivityRingsCluster values={ringValues} />
+        </GlassPanel>
+      </section>
+
+      <CognitiveGraph />
+
+
+      <section className="dashboard-command-grid">
+        <GlassPanel className="premium-sidebar" variant="default">
+          <p className="eyebrow">LÍNEAS ACTIVAS</p>
+          <ul className="command-list">
+            <li>Agenda estratégica sincronizada</li>
+            <li>Alertas con validación humana</li>
+            <li>Documentos críticos en revisión</li>
+          </ul>
+        </GlassPanel>
+
+        <GlassPanel className="jarvis-core-panel" variant="elevated">
+          <div className="jarvis-head-row"><p className="eyebrow">JARVIS COGNITIVE CORE</p><StatusChip label="En línea" tone="active" /></div>
+          <div className="mini-core-wrap"><span className="mini-core-dot" /></div>
+          <div className="jarvis-chip-row"><span>Contexto activo</span><span>Prioridad: Alta</span><span>Latencia: 42ms</span></div>
+          <div className="jarvis-log-mini"><p>09:42 · Agenda cruzada con riesgo comercial.</p><p>09:43 · Documento estratégico actualizado.</p><p>09:44 · Alerta vinculada a seguimiento.</p></div>
+          <div className="jarvis-input-mini"><input placeholder="Pedir acción a Jarvis..." /><button type="button">Enviar</button></div>
         </GlassPanel>
       </section>
 
