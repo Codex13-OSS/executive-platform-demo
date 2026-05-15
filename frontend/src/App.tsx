@@ -609,36 +609,35 @@ export default function App() {
         </div>
       </aside>
     </main>
-    <section className={`mobile-jarvis ${mobileJarvisOpen ? 'open' : ''}`}>
-      <button className={`mobile-jarvis-orb ${mobileOrbListening ? 'listening' : ''}`} onClick={activateMobileOrb}>
-        <NeuralCore />
-      </button>
-      <div className="mobile-jarvis-status">
-        <strong>{mobileOrbListening ? 'Escuchando...' : 'En línea'}</strong>
-        <span>{mobileOrbListening ? 'Jarvis activa' : 'Toca para activar a Jarvis'}</span>
-      </div>
-      {mobileJarvisOpen && (
-        <div className="mobile-jarvis-body">
-          <div className="mobile-jarvis-stream">
-            {jarvisMessages.slice(-3).map((item, index) => (
-              <div className={`jarvis-bubble ${item.role}`} key={`mobile-${item.role}-${index}-${item.text}`}>
-                {item.text}
-              </div>
-            ))}
-          </div>
-          <div className="jarvis-input mobile">
-            <input
-              ref={mobileInputRef}
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && sendJarvis()}
-              placeholder="Habla con Jarvis..."
-            />
-            <button onClick={sendJarvis}>↑</button>
-          </div>
+    <button className={`mobile-jarvis-orb ${mobileOrbListening ? 'listening' : ''}`} onClick={activateMobileOrb}>
+      <NeuralCore />
+    </button>
+    <div className="mobile-jarvis-chip">
+      <strong>{mobileOrbListening ? 'Escuchando...' : 'En línea'}</strong>
+    </div>
+    {mobileJarvisOpen && (
+      <section className="mobile-jarvis-panel">
+        <button className="mobile-jarvis-close" onClick={() => setMobileJarvisOpen(false)}>✕</button>
+        <p className="eyebrow">JARVIS MÓVIL</p>
+        <div className="mobile-jarvis-stream">
+          {jarvisMessages.slice(-3).map((item, index) => (
+            <div className={`jarvis-bubble ${item.role}`} key={`mobile-${item.role}-${index}-${item.text}`}>
+              {item.text}
+            </div>
+          ))}
         </div>
-      )}
-    </section>
+        <div className="jarvis-input mobile">
+          <input
+            ref={mobileInputRef}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && sendJarvis()}
+            placeholder="Habla con Jarvis..."
+          />
+          <button onClick={sendJarvis}>↑</button>
+        </div>
+      </section>
+    )}
     </>
   );
 }
@@ -1006,51 +1005,72 @@ nav{display:grid;gap:8px;margin-top:34px}
   }
 }
 @media(max-width:1100px){.os-shell{grid-template-columns:1fr}.sidebar,.jarvis-panel{display:none}.kpi-grid,.dashboard-grid{grid-template-columns:1fr}.main-panel{padding:18px}}
-.mobile-jarvis{display:none}
 @media(max-width:1100px){
-  .mobile-jarvis{
+  .mobile-jarvis-orb{
     display:grid;
-    grid-template-columns:auto 1fr;
-    align-items:center;
-    gap:10px;
+    place-items:center;
+    position:fixed;
+    right:16px;
+    bottom:22px;
+    z-index:35;
+    width:76px;height:76px;border-radius:999px;border:1px solid rgba(125,211,252,.42);padding:0;position:relative;cursor:pointer;
+    background:
+      radial-gradient(circle at 34% 24%,rgba(224,242,254,.42),rgba(56,189,248,.12) 36%,rgba(2,6,23,.88) 72%),
+      radial-gradient(circle at 62% 70%,rgba(14,165,233,.28),transparent 60%);
+    box-shadow:inset 0 0 38px rgba(125,211,252,.32),inset 0 -10px 26px rgba(2,6,23,.58),0 0 34px rgba(56,189,248,.32),0 0 74px rgba(34,211,238,.16);
+    overflow:hidden;isolation:isolate;animation:orbFloat 4s ease-in-out infinite;
+    backdrop-filter:blur(4px) saturate(118%);
+  }
+  .mobile-jarvis-orb::before{
+    content:'';position:absolute;inset:8px;border-radius:999px;border:1px solid rgba(186,230,253,.24);pointer-events:none;
+    box-shadow:inset 0 0 24px rgba(125,211,252,.18),inset 0 0 6px rgba(255,255,255,.22);
+  }
+  .mobile-jarvis-orb::after{
+    content:'';position:absolute;inset:-14px;border-radius:999px;pointer-events:none;
+    background:
+      conic-gradient(from 42deg,transparent,rgba(56,189,248,.18),transparent,rgba(125,211,252,.16),transparent),
+      radial-gradient(circle,rgba(56,189,248,.28),transparent 62%);
+    opacity:.58;animation:orbSpark 2.2s ease-in-out infinite;
+  }
+  .mobile-jarvis-orb.listening{
+    box-shadow:inset 0 0 46px rgba(125,211,252,.44),0 0 50px rgba(56,189,248,.52),0 0 95px rgba(34,211,238,.36);
+    animation:orbPulse .9s ease-in-out infinite;
+  }
+  .mobile-jarvis-orb.listening .neural-core{filter:drop-shadow(0 0 18px rgba(56,189,248,.7));transform:scale(1.16)}
+  .mobile-jarvis-chip{
+    position:fixed;
+    right:16px;
+    bottom:106px;
+    z-index:34;
+    padding:6px 10px;
+    border-radius:999px;
+    border:1px solid rgba(125,211,252,.28);
+    background:rgba(2,6,23,.74);
+    backdrop-filter:blur(10px);
+    box-shadow:0 10px 28px rgba(0,0,0,.34);
+  }
+  .mobile-jarvis-chip strong{font-size:11px;color:#7dd3fc;font-weight:700}
+  .mobile-jarvis-panel{
     position:fixed;
     left:12px;
     right:12px;
     bottom:12px;
-    border:1px solid rgba(125,211,252,.24);
-    border-radius:24px;
-    background:rgba(2,6,23,.82);
+    z-index:30;
+    border:1px solid rgba(125,211,252,.2);
+    border-radius:20px;
+    background:linear-gradient(180deg,rgba(15,23,42,.88),rgba(3,10,22,.92));
     backdrop-filter:blur(18px);
-    padding:10px;
-    z-index:20;
-    box-shadow:0 20px 60px rgba(0,0,0,.45),0 0 40px rgba(34,211,238,.12);
+    padding:12px;
+    display:grid;
+    gap:8px;
+    box-shadow:0 20px 60px rgba(0,0,0,.5);
   }
-  .mobile-jarvis.open{grid-template-columns:auto 1fr}
-  .mobile-jarvis-orb{
-    width:76px;height:76px;border-radius:999px;border:1px solid rgba(125,211,252,.42);padding:0;position:relative;cursor:pointer;
-    background:radial-gradient(circle at 35% 28%,rgba(186,230,253,.34),rgba(14,165,233,.12) 40%,rgba(2,6,23,.94) 70%);
-    box-shadow:inset 0 0 34px rgba(125,211,252,.3),0 0 30px rgba(56,189,248,.32),0 0 60px rgba(34,211,238,.18);
-    overflow:hidden;isolation:isolate;animation:orbFloat 4s ease-in-out infinite;
+  .mobile-jarvis-close{
+    justify-self:end;border:1px solid rgba(125,211,252,.2);background:rgba(255,255,255,.04);color:#cdeeff;border-radius:10px;padding:3px 8px
   }
-  .mobile-jarvis-orb::before{
-    content:'';position:absolute;inset:8px;border-radius:999px;border:1px solid rgba(186,230,253,.2);pointer-events:none;
-    box-shadow:0 0 20px rgba(125,211,252,.16) inset;
-  }
-  .mobile-jarvis-orb::after{
-    content:'';position:absolute;inset:-14px;border-radius:999px;pointer-events:none;
-    background:radial-gradient(circle,rgba(56,189,248,.28),transparent 62%);opacity:.6;animation:orbSpark 1.8s ease-in-out infinite;
-  }
-  .mobile-jarvis-orb.listening{
-    box-shadow:inset 0 0 42px rgba(125,211,252,.38),0 0 44px rgba(56,189,248,.45),0 0 85px rgba(34,211,238,.32);
-    animation:orbPulse .9s ease-in-out infinite;
-  }
-  .mobile-jarvis-orb.listening .neural-core{filter:drop-shadow(0 0 18px rgba(56,189,248,.7));transform:scale(1.16)}
-  .mobile-jarvis-status strong{display:block;font-size:14px;color:#7dd3fc}
-  .mobile-jarvis-status span{font-size:11px;color:rgba(234,246,255,.62)}
-  .mobile-jarvis-body{grid-column:1 / -1;display:grid;gap:8px}
   .mobile-jarvis-stream{display:grid;gap:6px;max-height:92px;overflow:auto}
   .jarvis-input.mobile{margin-top:0}
-  .main-panel{padding-bottom:190px}
+  .main-panel{padding-bottom:150px}
 }
 @keyframes orbFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 @keyframes orbSpark{0%,100%{opacity:.5}50%{opacity:.9}}
