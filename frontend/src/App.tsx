@@ -38,9 +38,6 @@ export default function App() {
         <DashboardView
           session={session}
           cards={cards}
-          latestEntry={null}
-          flowCompleted={false}
-          onStartEntry={() => undefined}
           onLogout={handleLogout}
           theme={theme}
           onToggleTheme={toggleTheme}
