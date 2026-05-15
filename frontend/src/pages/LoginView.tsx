@@ -76,5 +76,4 @@ export default function LoginView({ onSubmit, theme, onToggleTheme }: LoginViewP
 
       <footer className="login-security-footer">Canal cifrado · Validación humana requerida para acciones críticas.</footer>
     </main>
-  );
-}
+  );}
