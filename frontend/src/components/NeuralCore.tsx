@@ -1,13 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-type Particle = {
-  angle: number;
-  radius: number;
-  speed: number;
-  size: number;
-  depth: number;
-  phase: number;
-};
+type Dot = { r: number; a: number; s: number; sz: number; tw: number };
 
 export function NeuralCore() {
   const ref = useRef<HTMLCanvasElement | null>(null);
@@ -15,25 +8,23 @@ export function NeuralCore() {
   useEffect(() => {
     const canvas = ref.current;
     if (!canvas) return;
-
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
     let raf = 0;
     let t = 0;
 
-    const particles: Particle[] = Array.from({ length: 68 }, () => ({
-      angle: Math.random() * Math.PI * 2,
-      radius: 0.2 + Math.random() * 0.7,
-      speed: 0.002 + Math.random() * 0.004,
-      size: 0.9 + Math.random() * 1.8,
-      depth: 0.45 + Math.random() * 0.75,
-      phase: Math.random() * Math.PI * 2,
+    const dots: Dot[] = Array.from({ length: 90 }, () => ({
+      r: 0.14 + Math.random() * 0.8,
+      a: Math.random() * Math.PI * 2,
+      s: 0.002 + Math.random() * 0.004,
+      sz: 0.8 + Math.random() * 1.7,
+      tw: Math.random() * Math.PI * 2,
     }));
 
-    const links = Array.from({ length: 36 }, () => [
-      Math.floor(Math.random() * particles.length),
-      Math.floor(Math.random() * particles.length),
+    const links = Array.from({ length: 58 }, () => [
+      Math.floor(Math.random() * dots.length),
+      Math.floor(Math.random() * dots.length),
     ] as const);
 
     const resize = () => {
@@ -48,62 +39,63 @@ export function NeuralCore() {
       const h = canvas.height;
       const dpr = window.devicePixelRatio || 1;
       const cx = w / 2;
-      const cy = h / 2;
-      const coreR = Math.min(w, h) * 0.26;
+      const cy = h / 2 + Math.sin(t * 0.012) * dpr * 1.8;
+      const R = Math.min(w, h) * 0.36;
 
       ctx.clearRect(0, 0, w, h);
 
-      const bg = ctx.createRadialGradient(cx, cy, coreR * 0.05, cx, cy, coreR * 2.2);
-      bg.addColorStop(0, 'rgba(56,189,248,0.34)');
-      bg.addColorStop(0.45, 'rgba(14,116,144,0.18)');
-      bg.addColorStop(1, 'rgba(2,6,23,0)');
-      ctx.fillStyle = bg;
+      const halo = ctx.createRadialGradient(cx, cy, R * 0.1, cx, cy, R * 2);
+      halo.addColorStop(0, 'rgba(125,211,252,0.30)');
+      halo.addColorStop(0.55, 'rgba(14,116,144,0.13)');
+      halo.addColorStop(1, 'rgba(2,6,23,0)');
+      ctx.fillStyle = halo;
       ctx.fillRect(0, 0, w, h);
 
-      for (let i = 1; i <= 4; i++) {
-        const ringR = coreR * (0.52 + i * 0.2 + Math.sin(t * 0.01 + i) * 0.01);
+      for (let i = 0; i < 4; i++) {
         ctx.beginPath();
-        ctx.arc(cx, cy, ringR, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(125,211,252,${0.14 - i * 0.02})`;
-        ctx.lineWidth = i === 2 ? 1.4 * dpr : 1 * dpr;
+        ctx.ellipse(cx, cy, R * (0.76 + i * 0.12), R * (0.54 + i * 0.09), Math.PI / 8, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(125,211,252,${0.19 - i * 0.03})`;
+        ctx.lineWidth = (1.2 - i * 0.15) * dpr;
         ctx.stroke();
       }
 
-      const points = particles.map((p) => {
-        const r = coreR * p.radius;
-        const x = cx + Math.cos(p.angle + t * p.speed) * r * p.depth;
-        const y = cy + Math.sin(p.angle + t * p.speed * 0.86) * r;
-        return { x, y, size: p.size * dpr, alpha: 0.35 + (Math.sin(t * 0.03 + p.phase) + 1) * 0.22 };
-      });
+      const points = dots.map((d) => {
+        const a = d.a + t * d.s;
+        const pr = R * d.r;
+        const x = cx + Math.cos(a) * pr;
+        const y = cy + Math.sin(a * 0.95 + d.tw) * pr * 0.78;
+        return { x, y, sz: d.sz * dpr, a: 0.32 + (Math.sin(t * 0.03 + d.tw) + 1) * 0.24 };
+      }).filter((p) => Math.hypot(p.x - cx, (p.y - cy) / 0.82) <= R * 0.98);
 
-      links.forEach(([a, b], idx) => {
-        const p1 = points[a];
-        const p2 = points[b];
+      links.forEach(([a, b], i) => {
+        const p1 = points[a % points.length];
+        const p2 = points[b % points.length];
+        if (!p1 || !p2) return;
         const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
-        if (dist > coreR * 0.92) return;
+        if (dist > R * 0.7) return;
         ctx.beginPath();
         ctx.moveTo(p1.x, p1.y);
         ctx.lineTo(p2.x, p2.y);
-        ctx.strokeStyle = `rgba(125,211,252,${0.07 + ((idx % 5) * 0.01)})`;
-        ctx.lineWidth = 0.75 * dpr;
+        ctx.strokeStyle = `rgba(125,211,252,${0.05 + (i % 4) * 0.015})`;
+        ctx.lineWidth = 0.8 * dpr;
         ctx.stroke();
       });
 
       points.forEach((p) => {
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(186,230,253,${Math.min(0.95, p.alpha)})`;
+        ctx.arc(p.x, p.y, p.sz, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(186,230,253,${Math.min(0.95, p.a)})`;
         ctx.fill();
       });
 
-      const core = ctx.createRadialGradient(cx, cy, coreR * 0.08, cx, cy, coreR);
-      core.addColorStop(0, 'rgba(224,242,254,0.95)');
-      core.addColorStop(0.25, 'rgba(125,211,252,0.9)');
-      core.addColorStop(0.65, 'rgba(14,116,144,0.6)');
+      const core = ctx.createRadialGradient(cx, cy, R * 0.06, cx, cy, R * 0.9);
+      core.addColorStop(0, 'rgba(224,242,254,0.96)');
+      core.addColorStop(0.3, 'rgba(125,211,252,0.9)');
+      core.addColorStop(0.75, 'rgba(3,105,161,0.52)');
       core.addColorStop(1, 'rgba(2,6,23,0)');
       ctx.fillStyle = core;
       ctx.beginPath();
-      ctx.arc(cx, cy, coreR, 0, Math.PI * 2);
+      ctx.arc(cx, cy, R * 0.86, 0, Math.PI * 2);
       ctx.fill();
 
       raf = requestAnimationFrame(draw);
@@ -118,7 +110,7 @@ export function NeuralCore() {
     };
   }, []);
 
-  return <canvas ref={ref} className="neural-core" aria-hidden="true" />;
+  return <canvas ref={ref} className="neural-core premium-orb-canvas" aria-hidden="true" />;
 }
 
 export default NeuralCore;
