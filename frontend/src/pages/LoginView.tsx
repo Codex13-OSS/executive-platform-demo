@@ -33,6 +33,7 @@ export default function LoginView({ onSubmit, theme, onToggleTheme }: LoginViewP
         <p className="eyebrow">SINCRONIZANDO</p>
         <h1>NÚCLEO COGNITIVO</h1>
         <p>Acceso ejecutivo seguro</p>
+        <small>Verificación contextual activa para sesiones críticas.</small>
         <ul>
           <li>Neural Sync 98%</li>
           <li>Mapa Cognitivo Enlazado</li>
@@ -66,14 +67,20 @@ export default function LoginView({ onSubmit, theme, onToggleTheme }: LoginViewP
 
           {error ? <p className="error-text">{error}</p> : null}
 
+          <label className="remember-row">
+            <input type="checkbox" />
+            Recordar sesión
+          </label>
+
           <button type="submit" className="btn-primary login-primary-btn">Iniciar sesión</button>
           <button type="button" className="btn-secondary biometric-btn">Acceso biométrico</button>
         </form>
       </section>
 
-      <div className="login-system-status">Estado del sistema / Óptimo</div>
+      <div className="login-system-status"><span>ESTADO DEL SISTEMA</span><strong>ÓPTIMO</strong></div>
 
       <footer className="login-security-footer">
+        <span>LÍA CORE OS</span>
         <span>Cifrado ejecutivo</span>
         <span>Protección multinivel</span>
         <span>Sesión segura</span>

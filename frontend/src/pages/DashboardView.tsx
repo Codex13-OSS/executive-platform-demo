@@ -3,6 +3,7 @@ import CognitiveGraph from '../components/CognitiveGraph';
 import GlassPanel from '../components/GlassPanel';
 import MetricCard from '../components/MetricCard';
 import TopBar from '../components/TopBar';
+import StatusChip from '../components/StatusChip';
 import ThemeToggle from '../components/ThemeToggle';
 import { DailySummaryCard } from '../data/mockDashboard';
 import { DemoSession } from '../lib/auth';
@@ -88,9 +89,11 @@ export default function DashboardView({
         </GlassPanel>
 
         <GlassPanel className="jarvis-core-panel" variant="elevated">
-          <p className="eyebrow">JARVIS COGNITIVE CORE</p>
+          <div className="jarvis-head-row"><p className="eyebrow">JARVIS COGNITIVE CORE</p><StatusChip label="En línea" tone="active" /></div>
           <div className="mini-core-wrap"><span className="mini-core-dot" /></div>
-          <p className="muted small-text">En línea · Analizando contexto operativo.</p>
+          <div className="jarvis-chip-row"><span>Contexto activo</span><span>Prioridad: Alta</span><span>Latencia: 42ms</span></div>
+          <div className="jarvis-log-mini"><p>09:42 · Agenda cruzada con riesgo comercial.</p><p>09:43 · Documento estratégico actualizado.</p><p>09:44 · Alerta vinculada a seguimiento.</p></div>
+          <div className="jarvis-input-mini"><input placeholder="Pedir acción a Jarvis..." /><button type="button">Enviar</button></div>
         </GlassPanel>
       </section>
 

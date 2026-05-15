@@ -597,3 +597,43 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
   .login-orb-stage{order:2;width:min(82vw,460px);height:min(82vw,460px)}
   .executive-access-panel{order:3;margin-bottom:3rem}
 }
+.login-sync-panel small{display:block;color:#93c5fd;max-width:32ch;line-height:1.45}
+.login-system-status{display:grid;gap:.15rem;text-align:right}
+.login-system-status span{font-size:.58rem;letter-spacing:.15em;color:#93c5fd}
+.login-system-status strong{font-size:.78rem;color:#e0f2fe}
+.remember-row{display:flex;align-items:center;gap:.5rem;color:#bfdbfe;font-size:.82rem;font-weight:500}
+.remember-row input{width:auto;margin:0;accent-color:#22d3ee}
+
+/* dashboard premium v2 */
+.topbar{background:linear-gradient(165deg,rgba(8,17,31,.76),rgba(11,25,44,.58));border:1px solid rgba(125,211,252,.2);box-shadow:0 20px 55px rgba(0,0,0,.26),inset 0 1px 0 rgba(255,255,255,.04)}
+.topbar .muted{max-width:62ch;color:#a4bedb}
+.metric-card{border:1px solid rgba(125,211,252,.16)!important;background:linear-gradient(165deg,rgba(7,17,31,.72),rgba(9,22,41,.58))!important;box-shadow:0 20px 45px rgba(0,0,0,.22)}
+.metric{color:#7dd3fc;text-shadow:0 0 24px rgba(56,189,248,.3)}
+
+.cognitive-panel-v2{padding:1.1rem;background:radial-gradient(circle at 16% 14%,rgba(56,189,248,.13),transparent 30%),linear-gradient(170deg,rgba(6,16,30,.88),rgba(5,13,24,.82));}
+.cognitive-title-row h3{font-size:1.28rem;letter-spacing:-.02em}
+.cognitive-viewport{min-height:340px;position:relative}
+.cognitive-viewport::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(56,189,248,.08),transparent 54%);pointer-events:none}
+.cognitive-svg{filter:drop-shadow(0 0 26px rgba(56,189,248,.22));transform:rotateX(18deg) rotateZ(-3deg)}
+.ring{fill:none;stroke:rgba(125,211,252,.22);stroke-width:.42}
+.ring-near{stroke:rgba(186,230,253,.3);animation:orbitBreath 5s ease-in-out infinite}
+.curve-link{fill:none;stroke:rgba(125,211,252,.28);stroke-width:.3}
+.curve-pulse{fill:#7dd3fc;filter:drop-shadow(0 0 4px rgba(125,211,252,.92))}
+.orbit-node circle{fill:rgba(8,47,73,.84);stroke:rgba(186,230,253,.84);stroke-width:.35}
+.orbit-node text{fill:#e2e8f0;font-size:2.35px;text-anchor:middle}
+.node-core text{fill:#e0f2fe;font-size:3px;text-anchor:middle;font-weight:700}
+.core-inner{fill:rgba(14,116,144,.78);stroke:rgba(186,230,253,.58);stroke-width:.3}
+
+.dashboard-command-grid{align-items:stretch}
+.premium-sidebar,.jarvis-core-panel{border-radius:20px}
+.jarvis-head-row{display:flex;justify-content:space-between;align-items:center;gap:.7rem}
+.jarvis-chip-row{display:flex;flex-wrap:wrap;gap:.42rem}
+.jarvis-chip-row span{padding:.22rem .52rem;border-radius:999px;border:1px solid rgba(125,211,252,.2);font-size:.7rem;color:#bfdbfe;background:rgba(2,6,23,.45)}
+.jarvis-log-mini{display:grid;gap:.35rem;max-height:86px;overflow:auto;padding-right:2px}
+.jarvis-log-mini p{margin:0;font-size:.76rem;color:#a7c5e6;border-bottom:1px solid rgba(125,211,252,.1);padding-bottom:.3rem}
+.jarvis-log-mini p:last-child{border-bottom:0}
+.jarvis-input-mini{display:flex;gap:.45rem}
+.jarvis-input-mini input{margin:0;background:rgba(2,6,23,.52);border:1px solid rgba(125,211,252,.2);color:#dbeafe;border-radius:12px;padding:.5rem .62rem;font-size:.78rem}
+.jarvis-input-mini button{border:0;border-radius:12px;padding:.5rem .7rem;background:linear-gradient(135deg,#0284c7,#22d3ee);color:#00111f;font-weight:700}
+
+.module-grid .glass-panel,.alerts-list .glass-panel{border-color:rgba(125,211,252,.16)}
