@@ -20,13 +20,21 @@ function NeuralCore() {
       canvas.height = canvas.offsetHeight * window.devicePixelRatio;
     };
 
-    const nodes = Array.from({ length: 72 }, () => ({
+    const nodes = Array.from({ length: 132 }, () => ({
       x: Math.random(),
       y: Math.random(),
       vx: (Math.random() - 0.5) * 0.0007,
       vy: (Math.random() - 0.5) * 0.0007,
       r: Math.random() * 2 + 0.8,
       phase: Math.random() * Math.PI * 2,
+    }));
+
+    const staticSpecks = Array.from({ length: 120 }, () => ({
+      x: Math.random(),
+      y: Math.random(),
+      r: Math.random() * 1.15 + 0.35,
+      phase: Math.random() * Math.PI * 2,
+      alpha: Math.random() * 0.34 + 0.12,
     }));
 
     resize();
@@ -47,6 +55,308 @@ function NeuralCore() {
       ctx.fillStyle = glow;
       ctx.fillRect(0, 0, w, h);
 
+      staticSpecks.forEach((s, index) => {
+        const flicker = Math.sin(tick * 0.11 + s.phase + index * 0.37) * 0.5 + 0.5;
+        const shimmer = ((tick + index * 7) % 19 === 0) ? 0.75 : 0;
+        ctx.beginPath();
+        ctx.arc(s.x * w, s.y * h, (s.r + flicker * 0.65) * window.devicePixelRatio, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(224,242,254,${Math.min(0.92, s.alpha + flicker * 0.22 + shimmer)})
+/* FINAL PANEL POLISH — mobile Jarvis overlay + denser static orb */
+.mobile-jarvis-close{
+  appearance:none!important;
+  -webkit-appearance:none!important;
+}
+
+@media(max-width:1100px){
+  .mobile-jarvis-panel{
+    position:fixed!important;
+    left:14px!important;
+    right:14px!important;
+    bottom:86px!important;
+    z-index:997!important;
+    max-height:42vh!important;
+    overflow:auto!important;
+
+    display:grid!important;
+    gap:9px!important;
+
+    border:1px solid rgba(125,211,252,.18)!important;
+    border-radius:26px!important;
+    background:
+      radial-gradient(circle at 82% 0%,rgba(56,189,248,.12),transparent 38%),
+      linear-gradient(180deg,rgba(15,23,42,.90),rgba(3,10,22,.94))!important;
+    backdrop-filter:blur(26px) saturate(132%)!important;
+    padding:16px 14px 14px!important;
+    box-shadow:
+      0 28px 90px rgba(0,0,0,.56),
+      0 0 52px rgba(56,189,248,.12),
+      inset 0 1px 0 rgba(255,255,255,.045)!important;
+  }
+
+  .mobile-jarvis-panel::before{
+    content:''!important;
+    position:absolute!important;
+    inset:0!important;
+    pointer-events:none!important;
+    border-radius:26px!important;
+    background:
+      linear-gradient(135deg,rgba(186,230,253,.08),transparent 28%,rgba(56,189,248,.04)),
+      linear-gradient(rgba(125,211,252,.035) 1px,transparent 1px)!important;
+    background-size:auto,100% 22px!important;
+    opacity:.65!important;
+  }
+
+  .mobile-jarvis-panel > *{
+    position:relative!important;
+    z-index:1!important;
+  }
+
+  .mobile-jarvis-panel > .eyebrow{
+    margin:0 42px 2px 0!important;
+    color:#7dd3fc!important;
+    letter-spacing:.22em!important;
+    text-shadow:0 0 18px rgba(56,189,248,.28)!important;
+  }
+
+  .mobile-jarvis-close{
+    position:absolute!important;
+    top:10px!important;
+    right:10px!important;
+    z-index:3!important;
+
+    width:30px!important;
+    height:30px!important;
+    min-width:30px!important;
+    padding:0!important;
+
+    display:grid!important;
+    place-items:center!important;
+
+    border:1px solid rgba(125,211,252,.20)!important;
+    border-radius:999px!important;
+    background:rgba(3,10,22,.58)!important;
+    color:rgba(234,246,255,.82)!important;
+    font-size:13px!important;
+    line-height:1!important;
+    cursor:pointer!important;
+
+    box-shadow:
+      0 10px 30px rgba(0,0,0,.28),
+      inset 0 1px 0 rgba(255,255,255,.06)!important;
+    backdrop-filter:blur(14px)!important;
+  }
+
+  .mobile-jarvis-close:hover{
+    border-color:rgba(125,211,252,.36)!important;
+    color:#eaf6ff!important;
+    box-shadow:
+      0 12px 34px rgba(0,0,0,.34),
+      0 0 24px rgba(56,189,248,.14)!important;
+  }
+
+  .mobile-jarvis-stream{
+    max-height:130px!important;
+    padding-right:2px!important;
+  }
+
+  .jarvis-input.mobile{
+    margin-top:2px!important;
+  }
+
+  .jarvis-input.mobile input{
+    background:rgba(2,6,23,.54)!important;
+    border-color:rgba(125,211,252,.18)!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.035)!important;
+  }
+
+  .mobile-jarvis-orb{
+    background:
+      radial-gradient(circle at 34% 26%,rgba(255,255,255,.58),rgba(186,230,253,.32) 16%,rgba(56,189,248,.18) 38%,rgba(2,6,23,.22) 68%,rgba(2,6,23,.08) 100%),
+      radial-gradient(circle at 72% 70%,rgba(14,165,233,.30),transparent 58%)!important;
+  }
+
+  .mobile-jarvis-orb .neural-core{
+    opacity:.92!important;
+    filter:
+      contrast(1.18)
+      brightness(1.08)
+      drop-shadow(0 0 16px rgba(186,230,253,.86))
+      drop-shadow(0 0 32px rgba(56,189,248,.36))!important;
+  }
+
+  .jarvis-orb .neural-core{
+    opacity:.96!important;
+    filter:
+      contrast(1.22)
+      brightness(1.10)
+      drop-shadow(0 0 18px rgba(186,230,253,.74))
+      drop-shadow(0 0 36px rgba(56,189,248,.30))!important;
+  }
+}
+
+
+/* FINAL QUALITY FIX — mobile Jarvis panel/header/close/orb density */
+.mobile-jarvis-close{
+  all:unset!important;
+}
+
+@media(max-width:1100px){
+  .mobile-jarvis-panel{
+    display:grid!important;
+    gap:10px!important;
+    padding:14px!important;
+    border-radius:26px!important;
+    border:1px solid rgba(125,211,252,.18)!important;
+    background:
+      radial-gradient(circle at 84% 0%,rgba(56,189,248,.14),transparent 34%),
+      radial-gradient(circle at 8% 100%,rgba(14,165,233,.08),transparent 32%),
+      linear-gradient(180deg,rgba(15,23,42,.90),rgba(3,10,22,.96))!important;
+    backdrop-filter:blur(28px) saturate(136%)!important;
+    box-shadow:
+      0 30px 100px rgba(0,0,0,.58),
+      0 0 55px rgba(56,189,248,.13),
+      inset 0 1px 0 rgba(255,255,255,.05)!important;
+  }
+
+  .mobile-jarvis-header{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    gap:12px!important;
+    min-height:34px!important;
+    padding:0 0 4px!important;
+    border-bottom:1px solid rgba(125,211,252,.08)!important;
+  }
+
+  .mobile-jarvis-header .eyebrow{
+    margin:0!important;
+    color:#7dd3fc!important;
+    letter-spacing:.22em!important;
+    text-shadow:0 0 18px rgba(56,189,248,.30)!important;
+  }
+
+  .mobile-jarvis-close{
+    all:unset!important;
+    width:30px!important;
+    height:30px!important;
+    min-width:30px!important;
+    display:grid!important;
+    place-items:center!important;
+    border-radius:999px!important;
+    border:1px solid rgba(125,211,252,.22)!important;
+    background:
+      radial-gradient(circle at 35% 25%,rgba(255,255,255,.10),transparent 42%),
+      rgba(3,10,22,.58)!important;
+    color:rgba(234,246,255,.84)!important;
+    cursor:pointer!important;
+    box-shadow:
+      0 12px 30px rgba(0,0,0,.26),
+      0 0 20px rgba(56,189,248,.08),
+      inset 0 1px 0 rgba(255,255,255,.08)!important;
+    backdrop-filter:blur(14px)!important;
+  }
+
+  .mobile-jarvis-close span{
+    display:block!important;
+    font-size:18px!important;
+    line-height:1!important;
+    transform:translateY(-1px)!important;
+  }
+
+  .mobile-jarvis-close:hover,
+  .mobile-jarvis-close:focus-visible{
+    border-color:rgba(125,211,252,.42)!important;
+    color:#eaf6ff!important;
+    box-shadow:
+      0 14px 36px rgba(0,0,0,.34),
+      0 0 30px rgba(56,189,248,.18)!important;
+    outline:none!important;
+  }
+
+  .mobile-jarvis-stream{
+    max-height:130px!important;
+    display:grid!important;
+    gap:7px!important;
+    overflow:auto!important;
+    padding-right:2px!important;
+    scrollbar-width:thin!important;
+    scrollbar-color:rgba(56,189,248,.26) transparent!important;
+  }
+
+  .mobile-jarvis-stream::-webkit-scrollbar{
+    width:5px!important;
+  }
+
+  .mobile-jarvis-stream::-webkit-scrollbar-thumb{
+    background:rgba(56,189,248,.26)!important;
+    border-radius:999px!important;
+  }
+
+  .jarvis-input.mobile{
+    margin-top:2px!important;
+    display:flex!important;
+    gap:8px!important;
+  }
+
+  .jarvis-input.mobile input{
+    min-height:42px!important;
+    background:rgba(2,6,23,.58)!important;
+    border:1px solid rgba(125,211,252,.18)!important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.04),
+      0 0 24px rgba(56,189,248,.04)!important;
+  }
+
+  .jarvis-input.mobile input:focus{
+    border-color:rgba(125,211,252,.38)!important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.05),
+      0 0 30px rgba(56,189,248,.16)!important;
+  }
+
+  .jarvis-input.mobile button{
+    min-height:42px!important;
+    box-shadow:0 0 30px rgba(34,211,238,.24)!important;
+  }
+
+  .mobile-jarvis-orb{
+    box-shadow:
+      inset 0 0 20px rgba(255,255,255,.25),
+      inset 0 0 56px rgba(125,211,252,.27),
+      0 0 26px rgba(186,230,253,.48),
+      0 0 76px rgba(56,189,248,.32),
+      0 0 130px rgba(14,165,233,.15)!important;
+  }
+
+  .mobile-jarvis-orb::after{
+    background:
+      radial-gradient(circle at 12% 24%,rgba(255,255,255,.72) 0 1px,transparent 2px),
+      radial-gradient(circle at 21% 52%,rgba(186,230,253,.60) 0 1px,transparent 2px),
+      radial-gradient(circle at 31% 34%,rgba(125,211,252,.66) 0 1px,transparent 2px),
+      radial-gradient(circle at 43% 72%,rgba(255,255,255,.48) 0 1px,transparent 2px),
+      radial-gradient(circle at 54% 21%,rgba(56,189,248,.54) 0 1px,transparent 2px),
+      radial-gradient(circle at 67% 49%,rgba(186,230,253,.50) 0 1px,transparent 2px),
+      radial-gradient(circle at 78% 31%,rgba(255,255,255,.44) 0 1px,transparent 2px),
+      radial-gradient(circle at 87% 76%,rgba(125,211,252,.48) 0 1px,transparent 2px),
+      linear-gradient(118deg,transparent 16%,rgba(186,230,253,.14),transparent 56%)!important;
+    opacity:.88!important;
+  }
+
+  .mobile-jarvis-orb .neural-core,
+  .jarvis-orb .neural-core{
+    opacity:.98!important;
+    filter:
+      contrast(1.25)
+      brightness(1.10)
+      drop-shadow(0 0 18px rgba(186,230,253,.82))
+      drop-shadow(0 0 36px rgba(56,189,248,.36))!important;
+  }
+}
+
+`;
+        ctx.fill();
+      });
+
       nodes.forEach((n) => {
         n.x += n.vx;
         n.y += n.vy;
@@ -65,7 +375,10 @@ function NeuralCore() {
 
           if (d < 150 * window.devicePixelRatio) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(56,189,248,${(1 - d / (150 * window.devicePixelRatio)) * 0.18})`;
+            ctx.strokeStyle = `rgba(56,189,248,${(1 - d / (150 * window.devicePixelRatio)) * 0.18})
+
+
+`;
             ctx.lineWidth = 0.8 * window.devicePixelRatio;
             ctx.moveTo(a.x * w, a.y * h);
             ctx.lineTo(b.x * w, b.y * h);
@@ -269,10 +582,16 @@ export default function App() {
     setMobileJarvisOpen(true);
     setMobileOrbListening(true);
     setJarvisState('Escuchando...');
-    setJarvisMessages((prev) => [
-      ...prev,
-      { role: 'assistant' as const, text: 'Jarvis lista. ¿Qué necesitas?' },
-    ].slice(-6));
+    setJarvisMessages((prev) => {
+      const prompt = { role: 'assistant' as const, text: 'Jarvis lista. ¿Qué necesitas?' };
+      const last = prev[prev.length - 1];
+
+      if (last?.role === prompt.role && last.text === prompt.text) {
+        return prev;
+      }
+
+      return [...prev, prompt].slice(-6);
+    });
     pushJarvisLog('Interacción móvil activada.');
     window.setTimeout(() => mobileInputRef.current?.focus(), 120);
     orbTimeoutRef.current = window.setTimeout(() => {
@@ -289,6 +608,7 @@ export default function App() {
     return (
       <main className="login-os">
         <style>{styles}</style>
+        <style>{mobileJarvisFixStyles}</style>
         <div className="login-bg"><NeuralCore /></div>
         <section className="login-card">
           <div className="brand-mark">LÍA</div>
@@ -316,6 +636,7 @@ export default function App() {
     <>
     <main className="os-shell">
       <style>{styles}</style>
+        <style>{mobileJarvisFixStyles}</style>
 
       <aside className="sidebar">
         <div>
@@ -616,9 +937,28 @@ export default function App() {
       <strong>{mobileOrbListening ? 'Escuchando...' : 'En línea'}</strong>
     </div>
     {mobileJarvisOpen && (
-      <section className="mobile-jarvis-panel">
-        <button className="mobile-jarvis-close" onClick={() => setMobileJarvisOpen(false)}>✕</button>
-        <p className="eyebrow">JARVIS MÓVIL</p>
+      <section className="mobile-jarvis-panel" role="dialog" aria-label="Jarvis móvil">
+        <div className="mobile-jarvis-header">
+          <div>
+            <p className="eyebrow">JARVIS MÓVIL</p>
+            <strong>Asistente ejecutivo activo</strong>
+          </div>
+
+          <button
+            type="button"
+            className="mobile-jarvis-close"
+            aria-label="Cerrar Jarvis móvil"
+            onClick={() => {
+              setMobileJarvisOpen(false);
+              setMobileOrbListening(false);
+              setJarvisState('En línea');
+              if (orbTimeoutRef.current) window.clearTimeout(orbTimeoutRef.current);
+            }}
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+
         <div className="mobile-jarvis-stream">
           {jarvisMessages.slice(-3).map((item, index) => (
             <div className={`jarvis-bubble ${item.role}`} key={`mobile-${item.role}-${index}-${item.text}`}>
@@ -626,6 +966,7 @@ export default function App() {
             </div>
           ))}
         </div>
+
         <div className="jarvis-input mobile">
           <input
             ref={mobileInputRef}
@@ -1005,74 +1346,479 @@ nav{display:grid;gap:8px;margin-top:34px}
   }
 }
 @media(max-width:1100px){.os-shell{grid-template-columns:1fr}.sidebar,.jarvis-panel{display:none}.kpi-grid,.dashboard-grid{grid-template-columns:1fr}.main-panel{padding:18px}}
+
+.mobile-jarvis-orb,
+.mobile-jarvis-chip,
+.mobile-jarvis-panel{
+  display:none;
+}
+
 @media(max-width:1100px){
   .mobile-jarvis-orb{
-    display:grid;
-    place-items:center;
-    position:fixed;
-    right:16px;
-    bottom:22px;
-    z-index:35;
-    width:76px;height:76px;border-radius:999px;border:1px solid rgba(125,211,252,.42);padding:0;position:relative;cursor:pointer;
+    display:grid!important;
+    place-items:center!important;
+    position:fixed!important;
+    top:92px!important;
+    right:18px!important;
+    left:auto!important;
+    bottom:auto!important;
+    z-index:999!important;
+
+    width:88px!important;
+    height:88px!important;
+    padding:0!important;
+    margin:0!important;
+
+    border-radius:999px!important;
+    border:1px solid rgba(186,230,253,.34)!important;
+    overflow:hidden!important;
+    isolation:isolate!important;
+    cursor:pointer!important;
+
     background:
-      radial-gradient(circle at 34% 24%,rgba(224,242,254,.42),rgba(56,189,248,.12) 36%,rgba(2,6,23,.88) 72%),
-      radial-gradient(circle at 62% 70%,rgba(14,165,233,.28),transparent 60%);
-    box-shadow:inset 0 0 38px rgba(125,211,252,.32),inset 0 -10px 26px rgba(2,6,23,.58),0 0 34px rgba(56,189,248,.32),0 0 74px rgba(34,211,238,.16);
-    overflow:hidden;isolation:isolate;animation:orbFloat 4s ease-in-out infinite;
-    backdrop-filter:blur(4px) saturate(118%);
+      radial-gradient(circle at 35% 28%,rgba(255,255,255,.62),rgba(186,230,253,.30) 16%,rgba(56,189,248,.16) 38%,rgba(2,6,23,.24) 68%,rgba(2,6,23,.10) 100%),
+      radial-gradient(circle at 68% 72%,rgba(14,165,233,.28),transparent 58%)!important;
+
+    backdrop-filter:blur(9px) saturate(160%)!important;
+
+    box-shadow:
+      inset 0 0 18px rgba(255,255,255,.24),
+      inset 0 0 50px rgba(125,211,252,.22),
+      0 0 22px rgba(186,230,253,.40),
+      0 0 64px rgba(56,189,248,.25),
+      0 0 120px rgba(14,165,233,.12)!important;
+
+    animation:liaMobileOrbFloat 4.2s ease-in-out infinite!important;
   }
+
   .mobile-jarvis-orb::before{
-    content:'';position:absolute;inset:8px;border-radius:999px;border:1px solid rgba(186,230,253,.24);pointer-events:none;
-    box-shadow:inset 0 0 24px rgba(125,211,252,.18),inset 0 0 6px rgba(255,255,255,.22);
-  }
-  .mobile-jarvis-orb::after{
-    content:'';position:absolute;inset:-14px;border-radius:999px;pointer-events:none;
+    content:''!important;
+    position:absolute!important;
+    inset:-20px!important;
+    border-radius:999px!important;
+    pointer-events:none!important;
     background:
-      conic-gradient(from 42deg,transparent,rgba(56,189,248,.18),transparent,rgba(125,211,252,.16),transparent),
-      radial-gradient(circle,rgba(56,189,248,.28),transparent 62%);
-    opacity:.58;animation:orbSpark 2.2s ease-in-out infinite;
+      conic-gradient(
+        from 120deg,
+        transparent 0deg,
+        rgba(125,211,252,.42) 42deg,
+        transparent 94deg,
+        rgba(56,189,248,.22) 172deg,
+        transparent 244deg,
+        rgba(124,58,237,.18) 304deg,
+        transparent 360deg
+      )!important;
+    opacity:.58!important;
+    animation:liaSpin 8s linear infinite!important;
+    z-index:-1!important;
   }
+
+  .mobile-jarvis-orb::after{
+    content:''!important;
+    position:absolute!important;
+    inset:0!important;
+    border-radius:999px!important;
+    pointer-events:none!important;
+    background:
+      radial-gradient(circle at 18% 32%,rgba(255,255,255,.70) 0 1px,transparent 2px),
+      radial-gradient(circle at 34% 58%,rgba(186,230,253,.54) 0 1px,transparent 2px),
+      radial-gradient(circle at 48% 24%,rgba(125,211,252,.58) 0 1px,transparent 2px),
+      radial-gradient(circle at 61% 47%,rgba(255,255,255,.46) 0 1px,transparent 2px),
+      radial-gradient(circle at 72% 30%,rgba(56,189,248,.50) 0 1px,transparent 2px),
+      radial-gradient(circle at 79% 72%,rgba(186,230,253,.44) 0 1px,transparent 2px),
+      linear-gradient(115deg,transparent 18%,rgba(186,230,253,.13),transparent 54%)!important;
+    opacity:.82!important;
+    mix-blend-mode:screen!important;
+    animation:liaMobileOrbStatic 1.45s steps(3,end) infinite!important;
+  }
+
+  .mobile-jarvis-orb .neural-core{
+    width:100%!important;
+    height:100%!important;
+    transform:scale(2.1)!important;
+    opacity:.76!important;
+    filter:
+      drop-shadow(0 0 14px rgba(186,230,253,.82))
+      drop-shadow(0 0 30px rgba(56,189,248,.32))!important;
+  }
+
   .mobile-jarvis-orb.listening{
-    box-shadow:inset 0 0 46px rgba(125,211,252,.44),0 0 50px rgba(56,189,248,.52),0 0 95px rgba(34,211,238,.36);
-    animation:orbPulse .9s ease-in-out infinite;
+    animation:liaMobileOrbListen .8s ease-in-out infinite!important;
+    box-shadow:
+      inset 0 0 26px rgba(255,255,255,.30),
+      inset 0 0 58px rgba(125,211,252,.34),
+      0 0 34px rgba(186,230,253,.68),
+      0 0 88px rgba(56,189,248,.46),
+      0 0 140px rgba(14,165,233,.26)!important;
   }
-  .mobile-jarvis-orb.listening .neural-core{filter:drop-shadow(0 0 18px rgba(56,189,248,.7));transform:scale(1.16)}
+
   .mobile-jarvis-chip{
-    position:fixed;
-    right:16px;
-    bottom:106px;
-    z-index:34;
-    padding:6px 10px;
-    border-radius:999px;
-    border:1px solid rgba(125,211,252,.28);
-    background:rgba(2,6,23,.74);
-    backdrop-filter:blur(10px);
-    box-shadow:0 10px 28px rgba(0,0,0,.34);
+    display:block!important;
+    position:fixed!important;
+    top:185px!important;
+    right:20px!important;
+    z-index:998!important;
+    width:max-content!important;
+    padding:6px 9px!important;
+    border-radius:999px!important;
+    border:1px solid rgba(125,211,252,.18)!important;
+    background:rgba(3,10,22,.48)!important;
+    backdrop-filter:blur(14px)!important;
+    box-shadow:0 10px 30px rgba(0,0,0,.26),0 0 24px rgba(56,189,248,.08)!important;
   }
-  .mobile-jarvis-chip strong{font-size:11px;color:#7dd3fc;font-weight:700}
+
+  .mobile-jarvis-chip strong{
+    display:block!important;
+    font-size:10px!important;
+    color:#7dd3fc!important;
+    font-weight:800!important;
+    line-height:1!important;
+  }
+
   .mobile-jarvis-panel{
-    position:fixed;
-    left:12px;
-    right:12px;
-    bottom:12px;
-    z-index:30;
-    border:1px solid rgba(125,211,252,.2);
-    border-radius:20px;
-    background:linear-gradient(180deg,rgba(15,23,42,.88),rgba(3,10,22,.92));
-    backdrop-filter:blur(18px);
-    padding:12px;
-    display:grid;
-    gap:8px;
-    box-shadow:0 20px 60px rgba(0,0,0,.5);
+    display:grid!important;
+    position:fixed!important;
+    left:14px!important;
+    right:14px!important;
+    bottom:86px!important;
+    z-index:997!important;
+    max-height:42vh!important;
+    overflow:auto!important;
+
+    border:1px solid rgba(125,211,252,.18)!important;
+    border-radius:24px!important;
+    background:linear-gradient(180deg,rgba(15,23,42,.88),rgba(3,10,22,.92))!important;
+    backdrop-filter:blur(24px) saturate(125%)!important;
+    padding:12px!important;
+    gap:8px!important;
+    box-shadow:0 26px 90px rgba(0,0,0,.52),0 0 48px rgba(56,189,248,.11)!important;
   }
-  .mobile-jarvis-close{
-    justify-self:end;border:1px solid rgba(125,211,252,.2);background:rgba(255,255,255,.04);color:#cdeeff;border-radius:10px;padding:3px 8px
+
+  .mobile-jarvis-stream{
+    max-height:120px!important;
   }
-  .mobile-jarvis-stream{display:grid;gap:6px;max-height:92px;overflow:auto}
-  .jarvis-input.mobile{margin-top:0}
-  .main-panel{padding-bottom:150px}
+
+  .main-panel{
+    padding-bottom:170px!important;
+  }
 }
-@keyframes orbFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
-@keyframes orbSpark{0%,100%{opacity:.5}50%{opacity:.9}}
-@keyframes orbPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+
+@media(max-width:520px){
+  .mobile-jarvis-orb{
+    width:78px!important;
+    height:78px!important;
+    top:88px!important;
+    right:14px!important;
+  }
+
+  .mobile-jarvis-chip{
+    top:170px!important;
+    right:16px!important;
+  }
+
+  .mobile-jarvis-panel{
+    bottom:82px!important;
+  }
+}
+
+@keyframes liaMobileOrbFloat{
+  0%,100%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-5px) scale(1.025)}
+}
+
+@keyframes liaMobileOrbStatic{
+  0%{opacity:.52;filter:contrast(1)}
+  33%{opacity:.88;filter:contrast(1.18)}
+  66%{opacity:.66;filter:contrast(.96)}
+  100%{opacity:.78;filter:contrast(1.06)}
+}
+
+@keyframes liaMobileOrbListen{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.055)}
+}
+50%{transform:scale(1.04)}}
+`;
+
+
+
+const mobileJarvisFixStyles = `
+@media(min-width:1101px){
+  .mobile-jarvis-orb,
+  .mobile-jarvis-chip,
+  .mobile-jarvis-panel{
+    display:none!important;
+  }
+}
+
+@media(max-width:1100px){
+  .mobile-jarvis-orb{
+    display:grid!important;
+    place-items:center!important;
+    position:fixed!important;
+    top:88px!important;
+    right:16px!important;
+    left:auto!important;
+    bottom:auto!important;
+    width:86px!important;
+    height:86px!important;
+    z-index:1200!important;
+    border-radius:999px!important;
+    overflow:hidden!important;
+    isolation:isolate!important;
+    border:1px solid rgba(186,230,253,.36)!important;
+    background:
+      radial-gradient(circle at 35% 26%,rgba(255,255,255,.58),rgba(186,230,253,.30) 16%,rgba(56,189,248,.18) 38%,rgba(2,6,23,.22) 68%,rgba(2,6,23,.08) 100%),
+      radial-gradient(circle at 72% 70%,rgba(14,165,233,.30),transparent 58%)!important;
+    backdrop-filter:blur(9px) saturate(160%)!important;
+    box-shadow:
+      inset 0 0 20px rgba(255,255,255,.25),
+      inset 0 0 56px rgba(125,211,252,.27),
+      0 0 26px rgba(186,230,253,.48),
+      0 0 76px rgba(56,189,248,.32),
+      0 0 130px rgba(14,165,233,.15)!important;
+    animation:liaMobileOrbFloat 4.2s ease-in-out infinite!important;
+  }
+
+  .mobile-jarvis-orb::before{
+    content:''!important;
+    position:absolute!important;
+    inset:-20px!important;
+    border-radius:999px!important;
+    pointer-events:none!important;
+    background:conic-gradient(from 120deg,transparent 0deg,rgba(125,211,252,.42) 42deg,transparent 94deg,rgba(56,189,248,.22) 172deg,transparent 244deg,rgba(124,58,237,.18) 304deg,transparent 360deg)!important;
+    opacity:.58!important;
+    animation:liaSpin 8s linear infinite!important;
+    z-index:-1!important;
+  }
+
+  .mobile-jarvis-orb::after{
+    content:''!important;
+    position:absolute!important;
+    inset:0!important;
+    border-radius:999px!important;
+    pointer-events:none!important;
+    background:
+      radial-gradient(circle at 12% 24%,rgba(255,255,255,.72) 0 1px,transparent 2px),
+      radial-gradient(circle at 21% 52%,rgba(186,230,253,.60) 0 1px,transparent 2px),
+      radial-gradient(circle at 31% 34%,rgba(125,211,252,.66) 0 1px,transparent 2px),
+      radial-gradient(circle at 43% 72%,rgba(255,255,255,.48) 0 1px,transparent 2px),
+      radial-gradient(circle at 54% 21%,rgba(56,189,248,.54) 0 1px,transparent 2px),
+      radial-gradient(circle at 67% 49%,rgba(186,230,253,.50) 0 1px,transparent 2px),
+      radial-gradient(circle at 78% 31%,rgba(255,255,255,.44) 0 1px,transparent 2px),
+      radial-gradient(circle at 87% 76%,rgba(125,211,252,.48) 0 1px,transparent 2px),
+      linear-gradient(118deg,transparent 16%,rgba(186,230,253,.14),transparent 56%)!important;
+    opacity:.88!important;
+    mix-blend-mode:screen!important;
+    animation:liaMobileOrbStatic 1.45s steps(3,end) infinite!important;
+  }
+
+  .mobile-jarvis-orb .neural-core{
+    width:100%!important;
+    height:100%!important;
+    opacity:.98!important;
+    transform:scale(2.12)!important;
+    filter:
+      contrast(1.25)
+      brightness(1.10)
+      drop-shadow(0 0 18px rgba(186,230,253,.82))
+      drop-shadow(0 0 36px rgba(56,189,248,.36))!important;
+  }
+
+  .mobile-jarvis-orb.listening{
+    animation:liaMobileOrbListen .8s ease-in-out infinite!important;
+  }
+
+  .mobile-jarvis-chip{
+    display:block!important;
+    position:fixed!important;
+    top:178px!important;
+    right:18px!important;
+    z-index:1199!important;
+    width:max-content!important;
+    padding:6px 9px!important;
+    border-radius:999px!important;
+    border:1px solid rgba(125,211,252,.18)!important;
+    background:rgba(3,10,22,.48)!important;
+    backdrop-filter:blur(14px)!important;
+    box-shadow:0 10px 30px rgba(0,0,0,.26),0 0 24px rgba(56,189,248,.08)!important;
+  }
+
+  .mobile-jarvis-chip strong{
+    display:block!important;
+    font-size:10px!important;
+    color:#7dd3fc!important;
+    font-weight:800!important;
+    line-height:1!important;
+  }
+
+  .mobile-jarvis-panel{
+    display:grid!important;
+    position:fixed!important;
+    left:14px!important;
+    right:14px!important;
+    bottom:82px!important;
+    z-index:1198!important;
+    max-height:44vh!important;
+    overflow:hidden!important;
+    gap:10px!important;
+    padding:14px!important;
+    border-radius:26px!important;
+    border:1px solid rgba(125,211,252,.18)!important;
+    background:
+      radial-gradient(circle at 84% 0%,rgba(56,189,248,.14),transparent 34%),
+      radial-gradient(circle at 8% 100%,rgba(14,165,233,.08),transparent 32%),
+      linear-gradient(180deg,rgba(15,23,42,.90),rgba(3,10,22,.96))!important;
+    backdrop-filter:blur(28px) saturate(136%)!important;
+    box-shadow:
+      0 30px 100px rgba(0,0,0,.58),
+      0 0 55px rgba(56,189,248,.13),
+      inset 0 1px 0 rgba(255,255,255,.05)!important;
+  }
+
+  .mobile-jarvis-panel::before{
+    content:''!important;
+    position:absolute!important;
+    inset:0!important;
+    pointer-events:none!important;
+    border-radius:26px!important;
+    background:
+      linear-gradient(135deg,rgba(186,230,253,.08),transparent 28%,rgba(56,189,248,.04)),
+      linear-gradient(rgba(125,211,252,.035) 1px,transparent 1px)!important;
+    background-size:auto,100% 22px!important;
+    opacity:.55!important;
+  }
+
+  .mobile-jarvis-panel > *{
+    position:relative!important;
+    z-index:1!important;
+  }
+
+  .mobile-jarvis-header{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    gap:12px!important;
+    min-height:38px!important;
+    padding:0 0 7px!important;
+    border-bottom:1px solid rgba(125,211,252,.08)!important;
+  }
+
+  .mobile-jarvis-header .eyebrow{
+    margin:0 0 3px!important;
+    color:#7dd3fc!important;
+    letter-spacing:.22em!important;
+  }
+
+  .mobile-jarvis-header strong{
+    display:block!important;
+    color:rgba(234,246,255,.78)!important;
+    font-size:12px!important;
+    font-weight:700!important;
+  }
+
+  .mobile-jarvis-close{
+    all:unset!important;
+    box-sizing:border-box!important;
+    width:32px!important;
+    height:32px!important;
+    min-width:32px!important;
+    display:grid!important;
+    place-items:center!important;
+    border-radius:999px!important;
+    border:1px solid rgba(125,211,252,.24)!important;
+    background:rgba(3,10,22,.64)!important;
+    color:rgba(234,246,255,.86)!important;
+    cursor:pointer!important;
+    box-shadow:
+      0 12px 30px rgba(0,0,0,.28),
+      0 0 20px rgba(56,189,248,.08),
+      inset 0 1px 0 rgba(255,255,255,.08)!important;
+    backdrop-filter:blur(14px)!important;
+  }
+
+  .mobile-jarvis-close span{
+    display:block!important;
+    font-size:20px!important;
+    line-height:1!important;
+    transform:translateY(-1px)!important;
+  }
+
+  .mobile-jarvis-stream{
+    max-height:130px!important;
+    display:grid!important;
+    gap:7px!important;
+    overflow:auto!important;
+    padding-right:2px!important;
+    scrollbar-width:thin!important;
+    scrollbar-color:rgba(56,189,248,.26) transparent!important;
+  }
+
+  .jarvis-input.mobile{
+    margin-top:2px!important;
+    display:flex!important;
+    gap:8px!important;
+  }
+
+  .jarvis-input.mobile input{
+    min-height:42px!important;
+    background:rgba(2,6,23,.58)!important;
+    border:1px solid rgba(125,211,252,.18)!important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.04),
+      0 0 24px rgba(56,189,248,.04)!important;
+  }
+
+  .jarvis-input.mobile button{
+    min-height:42px!important;
+    box-shadow:0 0 30px rgba(34,211,238,.24)!important;
+  }
+
+  .jarvis-orb .neural-core{
+    opacity:.98!important;
+    filter:
+      contrast(1.25)
+      brightness(1.10)
+      drop-shadow(0 0 18px rgba(186,230,253,.82))
+      drop-shadow(0 0 36px rgba(56,189,248,.36))!important;
+  }
+}
+
+@media(max-width:520px){
+  .mobile-jarvis-orb{
+    top:86px!important;
+    right:14px!important;
+    width:78px!important;
+    height:78px!important;
+  }
+
+  .mobile-jarvis-chip{
+    top:166px!important;
+    right:16px!important;
+  }
+
+  .mobile-jarvis-panel{
+    left:12px!important;
+    right:12px!important;
+    bottom:78px!important;
+    max-height:46vh!important;
+  }
+}
+
+@keyframes liaMobileOrbFloat{
+  0%,100%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-5px) scale(1.025)}
+}
+
+@keyframes liaMobileOrbStatic{
+  0%{opacity:.52;filter:contrast(1)}
+  33%{opacity:.88;filter:contrast(1.18)}
+  66%{opacity:.66;filter:contrast(.96)}
+  100%{opacity:.78;filter:contrast(1.06)}
+}
+
+@keyframes liaMobileOrbListen{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.055)}
+}
 `;
