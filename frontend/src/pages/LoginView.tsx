@@ -1,4 +1,5 @@
 import { FormEvent, useState } from 'react';
+import ExecutiveEnvironmentCard from '../components/ExecutiveEnvironmentCard';
 import NeuralCore from '../components/NeuralCore';
 import ThemeToggle from '../components/ThemeToggle';
 import { ThemeMode } from '../lib/theme';
@@ -48,6 +49,7 @@ export default function LoginView({ onSubmit, theme, onToggleTheme }: LoginViewP
       </section>
 
       <section className="executive-access-panel">
+        <ExecutiveEnvironmentCard variant="login" />
         <div className="login-head">
           <p className="eyebrow">ACCESO EJECUTIVO</p>
           <ThemeToggle theme={theme} onToggle={onToggleTheme} />

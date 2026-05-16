@@ -5,7 +5,7 @@ import GlassPanel from '../components/GlassPanel';
 import StatusChip from '../components/StatusChip';
 import TopBar from '../components/TopBar';
 import ThemeToggle from '../components/ThemeToggle';
-import EnvironmentWidget from '../components/EnvironmentWidget';
+import ExecutiveEnvironmentCard from '../components/ExecutiveEnvironmentCard';
 import { DailySummaryCard } from '../data/mockDashboard';
 import { DemoSession } from '../lib/auth';
 
@@ -57,7 +57,7 @@ export default function DashboardView({ session, cards, onLogout, theme, onToggl
 
   return (
     <main className="dashboard-layout dashboard-premium-layout">
-      <TopBar eyebrow="Plataforma Ejecutiva de Coordinación" title="Centro de Comando LÍA O.S" subtitle={`Bienvenido, ${session.name}.`} actions={<><EnvironmentWidget /><ThemeToggle theme={theme} onToggle={onToggleTheme} /><button type="button" className="btn-secondary" onClick={onLogout}>Cerrar sesión</button></>} />
+      <TopBar eyebrow="Plataforma Ejecutiva de Coordinación" title="Centro de Comando LÍA O.S" subtitle={`Bienvenido, ${session.name}.`} actions={<><ExecutiveEnvironmentCard variant="compact" /><ThemeToggle theme={theme} onToggle={onToggleTheme} /><button type="button" className="btn-secondary" onClick={onLogout}>Cerrar sesión</button></>} />
 
       <div className="view-tabs">{(['dashboard','agenda','seguimiento','documentos','alertas'] as const).map((v)=><button key={v} className={tab===v?'active':''} onClick={()=>setTab(v)}>{v}</button>)}</div>
 
