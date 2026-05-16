@@ -16,6 +16,7 @@ export default function App() {
   const [loginPassword, setLoginPassword] = useState('');
   const [loginError, setLoginError] = useState<string | null>(null);
   const [view, setView] = useState<View>('dashboard');
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [jarvisState, setJarvisState] = useState('En línea');
   const [message, setMessage] = useState('');
   const [jarvisLog, setJarvisLog] = useState([
@@ -302,6 +303,65 @@ export default function App() {
     <main className="os-shell">
       <style>{styles}</style>
         <style>{mobileJarvisFixStyles}</style>
+
+
+      <button
+        type="button"
+        className="mobile-nav-toggle"
+        aria-label="Abrir navegación principal"
+        onClick={() => setMobileNavOpen(true)}
+      >
+        <span />
+        <span />
+        <span />
+        <strong>Menú</strong>
+      </button>
+
+      {mobileNavOpen && (
+        <div className="mobile-nav-layer" role="presentation">
+          <button
+            type="button"
+            className="mobile-nav-backdrop"
+            aria-label="Cerrar navegación"
+            onClick={() => setMobileNavOpen(false)}
+          />
+
+          <nav className="mobile-nav-drawer" aria-label="Navegación móvil LÍA O.S">
+            <div className="mobile-nav-head">
+              <div className="login-brand-mark">LÍA</div>
+              <div>
+                <strong>LÍA O.S</strong>
+                <span>Command Center</span>
+              </div>
+              <button
+                type="button"
+                className="mobile-nav-close"
+                aria-label="Cerrar menú"
+                onClick={() => setMobileNavOpen(false)}
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="mobile-nav-links">
+              {nav.map(([id, label]) => (
+                <button
+                  key={`mobile-${id}`}
+                  type="button"
+                  className={view === id ? 'mobile-nav-link active' : 'mobile-nav-link'}
+                  onClick={() => {
+                    setView(id);
+                    setMobileNavOpen(false);
+                  }}
+                >
+                  <span>{label}</span>
+                  <em>{view === id ? 'Activo' : 'Abrir'}</em>
+                </button>
+              ))}
+            </div>
+          </nav>
+        </div>
+      )}
 
       <aside className="sidebar">
         <div>
