@@ -26,6 +26,7 @@ export default function LoginView({ onSubmit, theme, onToggleTheme }: LoginViewP
       <div className="login-cinematic-bg" aria-hidden="true" />
 
       <header className="login-brand-premium">
+        <div className="runtime-version-badge">LOGIN V4 ACTIVO</div>
         <strong>LÍA O.S</strong>
         <span>Executive Command Center</span>
       </header>
