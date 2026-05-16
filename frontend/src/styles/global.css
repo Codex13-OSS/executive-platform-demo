@@ -865,3 +865,15 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
 }
 
 .runtime-version-badge{display:inline-block;padding:.28rem .56rem;border-radius:999px;border:1px solid rgba(34,211,238,.42);background:rgba(34,211,238,.14);color:#a5f3fc;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+
+.app-shell-v5{min-height:100svh;display:grid;grid-template-columns:220px 1fr;background:radial-gradient(circle at 20% 15%,rgba(34,211,238,.14),transparent 35%),#020617;color:#e2e8f0}
+.login-v5{grid-template-columns:1fr;place-items:center}.login-v5-card{width:min(480px,92vw);padding:1rem;border:1px solid rgba(125,211,252,.26);border-radius:20px;background:rgba(8,17,31,.75)}
+.v5-badge{display:inline-block;padding:.25rem .5rem;border:1px solid rgba(34,211,238,.4);background:rgba(34,211,238,.15);border-radius:999px;font-size:.65rem}
+.v5-sidebar{border-right:1px solid rgba(125,211,252,.18);padding:1rem}.v5-nav{display:grid;gap:.4rem}.v5-nav button{background:transparent;border:1px solid transparent;color:#a5c3df;padding:.45rem;border-radius:10px;text-transform:capitalize}.v5-nav button.active{background:rgba(34,211,238,.13);border-color:rgba(34,211,238,.35);color:#e0f2fe}
+.v5-main{padding:1rem;display:grid;gap:.9rem}.hero-cinematic{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;padding:.7rem;border:1px solid rgba(125,211,252,.2);border-radius:16px;background:rgba(8,17,31,.68)}
+.hero-cinematic-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:.8rem}.hero-cinematic-grid article{padding:.8rem;border:1px solid rgba(125,211,252,.16);border-radius:14px;background:rgba(8,17,31,.6)}
+.month-heat{display:flex;gap:.4rem}.month-heat span{padding:.2rem .4rem;border-radius:999px;border:1px solid rgba(125,211,252,.25)}
+.tracking-control,.docs-command,.alerts-matrix{display:grid;gap:.6rem}.track-card,.doc-card-v5,.alert-v5,.agenda-item{padding:.7rem;border-radius:12px;border:1px solid rgba(125,211,252,.16);background:rgba(8,17,31,.6)}
+.alert-v5.alta{border-left:3px solid #fb7185}.alert-v5.media{border-left:3px solid #f59e0b}.alert-v5.baja{border-left:3px solid #22c55e}
+.mobile-menu{display:none}.drawer-backdrop{position:fixed;inset:0;background:rgba(2,6,23,.6);display:grid;z-index:50}.drawer{margin:1rem;width:min(320px,88vw);background:#0b1224;border:1px solid rgba(125,211,252,.24);border-radius:16px;padding:1rem}
+@media(max-width:1024px){.app-shell-v5{grid-template-columns:1fr}.v5-sidebar{display:none}.mobile-menu{display:inline-flex}}
