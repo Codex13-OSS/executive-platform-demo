@@ -89,5 +89,4 @@ export default function LoginView({ onSubmit, theme, onToggleTheme }: LoginViewP
         <span>Sesión segura</span>
       </footer>
     </main>
-  );
-}
+  );}
