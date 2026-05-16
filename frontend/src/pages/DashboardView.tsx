@@ -5,7 +5,9 @@ import ExecutiveEnvironmentCard from '../components/ExecutiveEnvironmentCard';
 import GlassPanel from '../components/GlassPanel';
 import StatusChip from '../components/StatusChip';
 import TopBar from '../components/TopBar';
+import StatusChip from '../components/StatusChip';
 import ThemeToggle from '../components/ThemeToggle';
+import ExecutiveEnvironmentCard from '../components/ExecutiveEnvironmentCard';
 import { DailySummaryCard } from '../data/mockDashboard';
 import { DemoSession } from '../lib/auth';
 
