@@ -22,7 +22,7 @@ export default function LoginView({ onSubmit, theme, onToggleTheme }: LoginViewP
   };
 
   return (
-    <main className="login-grid">
+    <main className="lia-login-premium">
       <section className="login-hero">
         <AmbientNetwork />
         <div className="login-hero-copy">

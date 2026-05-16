@@ -3,11 +3,18 @@ import { CognitiveGraph } from './components/CognitiveGraph';
 import { NeuralCore } from './components/NeuralCore';
 import { activity, agenda, alerts, documents, tracking } from './data/liaOsDemoData';
 import { mobileJarvisFixStyles, styles } from './styles/liaOsStyles';
+import { AgendaCalendar } from './components/AgendaCalendar';
+import { PremiumAlertsView } from './components/PremiumAlertsView';
+import { TrackingCommandView } from './components/TrackingCommandView';
+import { ExecutiveEnvironmentCard } from './components/ExecutiveEnvironmentCard';
 
 type View = 'dashboard' | 'agenda' | 'tracking' | 'documents' | 'alerts';
 
 export default function App() {
   const [logged, setLogged] = useState(false);
+  const [loginEmail, setLoginEmail] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [loginError, setLoginError] = useState<string | null>(null);
   const [view, setView] = useState<View>('dashboard');
   const [jarvisState, setJarvisState] = useState('En línea');
   const [message, setMessage] = useState('');
@@ -18,7 +25,7 @@ export default function App() {
   ]);
   const [activityFeed, setActivityFeed] = useState(activity);
   const [documentsList, setDocumentsList] = useState(documents);
-  const [alertsList, setAlertsList] = useState(alerts);
+  const [, setAlertsList] = useState(alerts);
   const [livePulse, setLivePulse] = useState(0);
   const [jarvisMessages, setJarvisMessages] = useState<Array<{ role: 'user' | 'assistant'; text: string }>>([
     {
@@ -159,23 +166,128 @@ export default function App() {
 
   if (!logged) {
     return (
-      <main className="login-os">
+      <main className="lia-login-premium">
         <style>{styles}</style>
         <style>{mobileJarvisFixStyles}</style>
-        <div className="login-bg"><NeuralCore /></div>
-        <section className="login-card">
-          <div className="brand-mark">LÍA</div>
-          <p className="eyebrow">EXECUTIVE INTELLIGENCE OPERATING SYSTEM</p>
-          <h1>LÍA O.S Beta</h1>
-          <p className="muted">
-            Centro de comando ejecutivo con Jarvis IA, operación viva y seguimiento inteligente.
+
+        <div className="login-cinematic-bg" aria-hidden="true" />
+        <div className="login-mesh-glow" aria-hidden="true" />
+
+        <header className="login-brand-premium">
+          <div className="login-brand-mark">LÍA</div>
+          <div>
+            <strong>LÍA O.S</strong>
+            <span>Executive Command Center</span>
+          </div>
+        </header>
+
+        <div className="login-system-status">
+          <span className="login-status-dot" />
+          <div>
+            <small>ESTADO DEL SISTEMA</small>
+            <strong>ÓPTIMO</strong>
+          </div>
+        </div>
+
+        <aside className="login-sync-panel">
+          <p className="login-eyebrow">SINCRONIZANDO</p>
+          <h1>NÚCLEO COGNITIVO</h1>
+          <p>
+            Acceso ejecutivo seguro. Verificando identidad, enlazando contexto operativo
+            y preparando el mapa cognitivo de dirección.
           </p>
-          <button className="primary" onClick={() => setLogged(true)}>Acceder al sistema</button>
-          <div className="credentials">demo@lia-os.mx · demo1234</div>
+
+          <div className="login-sync-stack">
+            <div><span>Neural Sync</span><strong>98%</strong></div>
+            <div><span>Mapa Cognitivo</span><strong>Enlazado</strong></div>
+            <div><span>Módulos</span><strong>Listos</strong></div>
+          </div>
+        </aside>
+
+        <section className="login-orb-stage" aria-label="Núcleo cognitivo LÍA">
+          <div className="orb-halo-system">
+            <NeuralCore />
+          </div>
+          <div className="orb-caption">
+            <span>LÍA Core</span>
+            <strong>Cognitive sync active</strong>
+          </div>
         </section>
+
+        <section className="executive-access-panel">
+          <div className="access-panel-head">
+            <p className="login-eyebrow">ACCESO EJECUTIVO</p>
+            <h2>Verificación requerida</h2>
+            <p>Ingresa con credenciales demo para iniciar el centro de comando.</p>
+          </div>
+
+          <div className="login-weather-integrated">
+            <ExecutiveEnvironmentCard variant="login" />
+          </div>
+
+          <form
+            className="login-premium-form"
+            onSubmit={(event) => {
+              event.preventDefault();
+
+              if (loginEmail !== 'demo@plataforma.com' || loginPassword !== 'demo1234') {
+                setLoginError('Credenciales demo: demo@plataforma.com / demo1234');
+                return;
+              }
+
+              setLoginError(null);
+              setLogged(true);
+            }}
+          >
+            <label className="login-field">
+              <span>Correo ejecutivo</span>
+              <input
+                type="email"
+                value={loginEmail}
+                onChange={(event) => setLoginEmail(event.target.value)}
+                placeholder="demo@plataforma.com"
+                autoComplete="email"
+              />
+            </label>
+
+            <label className="login-field">
+              <span>Clave de acceso</span>
+              <input
+                type="password"
+                value={loginPassword}
+                onChange={(event) => setLoginPassword(event.target.value)}
+                placeholder="demo1234"
+                autoComplete="current-password"
+              />
+            </label>
+
+            <label className="login-checkbox">
+              <input type="checkbox" defaultChecked />
+              <span>Recordar sesión en este dispositivo</span>
+            </label>
+
+            {loginError ? <p className="login-error">{loginError}</p> : null}
+
+            <button type="submit" className="login-premium-submit">
+              Iniciar sesión <span>→</span>
+            </button>
+
+            <button type="button" className="login-biometric">
+              Acceso biométrico
+            </button>
+          </form>
+        </section>
+
+        <footer className="login-security-footer">
+          <span>LÍA CORE OS</span>
+          <span>Cifrado ejecutivo</span>
+          <span>Protección multinivel</span>
+          <span>Sesión segura</span>
+        </footer>
       </main>
     );
   }
+
 
   const nav = [
     ['dashboard', 'Dashboard'],
@@ -221,6 +333,7 @@ export default function App() {
             <p className="eyebrow">SOLUCIONES INFORMÁTICAS</p>
             <h2>{view === 'dashboard' ? 'Centro de Comando Ejecutivo' : nav.find(([id]) => id === view)?.[1]}</h2>
           </div>
+          <ExecutiveEnvironmentCard variant="compact" />
           <button className="secondary" onClick={() => setLogged(false)}>Cerrar sesión</button>
         </header>
 
@@ -265,73 +378,9 @@ export default function App() {
           </>
         )}
 
-        {view === 'agenda' && (
-          <section className="module-grid">
-            <div className="panel module-header">
-              <p className="eyebrow">AGENDA INTELIGENTE</p>
-              <h3>Agenda ejecutiva contextual</h3>
-              <p className="muted">
-                Vista preparada para briefings automáticos, prioridades, responsables y confirmaciones críticas.
-              </p>
-            </div>
+        {view === 'agenda' && <AgendaCalendar />}
 
-            <div className="panel module-list">
-              {agenda.map(([time, title, priority]) => (
-                <div className="module-row" key={`agenda-${title}`}>
-                  <div>
-                    <b>{time}</b>
-                    <span>{title}</span>
-                  </div>
-                  <em>{priority}</em>
-                </div>
-              ))}
-            </div>
-
-            <div className="panel briefing-card">
-              <p className="eyebrow">BRIEFING JARVIS</p>
-              <strong>2 reuniones requieren contexto</strong>
-              <span className="muted">
-                Jarvis puede preparar historial, temas pendientes, riesgos y puntos sugeridos antes de cada sesión.
-              </span>
-              <button
-                className="primary compact"
-                onClick={() =>
-                  runJarvisAction(
-                    'Generar briefing de agenda',
-                    'Briefing generado: contexto, riesgos y puntos sugeridos listos.',
-                    () => addActivity('Jarvis generó briefing contextual para la agenda inteligente.')
-                  )
-                }
-              >
-                Generar briefing
-              </button>
-            </div>
-          </section>
-        )}
-
-        {view === 'tracking' && (
-          <section className="module-grid">
-            <div className="panel module-header">
-              <p className="eyebrow">SEGUIMIENTO OPERATIVO</p>
-              <h3>Procesos activos bajo control</h3>
-              <p className="muted">
-                Semáforos, porcentaje de avance, responsables y cambios visibles en tiempo real.
-              </p>
-            </div>
-
-            {tracking.map(([name, pct, status]) => (
-              <div className="panel process-card" key={`process-${name}`}>
-                <div className="process-head">
-                  <span>{name}</span>
-                  <b>{status}</b>
-                </div>
-                <strong>{pct}%</strong>
-                <div className="bar"><i style={{ width: `${pct}%` }} /></div>
-                <p className="muted">Última actualización registrada por Jarvis.</p>
-              </div>
-            ))}
-          </section>
-        )}
+        {view === 'tracking' && <TrackingCommandView legacyTracking={tracking} />}
 
         {view === 'documents' && (
           <section className="module-grid">
@@ -364,29 +413,8 @@ export default function App() {
           </section>
         )}
 
-        {view === 'alerts' && (
-          <section className="module-grid">
-            <div className="panel module-header">
-              <p className="eyebrow">ALERTAS Y CONFIRMACIONES</p>
-              <h3>Centro de control preventivo</h3>
-              <p className="muted">
-                Ninguna acción crítica se ejecuta sin validación humana y trazabilidad.
-              </p>
-            </div>
+        {view === 'alerts' && <PremiumAlertsView />}
 
-            <div className="panel alerts-list">
-              {alertsList.map(([level, title, detail]) => (
-                <div className="alert-row" key={`alert-${title}`}>
-                  <span className={`alert-severity ${level.toLowerCase()}`}>{level}</span>
-                  <div>
-                    <b>{title}</b>
-                    <p>{detail}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
       </section>
 
       <aside className="jarvis-panel">
