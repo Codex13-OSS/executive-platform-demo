@@ -93,22 +93,26 @@ export default function ExecutiveEnvironmentCard({ variant }: Props) {
     <section className={`executive-environment-card ${variant} tone-${tone}`}>
       <div className={`weather-visual weather-${tone}`} aria-hidden="true">
         <span className="sun" />
+        <span className="halo" />
         <span className="ray r1" />
         <span className="ray r2" />
         <span className="cloud c1" />
         <span className="cloud c2" />
-        <span className="drop d1" />
-        <span className="drop d2" />
-        <span className="drop d3" />
+        <span className="mist" />
+        <span className="rain-line rl1" />
+        <span className="rain-line rl2" />
+        <span className="rain-line rl3" />
         <span className="bolt" />
         <span className="moon" />
         <span className="star s1" />
         <span className="star s2" />
       </div>
+
       <div className="env-main">
         <strong>{now.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' })}</strong>
         <p>{now.toLocaleDateString('es-MX', { weekday: 'short', day: '2-digit', month: 'short' })}</p>
       </div>
+
       <div className="env-meta">
         <strong>{weather.city}</strong>
         <p>{Math.round(weather.temp)}°C · {weather.label}</p>
