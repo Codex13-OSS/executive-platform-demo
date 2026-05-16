@@ -2,11 +2,11 @@ import { useMemo, useState } from 'react';
 import ActivityRingsCluster from '../components/ActivityRingsCluster';
 import CognitiveGraph from '../components/CognitiveGraph';
 import GlassPanel from '../components/GlassPanel';
-import MetricCard from '../components/MetricCard';
 import StatusChip from '../components/StatusChip';
 import TopBar from '../components/TopBar';
 import StatusChip from '../components/StatusChip';
 import ThemeToggle from '../components/ThemeToggle';
+import ExecutiveEnvironmentCard from '../components/ExecutiveEnvironmentCard';
 import { DailySummaryCard } from '../data/mockDashboard';
 import { DemoSession } from '../lib/auth';
 
@@ -58,7 +58,7 @@ export default function DashboardView({ session, cards, onLogout, theme, onToggl
 
   return (
     <main className="dashboard-layout dashboard-premium-layout">
-      <TopBar eyebrow="Plataforma Ejecutiva de Coordinación" title="Centro de Comando LÍA O.S" subtitle={`Bienvenido, ${session.name}.`} actions={<><ThemeToggle theme={theme} onToggle={onToggleTheme} /><button type="button" className="btn-secondary" onClick={onLogout}>Cerrar sesión</button></>} />
+      <TopBar eyebrow="Plataforma Ejecutiva de Coordinación" title="Centro de Comando LÍA O.S" subtitle={`Bienvenido, ${session.name}.`} actions={<><ExecutiveEnvironmentCard variant="compact" /><ThemeToggle theme={theme} onToggle={onToggleTheme} /><button type="button" className="btn-secondary" onClick={onLogout}>Cerrar sesión</button></>} />
 
       <div className="view-tabs">{(['dashboard','agenda','seguimiento','documentos','alertas'] as const).map((v)=><button key={v} className={tab===v?'active':''} onClick={()=>setTab(v)}>{v}</button>)}</div>
 
@@ -79,8 +79,8 @@ export default function DashboardView({ session, cards, onLogout, theme, onToggl
         </div>
       </section>}
 
-      {tab==='seguimiento' && <section className="metrics-grid">{cards.map((c)=><MetricCard key={c.id} label={c.title} value={c.value} note={c.note} />)}</section>}
-      {tab==='documentos' && <GlassPanel variant="default"><p className="eyebrow">Documentos</p><h3>Repositorio ejecutivo activo</h3><p className="muted">Contratos, reportes y actas con estado premium.</p></GlassPanel>}
+      {tab==='seguimiento' && <section className="tracking-premium-grid">{cards.map((c,idx)=><GlassPanel key={c.id} variant="default" className={`tracking-premium-card risk-${idx===1?'high':idx===2?'medium':'low'}`}><p className="eyebrow">{c.title}</p><strong>{c.value}</strong><p>{c.note}</p><div className="tracking-meta"><span>{idx===0?'+8% semana':idx===1?'-4% ayer':'estable'}</span><span>{idx===0?'Deadline: hoy 18:00':idx===1?'Hito: mañana 09:00':'Siguiente: validación'}</span><span>Responsable: {idx===1?'Operaciones':'Dirección'}</span></div><div className="tracking-spark" /></GlassPanel>)}</section>}
+      {tab==='documentos' && <section className="docs-grid"><GlassPanel variant="default" className="doc-card contrato"><p className="eyebrow">Contrato · v1.4</p><h3>Contrato inteligente</h3><p className="muted">Estado: revisión · Responsable: Legal</p><div className="doc-actions"><button>Ver documento</button><button>Generar resumen</button></div></GlassPanel><GlassPanel variant="default" className="doc-card acta"><p className="eyebrow">Acta · v2.1</p><h3>Acta ejecutiva</h3><p className="muted">Estado: aprobado · Última actualización: 09:20</p><div className="doc-actions"><button>Preparar junta</button><button>Marcar revisión</button></div></GlassPanel></section>}
       {tab==='alertas' && <section className="alerts-premium">{alerts.map((a,i)=><GlassPanel key={`${a.title}-${i}`} variant="default" className="alert-item"><div><StatusChip label={a.level} tone={a.level==='Alta'?'alert':a.level==='Media'?'pending':'done'} /><span className="alert-source">{a.source}</span></div><b>{a.title}</b><p>{a.detail}</p><small>{a.time}</small></GlassPanel>)}</section>}
 
       <section className="dashboard-command-grid">
