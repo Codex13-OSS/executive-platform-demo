@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { CognitiveGraph } from './components/CognitiveGraph';
 import { NeuralCore } from './components/NeuralCore';
 import { activity, agenda, alerts, documents, tracking } from './data/liaOsDemoData';
-import { mobileJarvisFixStyles, styles } from './styles/liaOsStyles';
+import { mobileLÍAFixStyles, styles } from './styles/liaOsStyles';
 import { AgendaCalendar } from './components/AgendaCalendar';
 import { PremiumAlertsView } from './components/PremiumAlertsView';
 import { TrackingCommandView } from './components/TrackingCommandView';
@@ -17,9 +17,9 @@ export default function App() {
   const [loginError, setLoginError] = useState<string | null>(null);
   const [view, setView] = useState<View>('dashboard');
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
-  const [jarvisState, setJarvisState] = useState('En línea');
+  const [liaState, setLÍAState] = useState('En línea');
   const [message, setMessage] = useState('');
-  const [jarvisLog, setJarvisLog] = useState([
+  const [liaLog, setLÍALog] = useState([
     'Núcleo cognitivo iniciado.',
     'Dashboard sincronizado.',
     'Esperando instrucción ejecutiva.',
@@ -28,31 +28,31 @@ export default function App() {
   const [documentsList, setDocumentsList] = useState(documents);
   const [, setAlertsList] = useState(alerts);
   const [livePulse, setLivePulse] = useState(0);
-  const [jarvisMessages, setJarvisMessages] = useState<Array<{ role: 'user' | 'assistant'; text: string }>>([
+  const [liaMessages, setLÍAMessages] = useState<Array<{ role: 'user' | 'assistant'; text: string }>>([
     {
       role: 'assistant',
       text: 'Estoy en línea. Puedo ayudarte con agenda, documentos, alertas y seguimiento ejecutivo.',
     },
   ]);
   const [mobileOrbListening, setMobileOrbListening] = useState(false);
-  const [mobileJarvisOpen, setMobileJarvisOpen] = useState(false);
+  const [mobileLÍAOpen, setMobileLÍAOpen] = useState(false);
   const mobileInputRef = useRef<HTMLInputElement | null>(null);
   const orbTimeoutRef = useRef<number | null>(null);
 
-  const pushJarvisLog = (text: string) => {
+  const pushLÍALog = (text: string) => {
     const time = new Date().toLocaleTimeString('es-MX', {
       hour: '2-digit',
       minute: '2-digit',
     });
 
-    setJarvisLog((prev) => [`${time} · ${text}`, ...prev].slice(0, 4));
+    setLÍALog((prev) => [`${time} · ${text}`, ...prev].slice(0, 4));
   };
 
   const addActivity = (text: string) => {
     setActivityFeed((prev) => [text, ...prev].slice(0, 5));
   };
 
-  const addDocument = (title = 'Documento generado por Jarvis') => {
+  const addDocument = (title = 'Documento generado por LÍA') => {
     const stamp = new Date().toLocaleTimeString('es-MX', {
       hour: '2-digit',
       minute: '2-digit',
@@ -68,31 +68,31 @@ export default function App() {
 
   const addAlert = (title = 'Nuevo recordatorio ejecutivo') => {
     setAlertsList((prev) => [
-      ['Alta', title, 'Jarvis creó una alerta mock y requiere confirmación humana.'],
+      ['Alta', title, 'LÍA creó una alerta mock y requiere confirmación humana.'],
       ...prev,
     ].slice(0, 6));
 
     setView('alerts');
   };
 
-  const runJarvisAction = (instruction: string, result: string, onConfirm?: () => void) => {
-    setJarvisMessages((prev) => [
+  const runLÍAAction = (instruction: string, result: string, onConfirm?: () => void) => {
+    setLÍAMessages((prev) => [
       ...prev,
       { role: 'user' as const, text: instruction },
     ].slice(-6));
 
-    setJarvisState('Analizando contexto');
-    pushJarvisLog(`Recibido: ${instruction}`);
+    setLÍAState('Analizando contexto');
+    pushLÍALog(`Recibido: ${instruction}`);
 
     setTimeout(() => {
-      setJarvisState('Ejecutando acción');
-      pushJarvisLog('Validación ejecutiva completada.');
+      setLÍAState('Ejecutando acción');
+      pushLÍALog('Validación ejecutiva completada.');
     }, 700);
 
     setTimeout(() => {
-      setJarvisState('Confirmado');
-      pushJarvisLog(result);
-      setJarvisMessages((prev) => [
+      setLÍAState('Confirmado');
+      pushLÍALog(result);
+      setLÍAMessages((prev) => [
         ...prev,
         { role: 'assistant' as const, text: result },
       ].slice(-6));
@@ -100,38 +100,38 @@ export default function App() {
       onConfirm?.();
     }, 1500);
 
-    setTimeout(() => setJarvisState('En línea'), 2800);
+    setTimeout(() => setLÍAState('En línea'), 2800);
   };
 
-  const sendJarvis = () => {
+  const sendLÍA = () => {
     const clean = message.trim();
     if (!clean) return;
 
     const lower = clean.toLowerCase();
 
     if (lower.includes('documento') || lower.includes('reporte') || lower.includes('contrato')) {
-      runJarvisAction(
+      runLÍAAction(
         clean,
         'Documento generado y agregado al módulo documental.',
         () => addDocument(clean.length > 34 ? `${clean.slice(0, 34)}…` : clean)
       );
     } else if (lower.includes('recordatorio') || lower.includes('alerta')) {
-      runJarvisAction(
+      runLÍAAction(
         clean,
         'Recordatorio creado y agregado al centro de alertas.',
         () => addAlert(clean.length > 36 ? `${clean.slice(0, 36)}…` : clean)
       );
     } else if (lower.includes('briefing') || lower.includes('agenda')) {
-      runJarvisAction(
+      runLÍAAction(
         clean,
         'Briefing generado y registrado en actividad reciente.',
-        () => addActivity('Jarvis generó un briefing ejecutivo solicitado por texto.')
+        () => addActivity('LÍA generó un briefing ejecutivo solicitado por texto.')
       );
     } else {
-      runJarvisAction(
+      runLÍAAction(
         clean,
         'Solicitud procesada en modo demo. El dashboard fue actualizado visualmente.',
-        () => addActivity(`Jarvis procesó: ${clean.length > 44 ? `${clean.slice(0, 44)}…` : clean}`)
+        () => addActivity(`LÍA procesó: ${clean.length > 44 ? `${clean.slice(0, 44)}…` : clean}`)
       );
     }
 
@@ -140,11 +140,11 @@ export default function App() {
 
   const activateMobileOrb = () => {
     if (orbTimeoutRef.current) window.clearTimeout(orbTimeoutRef.current);
-    setMobileJarvisOpen(true);
+    setMobileLÍAOpen(true);
     setMobileOrbListening(true);
-    setJarvisState('Escuchando...');
-    setJarvisMessages((prev) => {
-      const prompt = { role: 'assistant' as const, text: 'Jarvis lista. ¿Qué necesitas?' };
+    setLÍAState('Escuchando...');
+    setLÍAMessages((prev) => {
+      const prompt = { role: 'assistant' as const, text: 'LÍA lista. ¿Qué necesitas?' };
       const last = prev[prev.length - 1];
 
       if (last?.role === prompt.role && last.text === prompt.text) {
@@ -153,11 +153,11 @@ export default function App() {
 
       return [...prev, prompt].slice(-6);
     });
-    pushJarvisLog('Interacción móvil activada.');
+    pushLÍALog('Interacción móvil activada.');
     window.setTimeout(() => mobileInputRef.current?.focus(), 120);
     orbTimeoutRef.current = window.setTimeout(() => {
       setMobileOrbListening(false);
-      setJarvisState('En línea');
+      setLÍAState('En línea');
     }, 2400);
   };
 
@@ -169,7 +169,7 @@ export default function App() {
     return (
       <main className="lia-login-premium">
         <style>{styles}</style>
-        <style>{mobileJarvisFixStyles}</style>
+        <style>{mobileLÍAFixStyles}</style>
 
         <div className="login-cinematic-bg" aria-hidden="true" />
         <div className="login-mesh-glow" aria-hidden="true" />
@@ -302,7 +302,7 @@ export default function App() {
     <>
     <main className="os-shell">
       <style>{styles}</style>
-        <style>{mobileJarvisFixStyles}</style>
+        <style>{mobileLÍAFixStyles}</style>
 
 
       <button
@@ -383,7 +383,7 @@ export default function App() {
 
         <div className="system-status">
           <span className="dot" />
-          Jarvis activo
+          LÍA activo
         </div>
       </aside>
 
@@ -403,7 +403,7 @@ export default function App() {
               <div className="card kpi info"><p>Información activa</p><strong>4</strong><span>2 sesiones con briefing</span></div>
               <div className="card kpi critical"><p>Riesgos críticos</p><strong>8</strong><span>3 requieren decisión</span></div>
               <div className="card kpi warning"><p>Documentos listos</p><strong>12</strong><span>4 listos para validar</span></div>
-              <div className="card kpi stable live-card"><p>Cadencia operativa</p><strong>{87 + Math.min(livePulse, 6)}%</strong><span>{livePulse > 0 ? 'actualizado por Jarvis' : 'operación estable'}</span></div>
+              <div className="card kpi stable live-card"><p>Cadencia operativa</p><strong>{87 + Math.min(livePulse, 6)}%</strong><span>{livePulse > 0 ? 'actualizado por LÍA' : 'operación estable'}</span></div>
             </section>
 
             <CognitiveGraph />
@@ -489,7 +489,7 @@ export default function App() {
                 <button
                   className="secondary compact"
                   onClick={() =>
-                    runJarvisAction(
+                    runLÍAAction(
                       `Abrir documento: ${title}`,
                       `Preview mock listo para ${title}.`
                     )
@@ -506,19 +506,19 @@ export default function App() {
 
       </section>
 
-      <aside className="jarvis-panel">
-        <div className="jarvis-orb">
+      <aside className="lia-panel">
+        <div className="lia-orb">
           <NeuralCore />
         </div>
-        <p className="eyebrow">JARVIS COGNITIVE CORE</p>
-        <h3>{jarvisState}</h3>
-        <div className={`jarvis-state ${jarvisState.toLowerCase().replace(/\s+/g, '-')}`}>
+        <p className="eyebrow">LÍA COGNITIVE CORE</p>
+        <h3>{liaState}</h3>
+        <div className={`lia-state ${liaState.toLowerCase().replace(/\s+/g, '-')}`}>
           <span />
-          {jarvisState === 'En línea'
+          {liaState === 'En línea'
             ? 'Listo para recibir instrucciones'
-            : jarvisState === 'Analizando contexto'
+            : liaState === 'Analizando contexto'
               ? 'Leyendo intención y contexto'
-              : jarvisState === 'Ejecutando acción'
+              : liaState === 'Ejecutando acción'
                 ? 'Aplicando cambios en modo demo'
                 : 'Acción registrada correctamente'}
         </div>
@@ -526,11 +526,11 @@ export default function App() {
           Núcleo IA integrado para agenda, seguimiento, documentos, recordatorios y decisiones ejecutivas.
         </p>
 
-        <div className="jarvis-chat">
+        <div className="lia-chat">
           <p className="eyebrow">CONVERSACIÓN</p>
-          <div className="jarvis-chat-stream">
-            {jarvisMessages.map((item, index) => (
-              <div className={`jarvis-bubble ${item.role}`} key={`${item.role}-${index}-${item.text}`}>
+          <div className="lia-chat-stream">
+            {liaMessages.map((item, index) => (
+              <div className={`lia-bubble ${item.role}`} key={`${item.role}-${index}-${item.text}`}>
                 {item.text}
               </div>
             ))}
@@ -540,10 +540,10 @@ export default function App() {
         <div className="quick-actions">
           <button
             onClick={() =>
-              runJarvisAction(
+              runLÍAAction(
                 'Briefing de hoy',
                 'Briefing ejecutivo listo: 4 reuniones, 3 acciones críticas y 2 documentos pendientes.',
-                () => addActivity('Briefing ejecutivo del día generado por Jarvis.')
+                () => addActivity('Briefing ejecutivo del día generado por LÍA.')
               )
             }
           >
@@ -551,10 +551,10 @@ export default function App() {
           </button>
           <button
             onClick={() =>
-              runJarvisAction(
+              runLÍAAction(
                 'Crear recordatorio',
                 'Recordatorio mock programado y registrado en el centro de alertas.',
-                () => addAlert('Recordatorio ejecutivo creado por Jarvis')
+                () => addAlert('Recordatorio ejecutivo creado por LÍA')
               )
             }
           >
@@ -562,10 +562,10 @@ export default function App() {
           </button>
           <button
             onClick={() =>
-              runJarvisAction(
+              runLÍAAction(
                 'Generar documento',
                 'Documento mock generado y agregado al módulo de documentos.',
-                () => addDocument('Documento generado por Jarvis')
+                () => addDocument('Documento generado por LÍA')
               )
             }
           >
@@ -573,10 +573,10 @@ export default function App() {
           </button>
           <button
             onClick={() =>
-              runJarvisAction(
+              runLÍAAction(
                 'Estado operativo',
                 'Estado operativo recalculado: operación estable con seguimiento activo.',
-                () => addActivity('Jarvis recalculó el estado operativo general.')
+                () => addActivity('LÍA recalculó el estado operativo general.')
               )
             }
           >
@@ -584,46 +584,46 @@ export default function App() {
           </button>
         </div>
 
-        <div className="jarvis-log">
+        <div className="lia-log">
           <p className="eyebrow">BITÁCORA IA</p>
-          {jarvisLog.map((item, index) => (
-            <div className="jarvis-log-item" key={`${item}-${index}`}>{item}</div>
+          {liaLog.map((item, index) => (
+            <div className="lia-log-item" key={`${item}-${index}`}>{item}</div>
           ))}
         </div>
 
-        <div className="jarvis-input">
+        <div className="lia-input">
           <input
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && sendJarvis()}
-            placeholder="Habla con Jarvis..."
+            onKeyDown={(e) => e.key === 'Enter' && sendLÍA()}
+            placeholder="Habla con LÍA..."
           />
-          <button onClick={sendJarvis}>↑</button>
+          <button onClick={sendLÍA}>↑</button>
         </div>
       </aside>
     </main>
-    <button className={`mobile-jarvis-orb ${mobileOrbListening ? 'listening' : ''}`} onClick={activateMobileOrb}>
+    <button className={`mobile-lia-orb ${mobileOrbListening ? 'listening' : ''}`} onClick={activateMobileOrb}>
       <NeuralCore />
     </button>
-    <div className="mobile-jarvis-chip">
+    <div className="mobile-lia-chip">
       <strong>{mobileOrbListening ? 'Escuchando...' : 'En línea'}</strong>
     </div>
-    {mobileJarvisOpen && (
-      <section className="mobile-jarvis-panel" role="dialog" aria-label="Jarvis móvil">
-        <div className="mobile-jarvis-header">
+    {mobileLÍAOpen && (
+      <section className="mobile-lia-panel" role="dialog" aria-label="LÍA móvil">
+        <div className="mobile-lia-header">
           <div>
-            <p className="eyebrow">JARVIS MÓVIL</p>
+            <p className="eyebrow">LÍA MÓVIL</p>
             <strong>Asistente ejecutivo activo</strong>
           </div>
 
           <button
             type="button"
-            className="mobile-jarvis-close"
-            aria-label="Cerrar Jarvis móvil"
+            className="mobile-lia-close"
+            aria-label="Cerrar LÍA móvil"
             onClick={() => {
-              setMobileJarvisOpen(false);
+              setMobileLÍAOpen(false);
               setMobileOrbListening(false);
-              setJarvisState('En línea');
+              setLÍAState('En línea');
               if (orbTimeoutRef.current) window.clearTimeout(orbTimeoutRef.current);
             }}
           >
@@ -631,23 +631,23 @@ export default function App() {
           </button>
         </div>
 
-        <div className="mobile-jarvis-stream">
-          {jarvisMessages.slice(-3).map((item, index) => (
-            <div className={`jarvis-bubble ${item.role}`} key={`mobile-${item.role}-${index}-${item.text}`}>
+        <div className="mobile-lia-stream">
+          {liaMessages.slice(-3).map((item, index) => (
+            <div className={`lia-bubble ${item.role}`} key={`mobile-${item.role}-${index}-${item.text}`}>
               {item.text}
             </div>
           ))}
         </div>
 
-        <div className="jarvis-input mobile">
+        <div className="lia-input mobile">
           <input
             ref={mobileInputRef}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && sendJarvis()}
-            placeholder="Habla con Jarvis..."
+            onKeyDown={(e) => e.key === 'Enter' && sendLÍA()}
+            placeholder="Habla con LÍA..."
           />
-          <button onClick={sendJarvis}>↑</button>
+          <button onClick={sendLÍA}>↑</button>
         </div>
       </section>
     )}

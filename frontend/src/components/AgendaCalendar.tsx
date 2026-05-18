@@ -163,7 +163,7 @@ const baseWeek: AgendaDay[] = [
         title: 'Briefing ejecutivo del día',
         priority: 'Alta',
         status: 'briefing listo',
-        owner: 'Jarvis',
+        owner: 'LÍA',
         context: 'Vista diaria preparada con riesgos y prioridades.',
         goal: 'Preparar al ejecutivo para operar el día con claridad y foco.',
         talkTrack: 'Resumir estado, marcar prioridades y convertir pendientes en decisiones accionables.',
@@ -214,7 +214,7 @@ const baseWeek: AgendaDay[] = [
         title: 'Cierre operativo y pendientes',
         priority: 'Media',
         status: 'confirmado',
-        owner: 'Jarvis',
+        owner: 'LÍA',
         context: 'Cierre con bitácora y alertas activas.',
         goal: 'Cerrar el día con pendientes organizados y alertas listas para mañana.',
         talkTrack: 'Confirmar qué se cerró, qué queda abierto y qué debe entrar mañana en agenda.',
@@ -361,10 +361,10 @@ export function AgendaCalendar() {
       id: `blocked-${slot.id}`,
       time: slot.time.split(' - ')[0],
       end: slot.time.split(' - ')[1] ?? '',
-      title: 'Espacio bloqueado por Jarvis',
+      title: 'Espacio bloqueado por LÍA',
       priority: 'Media',
       status: 'bloqueado',
-      owner: 'Jarvis',
+      owner: 'LÍA',
       context: slot.label,
       goal: 'Reservar tiempo operativo para avanzar pendientes sin interrupción.',
       talkTrack: 'Usar este bloque para cerrar una tarea específica y documentar salida.',
@@ -601,7 +601,7 @@ export function AgendaCalendar() {
                   : 'Hay ventanas disponibles para preparar contexto.'}
               </strong>
               <span>
-                Jarvis puede convertir espacios libres en sesiones de revisión, recordatorios o bloqueos operativos.
+                LÍA puede convertir espacios libres en sesiones de revisión, recordatorios o bloqueos operativos.
               </span>
             </div>
           </section>

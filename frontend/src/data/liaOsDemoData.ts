@@ -13,7 +13,7 @@ export const tracking = [
 ];
 
 export const activity = [
-  'Jarvis generó resumen ejecutivo del día.',
+  'LÍA generó resumen ejecutivo del día.',
   'Se detectaron 3 acciones críticas pendientes.',
   'Nuevo documento listo para revisión.',
   'Seguimiento actualizado sin recargar dashboard.',
@@ -21,7 +21,7 @@ export const activity = [
 
 export const documents = [
   ['Contrato inteligente', 'Word / PDF', 'Listo para revisión'],
-  ['Acta ejecutiva', 'Documento interno', 'Generado por Jarvis'],
+  ['Acta ejecutiva', 'Documento interno', 'Generado por LÍA'],
   ['Reporte operativo', 'Resumen semanal', 'Pendiente de aprobación'],
   ['Propuesta comercial', 'Versión beta', 'Borrador activo'],
 ];
@@ -29,6 +29,6 @@ export const documents = [
 export const alerts = [
   ['Alta', 'Acción crítica sin confirmar', 'Requiere autorización antes de ejecutar.'],
   ['Media', 'Briefing pendiente', 'Reunión próxima sin contexto generado.'],
-  ['Media', 'Documento esperando revisión', 'Jarvis preparó un borrador para validar.'],
+  ['Media', 'Documento esperando revisión', 'LÍA preparó un borrador para validar.'],
   ['Baja', 'Cadencia estable', 'Operación dentro de parámetros esperados.'],
 ];

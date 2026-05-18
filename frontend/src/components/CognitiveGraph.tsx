@@ -76,7 +76,7 @@ const nodes: GraphNode[] = [
     y: 80,
     depth: 'front',
     status: 'active',
-    detail: '12 documentos detectados; 4 generados por Jarvis esta sesión.',
+    detail: '12 documentos detectados; 4 generados por LÍA esta sesión.',
     actions: ['Generar documento', 'Revisar pendientes', 'Crear reporte'],
   },
   {
