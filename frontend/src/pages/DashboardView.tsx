@@ -65,7 +65,7 @@ export default function DashboardView({
           <div className="hero-inline-stats">
             <span>Operación diaria</span>
             <span>Flujo activo</span>
-            <span>Modo demo</span>
+            <span>Modo ejecutivo</span>
           </div>
           {flowCompleted ? (
             <div className="inline-badge">Flujo completado en la última iteración</div>

@@ -21,7 +21,7 @@ export default function App() {
   const [message, setMessage] = useState('');
   const [liaLog, setLÍALog] = useState([
     'Núcleo cognitivo iniciado.',
-    'Dashboard sincronizado.',
+    'Centro ejecutivo listo.',
     'Esperando instrucción ejecutiva.',
   ]);
   const [activityFeed, setActivityFeed] = useState(activity);
@@ -53,7 +53,7 @@ export default function App() {
     setActivityFeed((prev) => [text, ...prev].slice(0, 5));
   };
 
-  const addDocument = (title = 'Documento generado por LÍA') => {
+  const addDocument = (title = 'Documento listo para revisión') => {
     const stamp = new Date().toLocaleTimeString('es-MX', {
       hour: '2-digit',
       minute: '2-digit',
@@ -98,7 +98,7 @@ export default function App() {
 
         return [...next, { role: 'assistant', text: result }];
       });
-      setLÍALog((current) => [`Acción simulada completada: ${instruction}`, ...current].slice(0, 6));
+      setLÍALog((current) => [`Acción ejecutiva registrada: ${instruction}`, ...current].slice(0, 6));
       setLivePulse((pulse) => (pulse + 1) % 8);
       onConfirm?.();
 
@@ -131,9 +131,9 @@ export default function App() {
       'Generar briefing': 'Briefing de evento preparado: contexto, riesgos y acuerdos sugeridos.',
       'Crear recordatorio': 'Recordatorio preparado: LÍA lo dejó listo para la siguiente ventana operativa.',
       'Ver guion': 'Guion ejecutivo abierto: objetivo, preguntas clave y salida esperada.',
-      Revisar: 'Revisión simulada iniciada: LÍA priorizó contexto, estado y siguiente acción.',
-      Validar: 'Validación simulada registrada: pendiente de confirmación ejecutiva final.',
-      'Limpiar alertas de prueba': 'Alertas de prueba marcadas como revisadas en modo demo.',
+      Revisar: 'Revisión ejecutiva iniciada: LÍA priorizó contexto, estado y siguiente acción.',
+      Validar: 'Validación ejecutiva registrada: pendiente de confirmación ejecutiva final.',
+      'Limpiar alertas de prueba': 'Alertas de prueba marcadas como revisadas para revisión ejecutiva.',
     };
 
     const result = moduleActions[label];
@@ -176,7 +176,7 @@ export default function App() {
     } else {
       runLÍAAction(
         clean,
-        'Solicitud procesada en modo demo. El dashboard fue actualizado visualmente.',
+        'Solicitud procesada. El centro ejecutivo fue actualizado visualmente.',
         () => addActivity(`LÍA procesó: ${clean.length > 44 ? `${clean.slice(0, 44)}…` : clean}`)
       );
     }
@@ -484,7 +484,7 @@ export default function App() {
                 <div className="cockpit-decision-actions-v090">
                   {[
                     ['Priorizar alerta', 'Alerta priorizada: LÍA la movió a seguimiento ejecutivo inmediato.'],
-                    ['Solicitar validación', 'Validación simulada preparada: Dirección recibe contexto y siguiente acción.'],
+                    ['Solicitar validación', 'Validación preparada: Dirección recibe contexto y siguiente acción.'],
                     ['Crear seguimiento', 'Seguimiento creado: LÍA agregó control operativo al flujo de decisiones.'],
                   ].map(([label, result]) => (
                     <button
@@ -589,7 +589,7 @@ export default function App() {
             : liaState === 'Analizando contexto'
               ? 'Leyendo intención y contexto'
               : liaState === 'Ejecutando acción'
-                ? 'Aplicando cambios en modo demo'
+                ? 'Coordinando acción ejecutiva'
                 : 'Acción registrada correctamente'}
         </div>
         <p className="muted">
@@ -614,7 +614,7 @@ export default function App() {
               runLÍAAction(
                 'Briefing de hoy',
                 'Briefing ejecutivo listo: 4 reuniones, 3 acciones críticas y 2 documentos pendientes.',
-                () => addActivity('Briefing ejecutivo del día generado por LÍA.')
+                () => addActivity('Briefing ejecutivo del día preparado por LÍA.')
               )
             }
           >
@@ -638,7 +638,7 @@ export default function App() {
               runLÍAAction(
                 'Generar documento',
                 'Documento mock generado y agregado al módulo de documentos.',
-                () => addDocument('Documento generado por LÍA')
+                () => addDocument('Documento listo para revisión')
               )
             }
           >

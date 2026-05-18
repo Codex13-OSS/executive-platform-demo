@@ -21,7 +21,7 @@ export const activity = [
 
 export const documents = [
   ['Contrato inteligente', 'Word / PDF', 'Listo para revisión'],
-  ['Acta ejecutiva', 'Documento interno', 'Generado por LÍA'],
+  ['Acta ejecutiva', 'Documento interno', 'Documento listo para revisión'],
   ['Reporte operativo', 'Resumen semanal', 'Pendiente de aprobación'],
   ['Propuesta comercial', 'Versión beta', 'Borrador activo'],
 ];
