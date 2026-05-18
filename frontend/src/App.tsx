@@ -294,7 +294,7 @@ export default function App() {
     ['dashboard', 'Dashboard'],
     ['agenda', 'Agenda'],
     ['tracking', 'Seguimiento'],
-    ['documents', 'Documentos'],
+    ['documents', 'Documentos listos'],
     ['alerts', 'Alertas'],
   ] as const;
 
@@ -400,10 +400,10 @@ export default function App() {
         {view === 'dashboard' && (
           <>
             <section className="kpi-grid">
-              <div className="card"><p>Reuniones hoy</p><strong>4</strong><span>2 requieren briefing</span></div>
-              <div className="card"><p>Acciones críticas</p><strong>8</strong><span>3 en riesgo</span></div>
-              <div className="card"><p>Documentos</p><strong>12</strong><span>4 generados por Jarvis</span></div>
-              <div className="card live-card"><p>Operación</p><strong>{87 + Math.min(livePulse, 6)}%</strong><span>{livePulse > 0 ? 'actualizado por Jarvis' : 'cadencia estable'}</span></div>
+              <div className="card kpi info"><p>Información activa</p><strong>4</strong><span>2 sesiones con briefing</span></div>
+              <div className="card kpi critical"><p>Riesgos críticos</p><strong>8</strong><span>3 requieren decisión</span></div>
+              <div className="card kpi warning"><p>Documentos listos</p><strong>12</strong><span>4 listos para validar</span></div>
+              <div className="card kpi stable live-card"><p>Cadencia operativa</p><strong>{87 + Math.min(livePulse, 6)}%</strong><span>{livePulse > 0 ? 'actualizado por Jarvis' : 'operación estable'}</span></div>
             </section>
 
             <CognitiveGraph />
@@ -434,7 +434,29 @@ export default function App() {
                 <p className="eyebrow">ACTIVIDAD RECIENTE</p>
                 {activityFeed.map((item, index) => <div className="activity-item" key={`${item}-${index}`}>{item}</div>)}
               </div>
-            </section>
+    
+
+          <div className="panel risk-priority-panel">
+            <div className="risk-priority-head">
+              <p className="eyebrow">RIESGO / CONEXIÓN / ACCIÓN</p>
+              <strong>Panel de decisión</strong>
+            </div>
+            <div className="risk-priority-list">
+              <article>
+                <em className="critical">Crítico</em>
+                <span>Riesgo: Seguimiento con dirección sin confirmar.</span>
+                <small>Conexión: Agenda + Alertas + Documentos.</small>
+                <b>Acción: validar responsable y cierre antes de 14:00.</b>
+              </article>
+              <article>
+                <em className="warning">Prioridad</em>
+                <span>Riesgo: Documento comercial pendiente de firma.</span>
+                <small>Conexión: Documentos + Seguimiento.</small>
+                <b>Acción: revisión legal en la próxima ventana libre.</b>
+              </article>
+            </div>
+          </div>
+        </section>
           </>
         )}
 
@@ -452,11 +474,18 @@ export default function App() {
               </p>
             </div>
 
-            {documentsList.map(([title, type, status]) => (
+            {documentsList.map(([title, type, status], index) => (
               <div className="panel document-card" key={`doc-${title}`}>
-                <p className="eyebrow">{type}</p>
+                <p className="eyebrow">{type} · {(index % 3 === 0 && 'Contrato') || (index % 3 === 1 && 'Reporte') || 'Acta'}</p>
                 <h4>{title}</h4>
                 <span>{status}</span>
+            <div className="document-meta-grid">
+              <div><small>Estado</small><strong>{status.includes('Listo') ? 'Listo para validación' : 'En progreso'}</strong></div>
+              <div><small>Responsable</small><strong>{index % 2 === 0 ? 'Dirección' : 'Operación'}</strong></div>
+              <div><small>Última actividad</small><strong>Hace {8 + index * 3} min</strong></div>
+              <div><small>Siguiente acción</small><strong>Revisar y aprobar</strong></div>
+            </div>
+            <div className="document-progress"><i style={{ width: `${62 + (index * 7) % 30}%` }} /></div>
                 <button
                   className="secondary compact"
                   onClick={() =>

@@ -400,7 +400,7 @@ export function AgendaCalendar() {
           <p className="eyebrow">AGENDA INTELIGENTE · CALENDARIO ACTIVO</p>
           <h3>Calendario ejecutivo contextual</h3>
           <p className="muted">
-            Semana operativa enlazada a briefings, alertas, espacios disponibles y seguimiento.
+            Semana operativa enlazada a briefings, alertas y decisiones de ejecución.
           </p>
         </div>
 
@@ -409,6 +409,14 @@ export function AgendaCalendar() {
           <div><span>Espacios</span><strong>{day.slots.length}</strong></div>
           <div><span>Estado</span><strong>{day.state}</strong></div>
         </div>
+      </div>
+
+      <div className="agenda-legend-strip">
+        <span className="tone-free">Libre</span>
+        <span className="tone-stable">Estable</span>
+        <span className="tone-busy">En curso</span>
+        <span className="tone-critical">Crítico</span>
+        <span className="tone-priority">Alta prioridad</span>
       </div>
 
       <section className="panel agenda-year-planner">
@@ -488,10 +496,12 @@ export function AgendaCalendar() {
                         <span>{event.priority}</span>
                       </div>
                       <p>{event.context}</p>
+                <div className="agenda-primary-action">Acción primaria: {isBriefed ? "Validar acuerdos" : "Generar briefing"}</div>
 
                       <div className="agenda-event-meta">
                         <span>{event.owner}</span>
                         <span>{isBriefed ? 'briefing listo' : event.status}</span>
+                  <span>{event.priority === 'Alta' ? 'riesgo alto' : event.priority === 'Media' ? 'riesgo moderado' : 'riesgo controlado'}</span>
                       </div>
 
                       <div className="agenda-event-actions">

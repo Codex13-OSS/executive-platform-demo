@@ -10,6 +10,7 @@ const executionLanes = [
     name: 'Contratos inteligentes',
     progress: 78,
     status: 'En tiempo',
+    deadline: 'Hoy 18:00',
     owner: 'Legal / Dirección',
     risk: 'Bajo',
     next: 'Validar cláusulas críticas y cerrar versión final.',
@@ -20,6 +21,7 @@ const executionLanes = [
     name: 'Recordatorios ejecutivos',
     progress: 62,
     status: 'En riesgo',
+    deadline: 'Hoy 14:00',
     owner: 'Jarvis / Operación',
     risk: 'Medio',
     next: 'Confirmar responsables antes de la próxima junta.',
@@ -30,6 +32,7 @@ const executionLanes = [
     name: 'Dashboard comercial',
     progress: 91,
     status: 'En tiempo',
+    deadline: 'Lun 10:00',
     owner: 'Comercial',
     risk: 'Bajo',
     next: 'Preparar lectura ejecutiva de oportunidades.',
@@ -40,6 +43,7 @@ const executionLanes = [
     name: 'Documentos generados',
     progress: 44,
     status: 'Retrasado',
+    deadline: 'Hoy 12:30',
     owner: 'Documentos / Jarvis',
     risk: 'Alto',
     next: 'Revisar documentos pendientes antes de la reunión de dirección.',
@@ -78,7 +82,7 @@ export function TrackingCommandView({ legacyTracking = [] }: TrackingCommandView
       <div className="panel tracking-hero-panel">
         <div>
           <p className="eyebrow">SEGUIMIENTO OPERATIVO · SISTEMA VIVO</p>
-          <h3>Procesos activos bajo control ejecutivo</h3>
+          <h3>Cadencia, procesos activos y riesgos en una sola lectura</h3>
           <p className="muted">
             Avance, responsables, riesgos, compromisos y próximos pasos visibles en tiempo real.
           </p>
@@ -145,6 +149,10 @@ export function TrackingCommandView({ legacyTracking = [] }: TrackingCommandView
               <span>Responsable</span>
               <strong>{selectedLane.owner}</strong>
             </div>
+          <div className="tracking-deadline-card">
+            <span>Deadline / hito</span>
+            <strong>{selectedLane.deadline ?? 'Hoy 18:00'}</strong>
+          </div>
           </div>
 
           <div className="tracking-commitments">
@@ -166,8 +174,9 @@ export function TrackingCommandView({ legacyTracking = [] }: TrackingCommandView
         <aside className="tracking-side-stack">
           <section className="panel tracking-timeline-panel">
             <p className="eyebrow">BITÁCORA DE EJECUCIÓN</p>
-            {recentCommitments.map(([time, title, status]) => (
+            {recentCommitments.map(([time, title, status], index) => (
               <article key={`${time}-${title}`}>
+              <i style={{ width: `${42 + index * 15}%` }} />
                 <span>{time}</span>
                 <strong>{title}</strong>
                 <em>{status}</em>
