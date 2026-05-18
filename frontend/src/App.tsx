@@ -248,6 +248,7 @@ export default function App() {
                 onChange={(event) => setLoginEmail(event.target.value)}
                 placeholder="demo@plataforma.com"
                 autoComplete="email"
+                className="login-autofill-dark-fix-v088"
               />
             </label>
 
@@ -259,6 +260,7 @@ export default function App() {
                 onChange={(event) => setLoginPassword(event.target.value)}
                 placeholder="demo1234"
                 autoComplete="current-password"
+                className="login-autofill-dark-fix-v088"
               />
             </label>
 
@@ -398,20 +400,47 @@ export default function App() {
         </header>
 
         {view === 'dashboard' && (
-          <>
-            <section className="kpi-grid executive-first-screen-v087">
+          <section className="executive-cockpit-layout-v088">
+            <section className="kpi-grid executive-first-screen-v087 executive-cockpit-kpis-v088">
               <div className="card kpi info"><p>Información activa</p><strong>4</strong><span>2 sesiones con briefing</span></div>
               <div className="card kpi critical"><p>Riesgos críticos</p><strong>8</strong><span>3 requieren decisión</span></div>
               <div className="card kpi warning"><p>Documentos listos</p><strong>12</strong><span>4 listos para validar</span></div>
               <div className="card kpi stable live-card"><p>Cadencia operativa</p><strong>{87 + Math.min(livePulse, 6)}%</strong><span>{livePulse > 0 ? 'actualizado por LÍA' : 'operación estable'}</span></div>
             </section>
 
-            <div className="executive-first-screen-v087">
-              <CognitiveGraph />
-            </div>
+            <section className="executive-cockpit-main-v088">
+              <article className="panel cognitive-compact-stage-v088">
+                <div className="cockpit-section-head-v088">
+                  <p className="eyebrow">MAPA COGNITIVO</p>
+                  <strong>Núcleo ejecutivo en vivo</strong>
+                </div>
+                <CognitiveGraph />
+              </article>
 
-            <section className="dashboard-grid cockpit-priority-strip-v087">
-              <div className="panel">
+              <aside className="panel risk-priority-panel cockpit-decision-core-v088">
+                <div className="risk-priority-head">
+                  <p className="eyebrow">RIESGO / CONEXIÓN / ACCIÓN</p>
+                  <strong>Decisión ejecutiva inmediata</strong>
+                </div>
+                <div className="risk-priority-list">
+                  <article>
+                    <em className="critical">Crítico</em>
+                    <span>Seguimiento con dirección sin confirmar.</span>
+                    <small>Conexión: Agenda + Alertas + Documentos.</small>
+                    <b>Acción: validar responsable y cierre antes de 14:00.</b>
+                  </article>
+                  <article>
+                    <em className="warning">Prioridad</em>
+                    <span>Documento comercial pendiente de firma.</span>
+                    <small>Conexión: Documentos + Seguimiento.</small>
+                    <b>Acción: revisión legal en la próxima ventana libre.</b>
+                  </article>
+                </div>
+              </aside>
+            </section>
+
+            <section className="cockpit-secondary-grid-v088">
+              <div className="panel cockpit-agenda-card-v088">
                 <p className="eyebrow">AGENDA INTELIGENTE</p>
                 {agenda.map(([time, title, priority]) => (
                   <div className="row" key={title}>
@@ -422,7 +451,7 @@ export default function App() {
                 ))}
               </div>
 
-              <div className="panel">
+              <div className="panel cockpit-tracking-card-v088">
                 <p className="eyebrow">SEGUIMIENTO OPERATIVO</p>
                 {tracking.map(([name, pct, status]) => (
                   <div className="track" key={name}>
@@ -432,34 +461,12 @@ export default function App() {
                 ))}
               </div>
 
-              <div className="panel activity">
+              <div className="panel activity cockpit-activity-card-v088">
                 <p className="eyebrow">ACTIVIDAD RECIENTE</p>
                 {activityFeed.map((item, index) => <div className="activity-item" key={`${item}-${index}`}>{item}</div>)}
               </div>
-    
-
-          <div className="panel risk-priority-panel cockpit-priority-strip-v087">
-            <div className="risk-priority-head">
-              <p className="eyebrow">RIESGO / CONEXIÓN / ACCIÓN</p>
-              <strong>Panel de decisión</strong>
-            </div>
-            <div className="risk-priority-list">
-              <article>
-                <em className="critical">Crítico</em>
-                <span>Riesgo: Seguimiento con dirección sin confirmar.</span>
-                <small>Conexión: Agenda + Alertas + Documentos.</small>
-                <b>Acción: validar responsable y cierre antes de 14:00.</b>
-              </article>
-              <article>
-                <em className="warning">Prioridad</em>
-                <span>Riesgo: Documento comercial pendiente de firma.</span>
-                <small>Conexión: Documentos + Seguimiento.</small>
-                <b>Acción: revisión legal en la próxima ventana libre.</b>
-              </article>
-            </div>
-          </div>
-        </section>
-          </>
+            </section>
+          </section>
         )}
 
         {view === 'agenda' && <AgendaCalendar />}
@@ -508,7 +515,7 @@ export default function App() {
 
       </section>
 
-      <aside className="lia-panel lia-panel-compact-v087">
+      <aside className="lia-panel lia-panel-compact-v087 lia-executive-copilot-v088">
         <div className="lia-orb">
           <NeuralCore />
         </div>

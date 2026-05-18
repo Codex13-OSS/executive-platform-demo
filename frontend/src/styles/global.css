@@ -3996,3 +3996,214 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
   padding: 8px 10px;
 }
 
+
+/* cinematic cockpit restructure v0.8.8 */
+.executive-cockpit-layout-v088 {
+  display: grid;
+  gap: 12px;
+}
+
+.executive-cockpit-kpis-v088 {
+  margin-bottom: 0 !important;
+}
+
+.executive-cockpit-main-v088 {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr);
+  gap: 12px;
+  align-items: stretch;
+}
+
+.cognitive-compact-stage-v088 {
+  min-height: 420px;
+  max-height: 520px;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  background:
+    radial-gradient(circle at 18% 0%, rgba(34, 211, 238, .12), transparent 34%),
+    linear-gradient(145deg, rgba(8, 18, 34, .78), rgba(2, 8, 23, .88)) !important;
+}
+
+.cognitive-compact-stage-v088 > :last-child {
+  min-height: 0;
+}
+
+.cockpit-section-head-v088 {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.cockpit-section-head-v088 strong {
+  font-size: .82rem;
+  color: rgba(234, 246, 255, .82);
+}
+
+.cockpit-decision-core-v088 {
+  min-height: 420px;
+  display: grid !important;
+  align-content: start;
+  gap: 12px;
+  background:
+    radial-gradient(circle at 16% 0%, rgba(248, 113, 113, .11), transparent 32%),
+    radial-gradient(circle at 100% 18%, rgba(34, 211, 238, .11), transparent 34%),
+    linear-gradient(150deg, rgba(11, 25, 46, .92), rgba(3, 10, 24, .9)) !important;
+  border: 1px solid rgba(125, 211, 252, .25) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.07),
+    0 22px 58px rgba(0, 8, 24, .48),
+    0 0 38px rgba(34, 211, 238, .08) !important;
+}
+
+.cockpit-decision-core-v088 .risk-priority-head strong {
+  display: block;
+  margin-top: 4px;
+  font-size: clamp(1.15rem, 1.8vw, 1.55rem);
+  line-height: 1.05;
+}
+
+.cockpit-decision-core-v088 .risk-priority-list {
+  grid-template-columns: 1fr !important;
+}
+
+.cockpit-decision-core-v088 .risk-priority-list article {
+  min-height: 128px;
+  padding: 14px;
+  border-radius: 16px;
+}
+
+.cockpit-decision-core-v088 .risk-priority-list span {
+  font-size: .95rem;
+  line-height: 1.25;
+}
+
+.cockpit-secondary-grid-v088 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.05fr;
+  gap: 12px;
+}
+
+.cockpit-secondary-grid-v088 .panel {
+  min-height: 220px;
+  padding: 14px !important;
+}
+
+.cockpit-secondary-grid-v088 .row,
+.cockpit-secondary-grid-v088 .activity-item {
+  min-height: 38px;
+}
+
+.lia-executive-copilot-v088 {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(34,211,238,.11), transparent 30%),
+    linear-gradient(180deg, rgba(8,18,34,.86), rgba(2,8,23,.92)) !important;
+  border-left: 1px solid rgba(125, 211, 252, .14);
+}
+
+.lia-executive-copilot-v088 .lia-orb {
+  transform: scale(.92);
+  transform-origin: center top;
+  margin-bottom: -16px !important;
+}
+
+.lia-executive-copilot-v088 .muted {
+  font-size: .78rem;
+  line-height: 1.35;
+}
+
+.login-autofill-dark-fix-v088,
+.login-field input {
+  background:
+    linear-gradient(135deg, rgba(8, 18, 34, .92), rgba(2, 8, 23, .86)) !important;
+  color: rgba(234, 246, 255, .98) !important;
+  -webkit-text-fill-color: rgba(234, 246, 255, .98) !important;
+  caret-color: rgba(125, 211, 252, .95);
+}
+
+.login-autofill-dark-fix-v088:-webkit-autofill,
+.login-autofill-dark-fix-v088:-webkit-autofill:hover,
+.login-autofill-dark-fix-v088:-webkit-autofill:focus,
+.login-field input:-webkit-autofill,
+.login-field input:-webkit-autofill:hover,
+.login-field input:-webkit-autofill:focus {
+  box-shadow: 0 0 0 1000px rgba(8, 18, 34, .96) inset !important;
+  -webkit-box-shadow: 0 0 0 1000px rgba(8, 18, 34, .96) inset !important;
+  -webkit-text-fill-color: rgba(234, 246, 255, .98) !important;
+  border-color: rgba(125, 211, 252, .34) !important;
+}
+
+@media (max-width: 1180px) {
+  .executive-cockpit-main-v088,
+  .cockpit-secondary-grid-v088 {
+    grid-template-columns: 1fr;
+  }
+
+  .cognitive-compact-stage-v088,
+  .cockpit-decision-core-v088 {
+    min-height: auto;
+    max-height: none;
+  }
+}
+
+
+/* cinematic cockpit correction v0.8.8.1 */
+.executive-cockpit-main-v088 {
+  display: grid !important;
+  grid-template-columns: minmax(520px, 1.12fr) minmax(340px, .88fr) !important;
+  gap: 12px !important;
+  align-items: stretch !important;
+  width: 100% !important;
+}
+
+.executive-cockpit-main-v088 .cognitive-compact-stage-v088 {
+  grid-column: auto !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 430px !important;
+}
+
+.executive-cockpit-main-v088 .cockpit-decision-core-v088,
+.executive-cockpit-main-v088 .risk-priority-panel {
+  grid-column: auto !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 430px !important;
+  align-self: stretch !important;
+}
+
+.executive-cockpit-main-v088 .cockpit-decision-core-v088 .risk-priority-list {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 10px !important;
+}
+
+.executive-cockpit-main-v088 .cockpit-decision-core-v088 .risk-priority-list article {
+  min-height: 134px !important;
+  display: grid !important;
+  align-content: center !important;
+}
+
+.cognitive-compact-stage-v088 .cognitive-graph,
+.cognitive-compact-stage-v088 [class*="cognitive"] {
+  max-width: none;
+}
+
+.cockpit-secondary-grid-v088 {
+  margin-top: 0 !important;
+}
+
+@media (max-width: 1180px) {
+  .executive-cockpit-main-v088 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .executive-cockpit-main-v088 .cognitive-compact-stage-v088,
+  .executive-cockpit-main-v088 .cockpit-decision-core-v088,
+  .executive-cockpit-main-v088 .risk-priority-panel {
+    min-height: auto !important;
+  }
+}
+
