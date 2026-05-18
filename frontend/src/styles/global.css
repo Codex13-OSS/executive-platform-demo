@@ -4961,3 +4961,232 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
 
 /* lia-responsive-executive-v094 END */
 
+
+/* lia-orb-premium-v095 START */
+/* lia-cognitive-presence-v095 | lia-premium-orb-v095 | lia-neural-aura-v095 | lia-orb-depth-v095 | lia-core-presence-v095 */
+
+.lia-orb-premium-v095 {
+  --lia-orb-cyan: rgba(34, 211, 238, 0.72);
+  --lia-orb-blue: rgba(59, 130, 246, 0.52);
+  --lia-orb-violet: rgba(129, 140, 248, 0.36);
+  --lia-orb-white: rgba(255, 255, 255, 0.82);
+}
+
+/* Login orb: más profundo, translúcido y vivo */
+.lia-login-premium .orb-halo-system {
+  filter: saturate(1.14) contrast(1.06);
+}
+
+.lia-login-premium .orb-halo-system::before {
+  background:
+    radial-gradient(circle at 34% 28%, rgba(255,255,255,0.72), transparent 10%),
+    radial-gradient(circle at 62% 64%, rgba(34,211,238,0.38), transparent 22%),
+    radial-gradient(circle at 50% 50%, rgba(59,130,246,0.24), transparent 48%);
+  box-shadow:
+    inset 0 0 26px rgba(255,255,255,0.24),
+    inset 0 -22px 46px rgba(15, 23, 42, 0.42),
+    0 0 42px rgba(34,211,238,0.18),
+    0 0 86px rgba(59,130,246,0.14);
+  animation: liaOrbGlassBreathV095 6.2s ease-in-out infinite;
+}
+
+.lia-login-premium .orb-halo-system::after {
+  border-color: rgba(125, 211, 252, 0.22);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.05),
+    0 0 36px rgba(34,211,238,0.16),
+    inset 0 0 38px rgba(129,140,248,0.08);
+  animation: liaOrbOuterSignalV095 8.4s ease-in-out infinite;
+}
+
+.lia-login-premium .premium-orb-canvas {
+  opacity: 0.94;
+  mix-blend-mode: screen;
+  filter: saturate(1.18) brightness(1.04);
+}
+
+.lia-login-premium .orb-caption {
+  backdrop-filter: blur(20px) saturate(1.2);
+  border-color: rgba(125, 211, 252, 0.18);
+  box-shadow:
+    0 14px 46px rgba(0,0,0,0.22),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+/* Panel derecho: orbe pequeño con más presencia premium */
+.lia-panel .lia-orb {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 35% 28%, rgba(255,255,255,0.82), transparent 12%),
+    radial-gradient(circle at 50% 55%, rgba(34,211,238,0.38), transparent 30%),
+    radial-gradient(circle at 70% 68%, rgba(59,130,246,0.24), transparent 42%),
+    linear-gradient(145deg, rgba(255,255,255,0.16), rgba(34,211,238,0.04));
+  border: 1px solid rgba(125, 211, 252, 0.24);
+  box-shadow:
+    inset 0 0 18px rgba(255,255,255,0.18),
+    inset 0 -14px 24px rgba(15,23,42,0.38),
+    0 0 0 1px rgba(255,255,255,0.045),
+    0 0 24px rgba(34,211,238,0.20),
+    0 0 54px rgba(59,130,246,0.12);
+  animation: liaPanelOrbPulseV095 5.8s ease-in-out infinite;
+}
+
+.lia-panel .lia-orb::before,
+.lia-panel .lia-orb::after {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.lia-panel .lia-orb::before {
+  border: 1px solid rgba(125, 211, 252, 0.16);
+  transform: rotateX(64deg) rotateZ(-14deg);
+  filter: blur(0.1px);
+  animation: liaPanelOrbRingV095 7.5s linear infinite;
+}
+
+.lia-panel .lia-orb::after {
+  inset: -14px;
+  background:
+    radial-gradient(circle, rgba(34,211,238,0.16), transparent 56%);
+  filter: blur(8px);
+  opacity: 0.64;
+  animation: liaPanelOrbAuraV095 4.8s ease-in-out infinite;
+}
+
+.lia-panel .lia-orb span,
+.lia-panel .lia-orb strong,
+.lia-panel .lia-orb i {
+  position: relative;
+  z-index: 1;
+}
+
+/* Núcleo cognitivo central: más profundidad y menos genérico */
+.cognitive-core-orb {
+  background:
+    radial-gradient(circle at 32% 28%, rgba(255,255,255,0.68), transparent 12%),
+    radial-gradient(circle at 54% 54%, rgba(34,211,238,0.30), transparent 36%),
+    radial-gradient(circle at 74% 70%, rgba(129,140,248,0.18), transparent 50%),
+    linear-gradient(145deg, rgba(255,255,255,0.12), rgba(15,23,42,0.34));
+  border-color: rgba(125, 211, 252, 0.22);
+  box-shadow:
+    inset 0 0 30px rgba(255,255,255,0.12),
+    inset 0 -24px 52px rgba(15,23,42,0.46),
+    0 0 42px rgba(34,211,238,0.16),
+    0 0 88px rgba(59,130,246,0.10);
+}
+
+.cognitive-core-orb::before {
+  background:
+    conic-gradient(
+      from 120deg,
+      transparent,
+      rgba(34,211,238,0.22),
+      transparent,
+      rgba(129,140,248,0.16),
+      transparent
+    );
+  opacity: 0.68;
+  animation: liaCognitiveSweepV095 9s linear infinite;
+}
+
+.cognitive-core-orb::after {
+  background:
+    radial-gradient(circle at 44% 30%, rgba(255,255,255,0.20), transparent 18%),
+    radial-gradient(circle at 50% 50%, rgba(34,211,238,0.10), transparent 62%);
+  opacity: 0.78;
+}
+
+/* Nodos: reflejo sutil */
+.cognitive-premium-node {
+  box-shadow:
+    0 16px 38px rgba(0,0,0,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+.cognitive-premium-node.active,
+.cognitive-premium-node.linked {
+  box-shadow:
+    0 18px 48px rgba(34,211,238,0.14),
+    inset 0 1px 0 rgba(255,255,255,0.12);
+}
+
+/* Reduce motion safe */
+@media (prefers-reduced-motion: reduce) {
+  .lia-login-premium .orb-halo-system::before,
+  .lia-login-premium .orb-halo-system::after,
+  .lia-panel .lia-orb,
+  .lia-panel .lia-orb::before,
+  .lia-panel .lia-orb::after,
+  .cognitive-core-orb::before {
+    animation: none !important;
+  }
+}
+
+@keyframes liaOrbGlassBreathV095 {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.88;
+  }
+  50% {
+    transform: scale(1.025);
+    opacity: 1;
+  }
+}
+
+@keyframes liaOrbOuterSignalV095 {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+    opacity: 0.68;
+  }
+  50% {
+    transform: rotate(7deg) scale(1.035);
+    opacity: 0.92;
+  }
+}
+
+@keyframes liaPanelOrbPulseV095 {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    filter: saturate(1.05);
+  }
+  50% {
+    transform: translateY(-1px) scale(1.035);
+    filter: saturate(1.22);
+  }
+}
+
+@keyframes liaPanelOrbRingV095 {
+  from {
+    transform: rotateX(64deg) rotateZ(0deg);
+  }
+  to {
+    transform: rotateX(64deg) rotateZ(360deg);
+  }
+}
+
+@keyframes liaPanelOrbAuraV095 {
+  0%, 100% {
+    opacity: 0.42;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 0.72;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes liaCognitiveSweepV095 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* lia-orb-premium-v095 END */
+
