@@ -2,18 +2,18 @@
 set -euo pipefail
 
 REQUIRED_BRANCH="polish/lia-os-cinematic-compact-v085"
-REQUIRED_BASE="6f2a293"
+REQUIRED_BASE="ea3cbf9"
 
 BRANCH="$(git branch --show-current || true)"
 HEAD="$(git rev-parse --short HEAD)"
 
-echo "===== LIA GUARD v2 ====="
+echo "===== LIA GUARD v3 ====="
 echo "BRANCH=$BRANCH"
 echo "HEAD=$HEAD"
 echo "REQUIRED_BASE=$REQUIRED_BASE"
 
-# Codex Cloud puede montar la rama seleccionada como una rama interna llamada "work".
-# Eso SOLO se permite si el HEAD viene del commit seguro.
+# Codex Cloud puede montar la rama seleccionada como "work".
+# Eso SOLO se permite si el HEAD viene de ea3cbf9 o superior.
 if [ "$BRANCH" != "$REQUIRED_BRANCH" ] && [ "$BRANCH" != "work" ]; then
   echo "ABORT: rama incorrecta. Esperada: $REQUIRED_BRANCH o work válido de Codex."
   exit 42
@@ -24,10 +24,16 @@ if ! git merge-base --is-ancestor "$REQUIRED_BASE" HEAD; then
   exit 43
 fi
 
+if grep -RniE "Jarvis|JARVIS|jarvis|Javis|Ja vis" frontend/src >/tmp/lia-jarvis-check.txt 2>/dev/null; then
+  echo "ABORT: detecté referencias prohibidas a Jarvis:"
+  cat /tmp/lia-jarvis-check.txt
+  exit 44
+fi
+
 if grep -RniE "LOGIN APP ACTIVE V5|APP DASHBOARD V5 ACTIVO|app-shell-v5|test-pr35-v5|PR35" frontend/src >/tmp/lia-v5-check.txt 2>/dev/null; then
   echo "ABORT: detecté residuos de V5/PR35 roto:"
   cat /tmp/lia-v5-check.txt
-  exit 44
+  exit 45
 fi
 
 if git status --short | grep -q .; then
