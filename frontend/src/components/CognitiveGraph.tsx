@@ -22,7 +22,7 @@ const nodes: GraphNode[] = [
     depth: 'mid',
     status: 'active',
     detail: '2 reuniones requieren contexto previo y briefing ejecutivo.',
-    actions: ['Generar briefing', 'Cruzar documentos', 'Preparar minuta'],
+    actions: ['Briefing', 'Cruzar documentos', 'Preparar minuta'],
   },
   {
     id: 'riesgos',

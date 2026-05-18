@@ -12,7 +12,7 @@ type StoredAlert = {
 
 const defaultAlerts: StoredAlert[] = [
   { id: 1, level: 'Alta', title: 'Acción crítica sin confirmar', detail: 'Requiere autorización antes de ejecutar.', source: 'Seguimiento', state: 'Pendiente', recommendation: 'Validar responsable inmediato' },
-  { id: 2, level: 'Media', title: 'Briefing pendiente', detail: 'Reunión próxima sin contexto generado.', source: 'Agenda', state: 'En curso', recommendation: 'Generar briefing ejecutivo' },
+  { id: 2, level: 'Media', title: 'Briefing pendiente', detail: 'Contexto pendiente.', source: 'Agenda', state: 'En curso', recommendation: 'Preparar briefing' },
   { id: 3, level: 'Media', title: 'Documento esperando revisión', detail: 'LÍA preparó un borrador para validar.', source: 'Documentos', state: 'Por validar', recommendation: 'Revisar y firmar' },
   { id: 4, level: 'Baja', title: 'Cadencia estable', detail: 'Operación dentro de parámetros esperados.', source: 'Sistema', state: 'Monitoreo', recommendation: 'Mantener seguimiento' },
 ];
@@ -74,7 +74,7 @@ export function PremiumAlertsView() {
 
       <div className="alerts-toolbar">
         <span>Priorización automática activa</span>
-        <button type="button" onClick={clearAgendaAlerts}>Limpiar alertas de prueba</button>
+        <button type="button" onClick={clearAgendaAlerts}>Limpiar alertas</button>
       </div>
 
       <div className="alerts-grid-live">

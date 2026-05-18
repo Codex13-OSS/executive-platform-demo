@@ -4608,3 +4608,154 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
   }
 }
 /* lia-visual-executive-refinement-v092 END */
+
+/* lia-executive-minimalism-v093 START */
+/* lia-copy-trim-v093 | lia-card-minimal-v093 | lia-actions-minimal-v093 | lia-reading-rhythm-v093 */
+
+.lia-executive-minimalism-v093 {
+  --lia-minimal-muted: rgba(203, 213, 225, 0.58);
+  --lia-minimal-faint: rgba(148, 163, 184, 0.42);
+  --lia-minimal-line: rgba(148, 163, 184, 0.105);
+}
+
+/* Ritmo general: menos ruido, más aire */
+.lia-executive-minimalism-v093 .panel,
+.lia-executive-minimalism-v093 .card,
+.lia-executive-minimalism-v093 .document-card,
+.lia-executive-minimalism-v093 .agenda-event-card,
+.lia-executive-minimalism-v093 .alert-premium-card {
+  letter-spacing: -0.012em;
+}
+
+.lia-executive-minimalism-v093 p,
+.lia-executive-minimalism-v093 span,
+.lia-executive-minimalism-v093 small,
+.lia-executive-minimalism-v093 em {
+  color: var(--lia-minimal-muted);
+}
+
+/* KPI y tarjetas: lectura más ejecutiva */
+.lia-executive-minimalism-v093 .card p {
+  font-size: 0.72rem;
+  opacity: 0.72;
+}
+
+.lia-executive-minimalism-v093 .card span {
+  font-size: 0.66rem;
+  opacity: 0.58;
+}
+
+.lia-executive-minimalism-v093 .card strong {
+  letter-spacing: -0.035em;
+}
+
+/* Paneles: bordes más finos y menos densidad */
+.lia-executive-minimalism-v093 .panel {
+  border-color: var(--lia-minimal-line);
+}
+
+.lia-executive-minimalism-v093 .module-header p,
+.lia-executive-minimalism-v093 .activity div,
+.lia-executive-minimalism-v093 .document-card > p {
+  color: var(--lia-minimal-muted);
+}
+
+/* Agenda: botones y tags más limpios */
+.lia-executive-minimalism-v093 .agenda-event-card button,
+.lia-executive-minimalism-v093 .document-card button,
+.lia-executive-minimalism-v093 .alert-premium-actions button {
+  min-height: 34px;
+  padding-inline: 0.72rem;
+  border-radius: 12px;
+  font-size: 0.78rem;
+}
+
+/* Documentos: menos ruido de metadatos */
+.lia-executive-minimalism-v093 .document-meta-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  opacity: 0.88;
+}
+
+.lia-executive-minimalism-v093 .document-meta-grid span {
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+}
+
+.lia-executive-minimalism-v093 .document-meta-grid strong {
+  font-size: 0.72rem;
+}
+
+.lia-executive-minimalism-v093 .document-progress {
+  margin-block: 0.86rem;
+}
+
+/* Panel derecho: foco en conversación y acciones */
+.lia-panel.lia-executive-copilot-v088 {
+  padding-top: 1.05rem;
+}
+
+.lia-panel.lia-executive-copilot-v088 > p:not(.eyebrow) {
+  max-width: 26ch;
+  line-height: 1.35;
+}
+
+.quick-actions button {
+  min-height: 42px;
+  border-radius: 15px;
+  font-weight: 600;
+}
+
+.lia-chat {
+  padding: 0.62rem;
+}
+
+.lia-bubble {
+  font-size: 0.78rem;
+}
+
+.lia-log h4 {
+  margin-bottom: 0.4rem;
+}
+
+.lia-log-item {
+  font-size: 0.7rem;
+  padding: 0.44rem 0.52rem;
+}
+
+/* Alertas: más comité ejecutivo, menos tablero operativo */
+.alert-premium-card p {
+  max-width: 58ch;
+}
+
+.alert-premium-top em {
+  opacity: 0.58;
+}
+
+@media (max-width: 900px) {
+  .lia-executive-minimalism-v093 .document-meta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .quick-actions button {
+    min-height: 40px;
+  }
+}
+/* lia-executive-minimalism-v093 END */
+
+/* lia-label-minimal-fix-v093 START */
+.lia-label-minimal-fix-v093 .agenda-event-card button,
+.lia-label-minimal-fix-v093 .document-card button,
+.lia-label-minimal-fix-v093 .alert-premium-actions button {
+  min-width: 72px;
+  letter-spacing: -0.01em;
+}
+
+.lia-label-minimal-fix-v093 .quick-actions button {
+  font-size: 0.8rem;
+}
+
+.lia-label-minimal-fix-v093 .document-card > p,
+.lia-label-minimal-fix-v093 .alert-premium-card > p {
+  max-width: 42ch;
+}
+/* lia-label-minimal-fix-v093 END */

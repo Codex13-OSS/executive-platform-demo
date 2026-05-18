@@ -31,7 +31,7 @@ export default function App() {
   const [liaMessages, setLÍAMessages] = useState<Array<{ role: 'user' | 'assistant'; text: string }>>([
     {
       role: 'assistant',
-      text: 'Estoy en línea. Puedo ayudarte con agenda, documentos, alertas y seguimiento ejecutivo.',
+      text: 'En línea. Lista para agenda, documentos y alertas.',
     },
   ]);
   const [mobileOrbListening, setMobileOrbListening] = useState(false);
@@ -128,12 +128,12 @@ export default function App() {
     if (!label) return;
 
     const moduleActions: Record<string, string> = {
-      'Generar briefing': 'Briefing de evento preparado: contexto, riesgos y acuerdos sugeridos.',
-      'Crear recordatorio': 'Recordatorio operativo registrado para la siguiente ventana ejecutiva.',
-      'Ver guion': 'Guion ejecutivo abierto: objetivo, preguntas clave y salida esperada.',
+      'Briefing': 'Briefing de evento preparado: contexto, riesgos y acuerdos sugeridos.',
+      'Recordatorio': 'Recordatorio operativo registrado para la siguiente ventana ejecutiva.',
+      'Guion': 'Guion ejecutivo abierto: objetivo, preguntas clave y salida esperada.',
       Revisar: 'Revisión ejecutiva iniciada: LÍA priorizó contexto, estado y siguiente acción.',
       Validar: 'Validación ejecutiva registrada: pendiente de confirmación ejecutiva final.',
-      'Limpiar alertas de prueba': 'Alertas de prueba marcadas como revisadas para revisión ejecutiva.',
+      'Limpiar alertas': 'Alertas marcadas para revisión ejecutiva.',
     };
 
     const result = moduleActions[label];
@@ -435,7 +435,7 @@ export default function App() {
         </div>
       </aside>
 
-      <section className="main-panel executive-interaction-layer-v090 lia-visual-executive-refinement-v092" onClickCapture={handleModuleActionCapture}>
+      <section className="main-panel executive-interaction-layer-v090 lia-visual-executive-refinement-v092 lia-executive-minimalism-v093 lia-label-minimal-fix-v093" onClickCapture={handleModuleActionCapture}>
         <header className="topbar">
           <div>
             <p className="eyebrow">SOLUCIONES INFORMÁTICAS</p>
@@ -540,7 +540,7 @@ export default function App() {
               <p className="eyebrow">DOCUMENTOS INTELIGENTES</p>
               <h3>Generación documental asistida</h3>
               <p className="muted">
-                Contratos, actas, reportes y propuestas generadas desde instrucciones conversacionales.
+                Contratos, actas y reportes listos para revisión.
               </p>
             </div>
 
@@ -565,7 +565,7 @@ export default function App() {
                     )
                   }
                 >
-                  Ver documento
+                  Abrir
                 </button>
               </div>
             ))}
@@ -593,7 +593,7 @@ export default function App() {
                 : 'Acción registrada correctamente'}
         </div>
         <p className="muted">
-          Núcleo IA integrado para agenda, seguimiento, documentos, recordatorios y decisiones ejecutivas.
+          Agenda, documentos, alertas y seguimiento en una sola lectura.
         </p>
 
         <div className="lia-chat">
@@ -609,52 +609,52 @@ export default function App() {
 
         <div className="quick-actions">
           <button
-            className={`lia-simulated-feedback-v090 ${activeLiaAction === 'Briefing de hoy' ? 'cockpit-action-active-v090' : ''}`}
+            className={`lia-simulated-feedback-v090 ${activeLiaAction === 'Briefing' ? 'cockpit-action-active-v090' : ''}`}
             onClick={() =>
               runLÍAAction(
-                'Briefing de hoy',
-                'Briefing ejecutivo preparado: 4 reuniones, 3 acciones críticas y 2 documentos pendientes.',
+                'Briefing',
+                'Briefing preparado: 4 reuniones, 3 acciones críticas.',
                 () => addActivity('Briefing ejecutivo del día preparado por LÍA.')
               )
             }
           >
-            Briefing de hoy
+            Briefing
           </button>
           <button
-            className={`lia-simulated-feedback-v090 ${activeLiaAction === 'Crear recordatorio' ? 'cockpit-action-active-v090' : ''}`}
+            className={`lia-simulated-feedback-v090 ${activeLiaAction === 'Recordatorio' ? 'cockpit-action-active-v090' : ''}`}
             onClick={() =>
               runLÍAAction(
-                'Crear recordatorio',
+                'Recordatorio',
                 'Recordatorio mock programado y registrado en el centro de alertas.',
                 () => addAlert('Recordatorio ejecutivo creado por LÍA')
               )
             }
           >
-            Crear recordatorio
+            Recordatorio
           </button>
           <button
-            className={`lia-simulated-feedback-v090 ${activeLiaAction === 'Generar documento' ? 'cockpit-action-active-v090' : ''}`}
+            className={`lia-simulated-feedback-v090 ${activeLiaAction === 'Documento' ? 'cockpit-action-active-v090' : ''}`}
             onClick={() =>
               runLÍAAction(
-                'Generar documento',
-                'Documento ejecutivo generado y agregado al módulo de documentos.',
+                'Documento',
+                'Documento ejecutivo listo para revisión.',
                 () => addDocument('Documento listo para revisión')
               )
             }
           >
-            Generar documento
+            Documento
           </button>
           <button
-            className={`lia-simulated-feedback-v090 ${activeLiaAction === 'Estado operativo' ? 'cockpit-action-active-v090' : ''}`}
+            className={`lia-simulated-feedback-v090 ${activeLiaAction === 'Estado' ? 'cockpit-action-active-v090' : ''}`}
             onClick={() =>
               runLÍAAction(
-                'Estado operativo',
-                'Estado operativo recalculado: operación estable con seguimiento activo.',
+                'Estado',
+                'Estado actualizado.',
                 () => addActivity('LÍA recalculó el estado operativo general.')
               )
             }
           >
-            Estado operativo
+            Estado
           </button>
         </div>
 

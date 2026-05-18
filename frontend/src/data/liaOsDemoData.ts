@@ -13,22 +13,22 @@ export const tracking = [
 ];
 
 export const activity = [
-  'LÍA generó resumen ejecutivo del día.',
-  'Se detectaron 3 acciones críticas pendientes.',
-  'Nuevo documento listo para revisión.',
-  'Seguimiento actualizado sin recargar dashboard.',
+  'Resumen ejecutivo listo.',
+  '3 acciones críticas pendientes.',
+  'Listo para revisión.',
+  'Seguimiento actualizado.',
 ];
 
 export const documents = [
   ['Contrato inteligente', 'Word / PDF', 'Listo para revisión'],
-  ['Acta ejecutiva', 'Documento interno', 'Documento listo para revisión'],
-  ['Reporte operativo', 'Resumen semanal', 'Pendiente de aprobación'],
-  ['Propuesta comercial', 'Versión beta', 'Borrador activo'],
+  ['Acta ejecutiva', 'Documento interno', 'Listo para revisión'],
+  ['Reporte operativo', 'Resumen semanal', 'Pendiente'],
+  ['Propuesta comercial', 'Versión beta', 'Borrador'],
 ];
 
 export const alerts = [
-  ['Alta', 'Acción crítica sin confirmar', 'Requiere autorización antes de ejecutar.'],
-  ['Media', 'Briefing pendiente', 'Reunión próxima sin contexto generado.'],
-  ['Media', 'Documento esperando revisión', 'LÍA preparó un borrador para validar.'],
-  ['Baja', 'Cadencia estable', 'Operación dentro de parámetros esperados.'],
+  ['Alta', 'Acción crítica sin confirmar', 'Requiere autorización.'],
+  ['Media', 'Briefing pendiente', 'Contexto pendiente.'],
+  ['Media', 'Documento esperando revisión', 'Borrador por validar.'],
+  ['Baja', 'Cadencia estable', 'Operación estable.'],
 ];

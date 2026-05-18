@@ -496,7 +496,7 @@ export function AgendaCalendar() {
                         <span>{event.priority}</span>
                       </div>
                       <p>{event.context}</p>
-                <div className="agenda-primary-action">Acción primaria: {isBriefed ? "Validar acuerdos" : "Generar briefing"}</div>
+                <div className="agenda-primary-action">Acción: {isBriefed ? "Validar" : "Briefing"}</div>
 
                       <div className="agenda-event-meta">
                         <span>{event.owner}</span>
@@ -506,13 +506,13 @@ export function AgendaCalendar() {
 
                       <div className="agenda-event-actions">
                         <button type="button" onClick={(e) => { e.stopPropagation(); generateBriefing(event); }}>
-                          Generar briefing
+                          Briefing
                         </button>
                         <button type="button" onClick={(e) => { e.stopPropagation(); createReminder(event); }}>
-                          Crear recordatorio
+                          Recordatorio
                         </button>
                         <button type="button" onClick={(e) => { e.stopPropagation(); openContext(event); }}>
-                          Ver guion
+                          Guion
                         </button>
                       </div>
                     </div>
