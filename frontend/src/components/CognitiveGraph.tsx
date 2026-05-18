@@ -140,7 +140,7 @@ export function CognitiveGraph() {
     id === activeId || activeLinks.some(([from, to]) => from === id || to === id);
 
   return (
-    <section className="cognitive-premium-panel">
+    <section className="cognitive-premium-panel cognitive-premium-core-v089">
       <div className="cognitive-premium-head">
         <div>
           <p className="eyebrow">MAPA COGNITIVO EJECUTIVO</p>
@@ -153,8 +153,11 @@ export function CognitiveGraph() {
       </div>
 
       <div className="cognitive-premium-body">
-        <div className="cognitive-orbital-stage" aria-label="Mapa cognitivo interactivo">
-          <div className="cognitive-depth-field" aria-hidden="true" />
+        <div className="cognitive-orbital-stage cognitive-orbital-field-v089" aria-label="Mapa cognitivo interactivo">
+          <div className="cognitive-depth-field cognitive-particle-field-v089" aria-hidden="true" />
+          <div className="cognitive-depth-ring-v089 ring-outer" aria-hidden="true" />
+          <div className="cognitive-depth-ring-v089 ring-mid" aria-hidden="true" />
+          <div className="cognitive-depth-ring-v089 ring-core" aria-hidden="true" />
           <div className="cognitive-orbit orbit-a" aria-hidden="true" />
           <div className="cognitive-orbit orbit-b" aria-hidden="true" />
           <div className="cognitive-orbit orbit-c" aria-hidden="true" />
@@ -186,7 +189,7 @@ export function CognitiveGraph() {
                 <path
                   key={`${from}-${to}`}
                   d={`M ${a.x} ${a.y} Q ${cx} ${cy} ${b.x} ${b.y}`}
-                  className={active ? 'premium-link active' : 'premium-link'}
+                  className={active ? 'premium-link active cognitive-node-system-v089' : 'premium-link cognitive-node-system-v089'}
                   filter={active ? 'url(#linkGlow)' : undefined}
                 />
               );
@@ -195,7 +198,7 @@ export function CognitiveGraph() {
 
           <button
             type="button"
-            className="cognitive-core-orb"
+            className="cognitive-core-orb lia-core-orb-v089"
             onClick={() => setActiveId('riesgos')}
             aria-label="LÍA Core"
           >
