@@ -4759,3 +4759,205 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
   max-width: 42ch;
 }
 /* lia-label-minimal-fix-v093 END */
+
+
+/* lia-responsive-executive-v094 START */
+/* lia-layout-breathing-v094 | lia-right-rail-responsive-v094 | lia-laptop-fit-v094 | lia-mobile-command-v094 */
+
+.lia-responsive-executive-v094 {
+  --lia-v094-gap: clamp(12px, 1.2vw, 18px);
+  --lia-v094-card-pad: clamp(12px, 1.2vw, 18px);
+}
+
+.lia-responsive-executive-v094 .main-content,
+.lia-responsive-executive-v094 .dashboard-content,
+.lia-responsive-executive-v094 .module-content {
+  gap: var(--lia-v094-gap);
+}
+
+.lia-responsive-executive-v094 .panel,
+.lia-responsive-executive-v094 .card,
+.lia-responsive-executive-v094 .document-card,
+.lia-responsive-executive-v094 .agenda-event-card,
+.lia-responsive-executive-v094 .alert-premium-card {
+  padding: var(--lia-v094-card-pad);
+}
+
+.lia-responsive-executive-v094 .module-header,
+.lia-responsive-executive-v094 .dashboard-hero,
+.lia-responsive-executive-v094 .agenda-hero,
+.lia-responsive-executive-v094 .tracking-hero,
+.lia-responsive-executive-v094 .documents-hero,
+.lia-responsive-executive-v094 .alerts-hero {
+  min-height: unset;
+}
+
+.lia-responsive-executive-v094 .quick-actions {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.lia-responsive-executive-v094 .quick-actions button,
+.lia-responsive-executive-v094 .agenda-event-card button,
+.lia-responsive-executive-v094 .document-card button,
+.lia-responsive-executive-v094 .alert-premium-actions button {
+  min-height: 34px;
+  line-height: 1.1;
+  white-space: normal;
+}
+
+.lia-responsive-executive-v094 .assistant-panel,
+.lia-responsive-executive-v094 .right-panel,
+.lia-responsive-executive-v094 .lia-side-panel {
+  min-width: 260px;
+}
+
+.lia-responsive-executive-v094 .assistant-panel h2,
+.lia-responsive-executive-v094 .right-panel h2,
+.lia-responsive-executive-v094 .lia-side-panel h2 {
+  letter-spacing: -0.025em;
+}
+
+.lia-responsive-executive-v094 .assistant-log,
+.lia-responsive-executive-v094 .lia-log,
+.lia-responsive-executive-v094 .bitacora-list {
+  max-height: 130px;
+  overflow-y: auto;
+}
+
+.lia-responsive-executive-v094 .document-grid,
+.lia-responsive-executive-v094 .alerts-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* Laptop 1366px / pantallas compactas */
+@media (max-width: 1440px) {
+  .app-shell:has(.lia-responsive-executive-v094) {
+    grid-template-columns: 144px minmax(0, 1fr) 236px;
+  }
+
+  .lia-responsive-executive-v094 {
+    --lia-v094-gap: 10px;
+    --lia-v094-card-pad: 11px;
+  }
+
+  .lia-responsive-executive-v094 .module-title,
+  .lia-responsive-executive-v094 h1 {
+    font-size: clamp(18px, 1.55vw, 24px);
+  }
+
+  .lia-responsive-executive-v094 h2,
+  .lia-responsive-executive-v094 .card-title {
+    font-size: clamp(14px, 1.15vw, 18px);
+  }
+
+  .lia-responsive-executive-v094 p,
+  .lia-responsive-executive-v094 span,
+  .lia-responsive-executive-v094 small {
+    font-size: clamp(10px, 0.76vw, 13px);
+  }
+
+  .lia-responsive-executive-v094 .quick-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .lia-responsive-executive-v094 .quick-actions button {
+    padding-inline: 8px;
+  }
+
+  .lia-responsive-executive-v094 .agenda-event-card {
+    min-height: unset;
+  }
+
+  .lia-responsive-executive-v094 .document-card {
+    min-height: 188px;
+  }
+
+  .lia-responsive-executive-v094 .alert-premium-card {
+    min-height: 150px;
+  }
+}
+
+/* HP EliteBook / viewport con poco alto */
+@media (max-height: 780px) {
+  .lia-responsive-executive-v094 .module-header,
+  .lia-responsive-executive-v094 .dashboard-hero,
+  .lia-responsive-executive-v094 .agenda-hero,
+  .lia-responsive-executive-v094 .tracking-hero,
+  .lia-responsive-executive-v094 .documents-hero,
+  .lia-responsive-executive-v094 .alerts-hero {
+    padding-block: 12px;
+  }
+
+  .lia-responsive-executive-v094 .status-grid,
+  .lia-responsive-executive-v094 .metrics-grid {
+    gap: 8px;
+  }
+
+  .lia-responsive-executive-v094 .activity-list,
+  .lia-responsive-executive-v094 .bitacora-list {
+    gap: 6px;
+  }
+
+  .lia-responsive-executive-v094 .document-card,
+  .lia-responsive-executive-v094 .alert-premium-card {
+    padding-block: 12px;
+  }
+}
+
+/* Tablet / móvil */
+@media (max-width: 1120px) {
+  .app-shell:has(.lia-responsive-executive-v094) {
+    grid-template-columns: 96px minmax(0, 1fr);
+  }
+
+  .app-shell:has(.lia-responsive-executive-v094) .assistant-panel,
+  .app-shell:has(.lia-responsive-executive-v094) .right-panel,
+  .app-shell:has(.lia-responsive-executive-v094) .lia-side-panel {
+    grid-column: 2;
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    border-left: 0;
+    border-top: 1px solid rgba(125, 211, 252, 0.12);
+  }
+
+  .lia-responsive-executive-v094 .document-grid,
+  .lia-responsive-executive-v094 .alerts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .app-shell:has(.lia-responsive-executive-v094) {
+    grid-template-columns: 1fr;
+  }
+
+  .app-shell:has(.lia-responsive-executive-v094) .sidebar {
+    position: relative;
+    width: 100%;
+    min-height: unset;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .app-shell:has(.lia-responsive-executive-v094) .main-panel,
+  .app-shell:has(.lia-responsive-executive-v094) .assistant-panel,
+  .app-shell:has(.lia-responsive-executive-v094) .right-panel,
+  .app-shell:has(.lia-responsive-executive-v094) .lia-side-panel {
+    grid-column: 1;
+  }
+
+  .lia-responsive-executive-v094 .quick-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .lia-responsive-executive-v094 .calendar-days,
+  .lia-responsive-executive-v094 .month-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* lia-responsive-executive-v094 END */
+

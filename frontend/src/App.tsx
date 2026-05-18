@@ -435,7 +435,7 @@ export default function App() {
         </div>
       </aside>
 
-      <section className="main-panel executive-interaction-layer-v090 lia-visual-executive-refinement-v092 lia-executive-minimalism-v093 lia-label-minimal-fix-v093" onClickCapture={handleModuleActionCapture}>
+      <section className="main-panel executive-interaction-layer-v090 lia-visual-executive-refinement-v092 lia-executive-minimalism-v093 lia-label-minimal-fix-v093 lia-responsive-executive-v094" onClickCapture={handleModuleActionCapture}>
         <header className="topbar">
           <div>
             <p className="eyebrow">SOLUCIONES INFORMÁTICAS</p>
