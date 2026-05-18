@@ -4418,3 +4418,193 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
   box-shadow: 0 0 22px rgba(34, 211, 238, .22) !important;
 }
 
+/* lia-visual-executive-refinement-v092 START */
+/* lia-panel-premium-v092 | lia-log-compact-v092 | lia-quick-actions-premium-v092 | lia-document-card-premium-v092 | lia-alert-card-premium-v092 */
+
+.lia-visual-executive-refinement-v092 {
+  --lia-v092-line: rgba(125, 211, 252, 0.16);
+  --lia-v092-line-soft: rgba(148, 163, 184, 0.11);
+  --lia-v092-surface: rgba(8, 15, 30, 0.72);
+  --lia-v092-surface-strong: rgba(10, 20, 42, 0.84);
+  --lia-v092-glow: rgba(34, 211, 238, 0.16);
+}
+
+/* Panel derecho LÍA: más aire, menos ruido, sensación ejecutiva */
+.lia-panel.lia-executive-copilot-v088 {
+  background:
+    radial-gradient(circle at 22% 0%, rgba(34, 211, 238, 0.11), transparent 34%),
+    linear-gradient(180deg, rgba(5, 12, 26, 0.94), rgba(3, 8, 19, 0.91));
+  border: 1px solid rgba(125, 211, 252, 0.15);
+  box-shadow:
+    0 28px 80px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.075);
+  gap: 0.86rem;
+}
+
+.lia-panel.lia-executive-copilot-v088 .eyebrow {
+  letter-spacing: 0.18em;
+  opacity: 0.74;
+}
+
+.lia-panel.lia-executive-copilot-v088 h3 {
+  letter-spacing: -0.02em;
+}
+
+/* Chat LÍA: lectura más limpia */
+.lia-chat {
+  padding: 0.72rem;
+  border: 1px solid rgba(148, 163, 184, 0.10);
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025));
+}
+
+.lia-chat-stream {
+  gap: 0.58rem;
+  max-height: 178px;
+  padding-right: 0.18rem;
+}
+
+.lia-bubble {
+  border-radius: 17px;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  box-shadow: none;
+}
+
+.lia-bubble.assistant {
+  background:
+    linear-gradient(135deg, rgba(34, 211, 238, 0.105), rgba(59, 130, 246, 0.055));
+  border: 1px solid rgba(125, 211, 252, 0.13);
+}
+
+.lia-bubble.user {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.045));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Botones rápidos: más premium, menos glow */
+.quick-actions {
+  gap: 0.54rem;
+}
+
+.quick-actions button,
+.cockpit-decision-core-v088 button,
+.document-card button {
+  border: 1px solid rgba(125, 211, 252, 0.14);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.078), rgba(255, 255, 255, 0.034));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.065);
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.quick-actions button:hover,
+.cockpit-decision-core-v088 button:hover,
+.document-card button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(125, 211, 252, 0.28);
+  background:
+    linear-gradient(180deg, rgba(34, 211, 238, 0.105), rgba(255, 255, 255, 0.04));
+  box-shadow: 0 10px 28px rgba(34, 211, 238, 0.075);
+}
+
+.cockpit-action-active-v090 {
+  box-shadow:
+    0 0 0 1px rgba(125, 211, 252, 0.26),
+    0 12px 32px rgba(34, 211, 238, 0.12) !important;
+}
+
+/* Bitácora IA: compacta y ejecutiva */
+.lia-log {
+  padding: 0.68rem;
+  border-radius: 20px;
+  border: 1px solid rgba(148, 163, 184, 0.10);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.018));
+  gap: 0.42rem;
+}
+
+.lia-log-item {
+  padding: 0.5rem 0.58rem;
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.08);
+  background: rgba(255, 255, 255, 0.026);
+  font-size: 0.74rem;
+  line-height: 1.35;
+}
+
+.lia-log-item.lia-live-activity-v090 {
+  border-color: rgba(125, 211, 252, 0.18);
+  background:
+    linear-gradient(135deg, rgba(34, 211, 238, 0.09), rgba(255, 255, 255, 0.025));
+}
+
+/* Documentos: tarjetas menos planas */
+.document-card {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(125, 211, 252, 0.13);
+  background:
+    radial-gradient(circle at 12% 0%, rgba(34, 211, 238, 0.09), transparent 32%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.072), rgba(255, 255, 255, 0.026));
+}
+
+.document-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 35%);
+  opacity: 0.42;
+}
+
+.document-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.document-meta-grid {
+  gap: 0.5rem;
+}
+
+.document-progress {
+  height: 5px;
+  opacity: 0.78;
+}
+
+/* Alertas: lenguaje visual más sobrio */
+.alert-premium-card {
+  border-color: rgba(148, 163, 184, 0.12);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.064), rgba(255, 255, 255, 0.025));
+}
+
+.alert-premium-card.severity-alta {
+  box-shadow: inset 3px 0 0 rgba(248, 113, 113, 0.72);
+}
+
+.alert-premium-card.severity-media {
+  box-shadow: inset 3px 0 0 rgba(250, 204, 21, 0.54);
+}
+
+/* Mobile: mantener compacto sin romper */
+@media (max-width: 900px) {
+  .lia-chat-stream {
+    max-height: 240px;
+  }
+
+  .quick-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .lia-panel.lia-executive-copilot-v088 {
+    gap: 0.72rem;
+  }
+}
+/* lia-visual-executive-refinement-v092 END */

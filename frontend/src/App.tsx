@@ -69,7 +69,7 @@ export default function App() {
 
   const addAlert = (title = 'Nuevo recordatorio ejecutivo') => {
     setAlertsList((prev) => [
-      ['Alta', title, 'LÍA creó una alerta mock y requiere confirmación humana.'],
+      ['Alta', title, 'LÍA creó una alerta ejecutiva y requiere confirmación humana.'],
       ...prev,
     ].slice(0, 6));
 
@@ -129,7 +129,7 @@ export default function App() {
 
     const moduleActions: Record<string, string> = {
       'Generar briefing': 'Briefing de evento preparado: contexto, riesgos y acuerdos sugeridos.',
-      'Crear recordatorio': 'Recordatorio preparado: LÍA lo dejó listo para la siguiente ventana operativa.',
+      'Crear recordatorio': 'Recordatorio operativo registrado para la siguiente ventana ejecutiva.',
       'Ver guion': 'Guion ejecutivo abierto: objetivo, preguntas clave y salida esperada.',
       Revisar: 'Revisión ejecutiva iniciada: LÍA priorizó contexto, estado y siguiente acción.',
       Validar: 'Validación ejecutiva registrada: pendiente de confirmación ejecutiva final.',
@@ -435,7 +435,7 @@ export default function App() {
         </div>
       </aside>
 
-      <section className="main-panel executive-interaction-layer-v090" onClickCapture={handleModuleActionCapture}>
+      <section className="main-panel executive-interaction-layer-v090 lia-visual-executive-refinement-v092" onClickCapture={handleModuleActionCapture}>
         <header className="topbar">
           <div>
             <p className="eyebrow">SOLUCIONES INFORMÁTICAS</p>
@@ -483,9 +483,9 @@ export default function App() {
                   </article>
                 <div className="cockpit-decision-actions-v090">
                   {[
-                    ['Priorizar alerta', 'Alerta priorizada: LÍA la movió a seguimiento ejecutivo inmediato.'],
-                    ['Solicitar validación', 'Validación preparada: Dirección recibe contexto y siguiente acción.'],
-                    ['Crear seguimiento', 'Seguimiento creado: LÍA agregó control operativo al flujo de decisiones.'],
+                    ['Priorizar alerta', 'Alerta priorizada en el flujo ejecutivo inmediato.'],
+                    ['Solicitar validación', 'Validación preparada para dirección con contexto y siguiente acción.'],
+                    ['Crear seguimiento', 'Seguimiento agregado al control ejecutivo del día.'],
                   ].map(([label, result]) => (
                     <button
                       key={label}
@@ -613,7 +613,7 @@ export default function App() {
             onClick={() =>
               runLÍAAction(
                 'Briefing de hoy',
-                'Briefing ejecutivo listo: 4 reuniones, 3 acciones críticas y 2 documentos pendientes.',
+                'Briefing ejecutivo preparado: 4 reuniones, 3 acciones críticas y 2 documentos pendientes.',
                 () => addActivity('Briefing ejecutivo del día preparado por LÍA.')
               )
             }
@@ -637,7 +637,7 @@ export default function App() {
             onClick={() =>
               runLÍAAction(
                 'Generar documento',
-                'Documento mock generado y agregado al módulo de documentos.',
+                'Documento ejecutivo generado y agregado al módulo de documentos.',
                 () => addDocument('Documento listo para revisión')
               )
             }
