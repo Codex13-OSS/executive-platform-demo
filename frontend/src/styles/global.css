@@ -4293,3 +4293,128 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
   100% { transform: translateY(-4px) scale(1.01); opacity: 0.68; }
 }
 
+
+/* executive interaction layer v0.9.0 */
+.executive-interaction-layer-v090 {
+  position: relative;
+}
+
+.lia-action-response-v090 {
+  border: 1px solid rgba(125, 211, 252, .32) !important;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(34, 211, 238, .13), transparent 36%),
+    rgba(8, 18, 34, .68) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 0 20px rgba(34, 211, 238, .12);
+  animation: liaResponsePulseV090 1.6s ease-out;
+}
+
+.lia-live-activity-v090 {
+  border-color: rgba(125, 211, 252, .34) !important;
+  background:
+    linear-gradient(135deg, rgba(14, 165, 233, .12), rgba(8, 18, 34, .72)) !important;
+  color: rgba(234, 246, 255, .96) !important;
+  animation: liaActivityInV090 1.4s ease-out;
+}
+
+.lia-simulated-feedback-v090 {
+  position: relative;
+  transition:
+    transform .18s ease,
+    border-color .18s ease,
+    box-shadow .18s ease,
+    background .18s ease;
+}
+
+.lia-simulated-feedback-v090:hover {
+  transform: translateY(-1px);
+  border-color: rgba(125, 211, 252, .34) !important;
+  box-shadow: 0 0 18px rgba(34, 211, 238, .12);
+}
+
+.cockpit-action-active-v090 {
+  border-color: rgba(34, 211, 238, .58) !important;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(34, 211, 238, .18), transparent 42%),
+    rgba(8, 18, 34, .84) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08),
+    0 0 24px rgba(34, 211, 238, .22) !important;
+}
+
+.cockpit-decision-actions-v090 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.cockpit-decision-actions-v090 button {
+  min-height: 36px;
+  border-radius: 12px;
+  border: 1px solid rgba(125, 211, 252, .18);
+  background: rgba(8, 18, 34, .52);
+  color: rgba(234, 246, 255, .92);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  cursor: pointer;
+}
+
+.lia-panel .quick-actions button.cockpit-action-active-v090,
+.document-card button.cockpit-action-active-v090 {
+  color: rgba(234, 246, 255, .98);
+}
+
+@keyframes liaResponsePulseV090 {
+  0% { transform: translateY(4px); opacity: .72; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes liaActivityInV090 {
+  0% { transform: translateX(6px); opacity: .55; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+
+/* interaction completion v0.9.0.1 */
+.lia-executive-copilot-v088 {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.lia-executive-copilot-v088 .lia-chat {
+  min-height: 0;
+}
+
+.lia-executive-copilot-v088 .lia-chat-stream {
+  max-height: clamp(108px, 18vh, 160px);
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.lia-executive-copilot-v088 .quick-actions {
+  flex-shrink: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.lia-executive-copilot-v088 .quick-actions button {
+  min-height: 44px;
+}
+
+.lia-executive-copilot-v088 .lia-log {
+  max-height: clamp(72px, 13vh, 112px);
+  overflow-y: auto;
+}
+
+.lia-executive-copilot-v088 .lia-input {
+  flex-shrink: 0;
+}
+
+.executive-interaction-layer-v090 button.cockpit-action-active-v090 {
+  border-color: rgba(34, 211, 238, .58) !important;
+  box-shadow: 0 0 22px rgba(34, 211, 238, .22) !important;
+}
+

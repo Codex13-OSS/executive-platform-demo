@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import { CognitiveGraph } from './components/CognitiveGraph';
 import { NeuralCore } from './components/NeuralCore';
 import { activity, agenda, alerts, documents, tracking } from './data/liaOsDemoData';
@@ -36,6 +36,7 @@ export default function App() {
   ]);
   const [mobileOrbListening, setMobileOrbListening] = useState(false);
   const [mobileLÍAOpen, setMobileLÍAOpen] = useState(false);
+  const [activeLiaAction, setActiveLiaAction] = useState<string | null>(null);
   const mobileInputRef = useRef<HTMLInputElement | null>(null);
   const orbTimeoutRef = useRef<number | null>(null);
 
@@ -76,31 +77,76 @@ export default function App() {
   };
 
   const runLÍAAction = (instruction: string, result: string, onConfirm?: () => void) => {
-    setLÍAMessages((prev) => [
-      ...prev,
-      { role: 'user' as const, text: instruction },
-    ].slice(-6));
-
+    setActiveLiaAction(instruction);
     setLÍAState('Analizando contexto');
-    pushLÍALog(`Recibido: ${instruction}`);
+    setLÍAMessages((current) => [
+      ...current,
+      { role: 'user', text: instruction },
+      { role: 'assistant', text: 'LÍA procesando solicitud ejecutiva...' },
+    ]);
 
-    setTimeout(() => {
+    window.setTimeout(() => {
       setLÍAState('Ejecutando acción');
-      pushLÍALog('Validación ejecutiva completada.');
-    }, 700);
+      setLÍAMessages((current) => {
+        const next = [...current];
+        const last = next[next.length - 1];
 
-    setTimeout(() => {
-      setLÍAState('Confirmado');
-      pushLÍALog(result);
-      setLÍAMessages((prev) => [
-        ...prev,
-        { role: 'assistant' as const, text: result },
-      ].slice(-6));
-      setLivePulse((prev) => prev + 1);
+        if (last?.role === 'assistant' && last.text === 'LÍA procesando solicitud ejecutiva...') {
+          next[next.length - 1] = { role: 'assistant', text: result };
+          return next;
+        }
+
+        return [...next, { role: 'assistant', text: result }];
+      });
+      setLÍALog((current) => [`Acción simulada completada: ${instruction}`, ...current].slice(0, 6));
+      setLivePulse((pulse) => (pulse + 1) % 8);
       onConfirm?.();
-    }, 1500);
 
-    setTimeout(() => setLÍAState('En línea'), 2800);
+      window.setTimeout(() => {
+        setLÍAState('En línea');
+        setActiveLiaAction(null);
+      }, 1200);
+    }, 650);
+  };
+
+  const handleModuleActionCapture = (event: MouseEvent<HTMLElement>) => {
+    const target = event.target as HTMLElement | null;
+    const button = target?.closest('button');
+
+    if (!button) return;
+
+    if (
+      button.closest('.quick-actions') ||
+      button.closest('.cockpit-decision-actions-v090') ||
+      button.closest('.document-card')
+    ) {
+      return;
+    }
+
+    const label = button.textContent?.replace(/\s+/g, ' ').trim();
+
+    if (!label) return;
+
+    const moduleActions: Record<string, string> = {
+      'Generar briefing': 'Briefing de evento preparado: contexto, riesgos y acuerdos sugeridos.',
+      'Crear recordatorio': 'Recordatorio preparado: LÍA lo dejó listo para la siguiente ventana operativa.',
+      'Ver guion': 'Guion ejecutivo abierto: objetivo, preguntas clave y salida esperada.',
+      Revisar: 'Revisión simulada iniciada: LÍA priorizó contexto, estado y siguiente acción.',
+      Validar: 'Validación simulada registrada: pendiente de confirmación ejecutiva final.',
+      'Limpiar alertas de prueba': 'Alertas de prueba marcadas como revisadas en modo demo.',
+    };
+
+    const result = moduleActions[label];
+
+    if (!result) return;
+
+    button.classList.add('lia-simulated-feedback-v090', 'cockpit-action-active-v090');
+
+    window.setTimeout(() => {
+      button.classList.remove('cockpit-action-active-v090');
+    }, 1400);
+
+    runLÍAAction(label, result, () => addActivity(`${label} ejecutado por LÍA.`));
   };
 
   const sendLÍA = () => {
@@ -389,7 +435,7 @@ export default function App() {
         </div>
       </aside>
 
-      <section className="main-panel">
+      <section className="main-panel executive-interaction-layer-v090" onClickCapture={handleModuleActionCapture}>
         <header className="topbar">
           <div>
             <p className="eyebrow">SOLUCIONES INFORMÁTICAS</p>
@@ -435,6 +481,21 @@ export default function App() {
                     <small>Conexión: Documentos + Seguimiento.</small>
                     <b>Acción: revisión legal en la próxima ventana libre.</b>
                   </article>
+                <div className="cockpit-decision-actions-v090">
+                  {[
+                    ['Priorizar alerta', 'Alerta priorizada: LÍA la movió a seguimiento ejecutivo inmediato.'],
+                    ['Solicitar validación', 'Validación simulada preparada: Dirección recibe contexto y siguiente acción.'],
+                    ['Crear seguimiento', 'Seguimiento creado: LÍA agregó control operativo al flujo de decisiones.'],
+                  ].map(([label, result]) => (
+                    <button
+                      key={label}
+                      className={`lia-simulated-feedback-v090 ${activeLiaAction === label ? 'cockpit-action-active-v090' : ''}`}
+                      onClick={() => runLÍAAction(label, result, () => addActivity(`${label} registrado por LÍA.`))}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
                 </div>
               </aside>
             </section>
@@ -496,7 +557,7 @@ export default function App() {
             </div>
             <div className="document-progress"><i style={{ width: `${62 + (index * 7) % 30}%` }} /></div>
                 <button
-                  className="secondary compact"
+                  className={`secondary compact lia-simulated-feedback-v090 ${activeLiaAction === `Abrir documento: ${title}` ? 'cockpit-action-active-v090' : ''}`}
                   onClick={() =>
                     runLÍAAction(
                       `Abrir documento: ${title}`,
@@ -539,7 +600,7 @@ export default function App() {
           <p className="eyebrow">CONVERSACIÓN</p>
           <div className="lia-chat-stream">
             {liaMessages.map((item, index) => (
-              <div className={`lia-bubble ${item.role}`} key={`${item.role}-${index}-${item.text}`}>
+              <div className={`lia-bubble ${item.role} ${item.role === 'assistant' && index === liaMessages.length - 1 ? 'lia-action-response-v090' : ''}`} key={`${item.role}-${index}-${item.text}`}>
                 {item.text}
               </div>
             ))}
@@ -548,6 +609,7 @@ export default function App() {
 
         <div className="quick-actions">
           <button
+            className={`lia-simulated-feedback-v090 ${activeLiaAction === 'Briefing de hoy' ? 'cockpit-action-active-v090' : ''}`}
             onClick={() =>
               runLÍAAction(
                 'Briefing de hoy',
@@ -559,6 +621,7 @@ export default function App() {
             Briefing de hoy
           </button>
           <button
+            className={`lia-simulated-feedback-v090 ${activeLiaAction === 'Crear recordatorio' ? 'cockpit-action-active-v090' : ''}`}
             onClick={() =>
               runLÍAAction(
                 'Crear recordatorio',
@@ -570,6 +633,7 @@ export default function App() {
             Crear recordatorio
           </button>
           <button
+            className={`lia-simulated-feedback-v090 ${activeLiaAction === 'Generar documento' ? 'cockpit-action-active-v090' : ''}`}
             onClick={() =>
               runLÍAAction(
                 'Generar documento',
@@ -581,6 +645,7 @@ export default function App() {
             Generar documento
           </button>
           <button
+            className={`lia-simulated-feedback-v090 ${activeLiaAction === 'Estado operativo' ? 'cockpit-action-active-v090' : ''}`}
             onClick={() =>
               runLÍAAction(
                 'Estado operativo',
@@ -596,7 +661,7 @@ export default function App() {
         <div className="lia-log">
           <p className="eyebrow">BITÁCORA IA</p>
           {liaLog.map((item, index) => (
-            <div className="lia-log-item" key={`${item}-${index}`}>{item}</div>
+            <div className={`lia-log-item ${index === 0 ? 'lia-live-activity-v090' : ''}`} key={`${item}-${index}`}>{item}</div>
           ))}
         </div>
 
@@ -642,7 +707,7 @@ export default function App() {
 
         <div className="mobile-lia-stream">
           {liaMessages.slice(-3).map((item, index) => (
-            <div className={`lia-bubble ${item.role}`} key={`mobile-${item.role}-${index}-${item.text}`}>
+            <div className={`lia-bubble ${item.role} ${item.role === 'assistant' && index === liaMessages.length - 1 ? 'lia-action-response-v090' : ''}`} key={`mobile-${item.role}-${index}-${item.text}`}>
               {item.text}
             </div>
           ))}
