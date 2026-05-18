@@ -394,7 +394,7 @@ export function AgendaCalendar() {
   };
 
   return (
-    <section className="agenda-calendar-shell">
+    <section className="agenda-calendar-shell agenda-compact-pass-v087">
       <div className="panel module-header agenda-command-header">
         <div>
           <p className="eyebrow">AGENDA INTELIGENTE · CALENDARIO ACTIVO</p>

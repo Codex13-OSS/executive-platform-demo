@@ -78,7 +78,7 @@ export function TrackingCommandView({ legacyTracking = [] }: TrackingCommandView
   );
 
   return (
-    <section className="tracking-command-shell">
+    <section className="tracking-command-shell tracking-control-room-v087">
       <div className="panel tracking-hero-panel">
         <div>
           <p className="eyebrow">SEGUIMIENTO OPERATIVO · SISTEMA VIVO</p>

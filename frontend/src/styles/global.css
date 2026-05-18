@@ -3880,3 +3880,119 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
   }
 }
 
+
+/* cinematic layout pass v0.8.7 */
+.executive-first-screen-v087 {
+  margin-top: -8px;
+  margin-bottom: 8px;
+}
+
+.cockpit-priority-strip-v087 {
+  gap: 12px;
+}
+
+.cockpit-priority-strip-v087 .panel {
+  padding: 14px;
+}
+
+.cockpit-priority-strip-v087 .risk-priority-panel {
+  margin-top: -6px;
+  background: linear-gradient(145deg, rgba(17, 35, 62, 0.82), rgba(10, 23, 42, 0.75));
+  border: 1px solid rgba(109, 205, 255, 0.28);
+  box-shadow: 0 20px 44px rgba(0, 10, 28, 0.45);
+}
+
+.agenda-compact-pass-v087 .agenda-legend,
+.agenda-compact-pass-v087 .agenda-year-grid,
+.agenda-compact-pass-v087 .agenda-timeline,
+.agenda-compact-pass-v087 .agenda-events-list {
+  gap: 8px;
+}
+
+.agenda-compact-pass-v087 .panel {
+  padding: 14px;
+}
+
+.agenda-compact-pass-v087 .agenda-primary-action,
+.agenda-compact-pass-v087 .agenda-quick-action {
+  position: sticky;
+  bottom: 10px;
+}
+
+.tracking-control-room-v087 .tracking-detail-panel,
+.tracking-control-room-v087 .tracking-timeline-panel,
+.tracking-control-room-v087 .tracking-actions-panel {
+  background: linear-gradient(150deg, rgba(13, 28, 49, 0.85), rgba(9, 20, 38, 0.78));
+  border: 1px solid rgba(122, 214, 255, 0.24);
+  box-shadow: 0 18px 38px rgba(1, 10, 28, 0.46);
+}
+
+.tracking-control-room-v087 .tracking-deadline-card {
+  border-radius: 12px;
+  padding: 8px 10px;
+  background: rgba(89, 182, 255, 0.12);
+}
+
+.tracking-control-room-v087 .tracking-actions-panel button,
+.tracking-control-room-v087 .tracking-timeline-panel article {
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.docs-depth-pass-v087 .document-card {
+  background: linear-gradient(152deg, rgba(14, 31, 56, 0.8), rgba(8, 20, 36, 0.78));
+  border: 1px solid rgba(106, 198, 245, 0.24);
+  box-shadow: 0 16px 34px rgba(2, 11, 28, 0.45);
+}
+
+.docs-depth-pass-v087 .document-meta-grid {
+  gap: 8px;
+}
+
+.docs-depth-pass-v087 .document-progress {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.docs-depth-pass-v087 .document-progress i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(116, 209, 255, 0.95), rgba(75, 143, 255, 0.9));
+}
+
+.alerts-control-matrix-v087 .alerts-grid-live {
+  gap: 10px;
+}
+
+.alerts-control-matrix-v087 .alert-premium-card {
+  padding: 14px;
+  border-radius: 14px;
+  background: linear-gradient(150deg, rgba(14, 31, 52, 0.82), rgba(8, 20, 37, 0.8));
+  border: 1px solid rgba(117, 204, 255, 0.2);
+}
+
+.alerts-control-matrix-v087 .alert-premium-card.severity-alta { border-color: rgba(255, 123, 123, 0.44); }
+.alerts-control-matrix-v087 .alert-premium-card.severity-media { border-color: rgba(255, 199, 122, 0.4); }
+.alerts-control-matrix-v087 .alert-premium-card.severity-baja { border-color: rgba(115, 213, 255, 0.35); }
+
+.alerts-control-matrix-v087 .alert-premium-actions button {
+  padding: 0.5rem 0.8rem;
+}
+
+.lia-panel-compact-v087 {
+  gap: 10px;
+}
+
+.lia-panel-compact-v087 .lia-chat-stream,
+.lia-panel-compact-v087 .quick-actions,
+.lia-panel-compact-v087 .lia-log {
+  max-height: 180px;
+  overflow: auto;
+}
+
+.lia-panel-compact-v087 .lia-bubble {
+  padding: 8px 10px;
+}
+

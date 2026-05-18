@@ -399,16 +399,18 @@ export default function App() {
 
         {view === 'dashboard' && (
           <>
-            <section className="kpi-grid">
+            <section className="kpi-grid executive-first-screen-v087">
               <div className="card kpi info"><p>Información activa</p><strong>4</strong><span>2 sesiones con briefing</span></div>
               <div className="card kpi critical"><p>Riesgos críticos</p><strong>8</strong><span>3 requieren decisión</span></div>
               <div className="card kpi warning"><p>Documentos listos</p><strong>12</strong><span>4 listos para validar</span></div>
               <div className="card kpi stable live-card"><p>Cadencia operativa</p><strong>{87 + Math.min(livePulse, 6)}%</strong><span>{livePulse > 0 ? 'actualizado por LÍA' : 'operación estable'}</span></div>
             </section>
 
-            <CognitiveGraph />
+            <div className="executive-first-screen-v087">
+              <CognitiveGraph />
+            </div>
 
-            <section className="dashboard-grid">
+            <section className="dashboard-grid cockpit-priority-strip-v087">
               <div className="panel">
                 <p className="eyebrow">AGENDA INTELIGENTE</p>
                 {agenda.map(([time, title, priority]) => (
@@ -436,7 +438,7 @@ export default function App() {
               </div>
     
 
-          <div className="panel risk-priority-panel">
+          <div className="panel risk-priority-panel cockpit-priority-strip-v087">
             <div className="risk-priority-head">
               <p className="eyebrow">RIESGO / CONEXIÓN / ACCIÓN</p>
               <strong>Panel de decisión</strong>
@@ -465,7 +467,7 @@ export default function App() {
         {view === 'tracking' && <TrackingCommandView legacyTracking={tracking} />}
 
         {view === 'documents' && (
-          <section className="module-grid">
+          <section className="module-grid docs-depth-pass-v087">
             <div className="panel module-header">
               <p className="eyebrow">DOCUMENTOS INTELIGENTES</p>
               <h3>Generación documental asistida</h3>
@@ -506,7 +508,7 @@ export default function App() {
 
       </section>
 
-      <aside className="lia-panel">
+      <aside className="lia-panel lia-panel-compact-v087">
         <div className="lia-orb">
           <NeuralCore />
         </div>

@@ -55,7 +55,7 @@ export function PremiumAlertsView() {
   };
 
   return (
-    <section className="alerts-command-shell">
+    <section className="alerts-command-shell alerts-control-matrix-v087">
       <div className="panel module-header alerts-command-header">
         <div>
           <p className="eyebrow">ALERTAS Y CONFIRMACIONES</p>
