@@ -40,13 +40,44 @@ export default function App() {
   const mobileInputRef = useRef<HTMLInputElement | null>(null);
   const orbTimeoutRef = useRef<number | null>(null);
 
+  const viewContext: Record<View, string> = {
+    dashboard: 'Centro ejecutivo',
+    agenda: 'Agenda ejecutiva',
+    tracking: 'Seguimiento operativo',
+    documents: 'Documentos',
+    alerts: 'Alertas',
+  };
+
+  const buildContextualResult = (instruction: string, fallback: string) => {
+    const lower = instruction.toLowerCase();
+    const context = viewContext[view];
+
+    if (lower.includes('briefing') || lower.includes('guion')) {
+      return `${context}: briefing preparado con prioridades, riesgos y siguiente acción.`;
+    }
+
+    if (lower.includes('recordatorio') || lower.includes('alerta')) {
+      return `${context}: recordatorio preparado. Validación pendiente.`;
+    }
+
+    if (lower.includes('documento') || lower.includes('reporte') || lower.includes('contrato')) {
+      return `${context}: documento listo para revisión y cierre ejecutivo.`;
+    }
+
+    if (lower.includes('estado') || lower.includes('seguimiento') || lower.includes('priorizar')) {
+      return `${context}: prioridad detectada. Acción ejecutiva registrada.`;
+    }
+
+    return fallback;
+  };
+
   const pushLÍALog = (text: string) => {
     const time = new Date().toLocaleTimeString('es-MX', {
       hour: '2-digit',
       minute: '2-digit',
     });
 
-    setLÍALog((prev) => [`${time} · ${text}`, ...prev].slice(0, 4));
+    setLÍALog((prev) => [`${time} · ${text}`, ...prev].slice(0, 6));
   };
 
   const addActivity = (text: string) => {
@@ -60,7 +91,7 @@ export default function App() {
     });
 
     setDocumentsList((prev) => [
-      [title, `Generado ${stamp}`, 'Listo para revisión'],
+      [title, `Preparado ${stamp}`, 'Listo para revisión'],
       ...prev,
     ].slice(0, 6));
 
@@ -69,7 +100,7 @@ export default function App() {
 
   const addAlert = (title = 'Nuevo recordatorio ejecutivo') => {
     setAlertsList((prev) => [
-      ['Alta', title, 'LÍA creó una alerta ejecutiva y requiere confirmación humana.'],
+      ['Alta', title, 'Alerta ejecutiva preparada. Confirmación pendiente.'],
       ...prev,
     ].slice(0, 6));
 
@@ -77,28 +108,30 @@ export default function App() {
   };
 
   const runLÍAAction = (instruction: string, result: string, onConfirm?: () => void) => {
+    const contextualResult = buildContextualResult(instruction, result);
+
     setActiveLiaAction(instruction);
-    setLÍAState('Analizando contexto');
+    setLÍAState('Leyendo contexto');
     setLÍAMessages((current) => [
-      ...current,
-      { role: 'user', text: instruction },
-      { role: 'assistant', text: 'LÍA procesando solicitud ejecutiva...' },
+      ...current.slice(-5),
+      { role: 'user' as const, text: instruction },
+      { role: 'assistant' as const, text: 'Interpretando contexto ejecutivo...' },
     ]);
 
     window.setTimeout(() => {
-      setLÍAState('Ejecutando acción');
+      setLÍAState('Registrando acción');
       setLÍAMessages((current) => {
         const next = [...current];
         const last = next[next.length - 1];
 
-        if (last?.role === 'assistant' && last.text === 'LÍA procesando solicitud ejecutiva...') {
-          next[next.length - 1] = { role: 'assistant', text: result };
-          return next;
+        if (last?.role === 'assistant' && last.text === 'Interpretando contexto ejecutivo...') {
+          next[next.length - 1] = { role: 'assistant' as const, text: contextualResult };
+          return next.slice(-6);
         }
 
-        return [...next, { role: 'assistant', text: result }];
+        return [...next, { role: 'assistant' as const, text: contextualResult }].slice(-6);
       });
-      setLÍALog((current) => [`Acción ejecutiva registrada: ${instruction}`, ...current].slice(0, 6));
+      pushLÍALog(`${viewContext[view]} · ${instruction}`);
       setLivePulse((pulse) => (pulse + 1) % 8);
       onConfirm?.();
 
@@ -106,7 +139,7 @@ export default function App() {
         setLÍAState('En línea');
         setActiveLiaAction(null);
       }, 1200);
-    }, 650);
+    }, 520);
   };
 
   const handleModuleActionCapture = (event: MouseEvent<HTMLElement>) => {
@@ -146,7 +179,7 @@ export default function App() {
       button.classList.remove('cockpit-action-active-v090');
     }, 1400);
 
-    runLÍAAction(label, result, () => addActivity(`${label} ejecutado por LÍA.`));
+    runLÍAAction(label, result, () => addActivity(`${label}: acción ejecutiva registrada.`));
   };
 
   const sendLÍA = () => {
@@ -158,25 +191,25 @@ export default function App() {
     if (lower.includes('documento') || lower.includes('reporte') || lower.includes('contrato')) {
       runLÍAAction(
         clean,
-        'Documento generado y agregado al módulo documental.',
+        'Documento preparado para revisión y enlazado al módulo documental.',
         () => addDocument(clean.length > 34 ? `${clean.slice(0, 34)}…` : clean)
       );
     } else if (lower.includes('recordatorio') || lower.includes('alerta')) {
       runLÍAAction(
         clean,
-        'Recordatorio creado y agregado al centro de alertas.',
+        'Recordatorio preparado con confirmación pendiente.',
         () => addAlert(clean.length > 36 ? `${clean.slice(0, 36)}…` : clean)
       );
     } else if (lower.includes('briefing') || lower.includes('agenda')) {
       runLÍAAction(
         clean,
-        'Briefing generado y registrado en actividad reciente.',
-        () => addActivity('LÍA generó un briefing ejecutivo solicitado por texto.')
+        'Briefing preparado y registrado en actividad reciente.',
+        () => addActivity('Briefing ejecutivo solicitado por texto.')
       );
     } else {
       runLÍAAction(
         clean,
-        'Solicitud procesada. El centro ejecutivo fue actualizado visualmente.',
+        'Instrucción recibida. Contexto ejecutivo actualizado.',
         () => addActivity(`LÍA procesó: ${clean.length > 44 ? `${clean.slice(0, 44)}…` : clean}`)
       );
     }
@@ -190,7 +223,7 @@ export default function App() {
     setMobileOrbListening(true);
     setLÍAState('Escuchando...');
     setLÍAMessages((prev) => {
-      const prompt = { role: 'assistant' as const, text: 'LÍA lista. ¿Qué necesitas?' };
+      const prompt = { role: 'assistant' as const, text: 'LÍA lista. Indica prioridad, documento o alerta.' };
       const last = prev[prev.length - 1];
 
       if (last?.role === prompt.role && last.text === prompt.text) {
@@ -265,7 +298,7 @@ export default function App() {
           <div className="access-panel-head">
             <p className="login-eyebrow">ACCESO EJECUTIVO</p>
             <h2>Verificación requerida</h2>
-            <p>Ingresa con credenciales demo para iniciar el centro de comando.</p>
+            <p>Ingresa con tus credenciales para iniciar el centro de comando.</p>
           </div>
 
           <div className="login-weather-integrated">
@@ -277,8 +310,8 @@ export default function App() {
             onSubmit={(event) => {
               event.preventDefault();
 
-              if (loginEmail !== 'demo@plataforma.com' || loginPassword !== 'demo1234') {
-                setLoginError('Credenciales demo: demo@plataforma.com / demo1234');
+              if (loginEmail !== 'ejecutivo@lia.local' || loginPassword !== 'lia2026') {
+                setLoginError('Credenciales de acceso: ejecutivo@lia.local / lia2026');
                 return;
               }
 
@@ -292,7 +325,7 @@ export default function App() {
                 type="email"
                 value={loginEmail}
                 onChange={(event) => setLoginEmail(event.target.value)}
-                placeholder="demo@plataforma.com"
+                placeholder="ejecutivo@lia.local"
                 autoComplete="email"
                 className="login-autofill-dark-fix-v088"
               />
@@ -304,7 +337,7 @@ export default function App() {
                 type="password"
                 value={loginPassword}
                 onChange={(event) => setLoginPassword(event.target.value)}
-                placeholder="demo1234"
+                placeholder="lia2026"
                 autoComplete="current-password"
                 className="login-autofill-dark-fix-v088"
               />
@@ -435,7 +468,7 @@ export default function App() {
         </div>
       </aside>
 
-      <section className="main-panel executive-interaction-layer-v090 lia-visual-executive-refinement-v092 lia-executive-minimalism-v093 lia-label-minimal-fix-v093 lia-responsive-executive-v094 lia-orb-premium-v095" onClickCapture={handleModuleActionCapture}>
+      <section className="main-panel executive-interaction-layer-v090 lia-visual-executive-refinement-v092 lia-executive-minimalism-v093 lia-label-minimal-fix-v093 lia-responsive-executive-v094 lia-orb-premium-v095 lia-executive-intelligence-v096" onClickCapture={handleModuleActionCapture}>
         <header className="topbar">
           <div>
             <p className="eyebrow">SOLUCIONES INFORMÁTICAS</p>
@@ -490,7 +523,7 @@ export default function App() {
                     <button
                       key={label}
                       className={`lia-simulated-feedback-v090 ${activeLiaAction === label ? 'cockpit-action-active-v090' : ''}`}
-                      onClick={() => runLÍAAction(label, result, () => addActivity(`${label} registrado por LÍA.`))}
+                      onClick={() => runLÍAAction(label, result, () => addActivity(`${label}: acción ejecutiva registrada.`))}
                     >
                       {label}
                     </button>
@@ -613,8 +646,8 @@ export default function App() {
             onClick={() =>
               runLÍAAction(
                 'Briefing',
-                'Briefing preparado: 4 reuniones, 3 acciones críticas.',
-                () => addActivity('Briefing ejecutivo del día preparado por LÍA.')
+                'Briefing preparado: prioridades, riesgos y decisiones clave.',
+                () => addActivity('Briefing ejecutivo del día preparado.')
               )
             }
           >
@@ -625,8 +658,8 @@ export default function App() {
             onClick={() =>
               runLÍAAction(
                 'Recordatorio',
-                'Recordatorio mock programado y registrado en el centro de alertas.',
-                () => addAlert('Recordatorio ejecutivo creado por LÍA')
+                'Recordatorio preparado con validación pendiente.',
+                () => addAlert('Recordatorio ejecutivo preparado')
               )
             }
           >
@@ -649,8 +682,8 @@ export default function App() {
             onClick={() =>
               runLÍAAction(
                 'Estado',
-                'Estado actualizado.',
-                () => addActivity('LÍA recalculó el estado operativo general.')
+                'Estado recalculado: prioridades, riesgos y operación bajo lectura.',
+                () => addActivity('Estado operativo general actualizado.')
               )
             }
           >
