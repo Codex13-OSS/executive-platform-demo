@@ -18,6 +18,7 @@ Este paquete contiene la guía ejecutiva para presentar LÍA O.S como demo premi
 3. release-notes-v1.0.0-rc.md
 4. demo-access.md
 5. executive-narrative.md
+6. client-demo-scenarios.md
 
 ## Comando local recomendado
 
