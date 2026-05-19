@@ -5679,3 +5679,95 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
 }
 
 /* lia-module-content-v098 END */
+
+/* lia-interaction-flow-v099 START */
+/* lia-flow-continuity-v099 | lia-contextual-actions-v099 | lia-module-handshake-v099 | lia-action-bridge-v099 */
+
+.lia-interaction-flow-v099 .tracking-lane-card,
+.lia-interaction-flow-v099 .alert-premium-card,
+.lia-interaction-flow-v099 .available-slots button,
+.lia-interaction-flow-v099 .agenda-event-actions button,
+.lia-interaction-flow-v099 .tracking-actions-panel button {
+  position: relative;
+  overflow: hidden;
+}
+
+.lia-interaction-flow-v099 .tracking-lane-card::after,
+.lia-interaction-flow-v099 .alert-premium-card::after,
+.lia-interaction-flow-v099 .available-slots button::after,
+.lia-interaction-flow-v099 .agenda-event-actions button::after,
+.lia-interaction-flow-v099 .tracking-actions-panel button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(125, 211, 252, 0.16), transparent 34%),
+    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.07), transparent);
+  opacity: 0;
+  transform: translateX(-28%);
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 480ms ease;
+}
+
+.lia-interaction-flow-v099 .tracking-lane-card:hover::after,
+.lia-interaction-flow-v099 .alert-premium-card:hover::after,
+.lia-interaction-flow-v099 .available-slots button:hover::after,
+.lia-interaction-flow-v099 .agenda-event-actions button:hover::after,
+.lia-interaction-flow-v099 .tracking-actions-panel button:hover::after,
+.lia-interaction-flow-v099 .cockpit-action-active-v090::after {
+  opacity: 1;
+  transform: translateX(28%);
+}
+
+.lia-interaction-flow-v099 .tracking-lane-card.active,
+.lia-interaction-flow-v099 .agenda-event-card.selected,
+.lia-interaction-flow-v099 .alert-premium-card:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 20px 54px rgba(14, 165, 233, 0.12);
+}
+
+.lia-interaction-flow-v099 .lia-action-response-v090 {
+  border-color: rgba(125, 211, 252, 0.28);
+  background:
+    linear-gradient(135deg, rgba(8, 47, 73, 0.62), rgba(15, 23, 42, 0.42)),
+    rgba(15, 23, 42, 0.46);
+}
+
+.lia-interaction-flow-v099 .lia-log-item:first-of-type {
+  color: rgba(240, 249, 255, 0.94);
+}
+
+/* lia-interaction-flow-v099 END */
+
+/* lia-interaction-flow-v099-microfix START */
+.lia-interaction-flow-v099 .tracking-lane-card::after,
+.lia-interaction-flow-v099 .alert-premium-card::after,
+.lia-interaction-flow-v099 .available-slots button::after,
+.lia-interaction-flow-v099 .agenda-event-actions button::after,
+.lia-interaction-flow-v099 .tracking-actions-panel button::after {
+  z-index: 0;
+  opacity: 0;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(125, 211, 252, 0.09), transparent 36%),
+    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.035), transparent);
+}
+
+.lia-interaction-flow-v099 .tracking-lane-card > *,
+.lia-interaction-flow-v099 .alert-premium-card > *,
+.lia-interaction-flow-v099 .available-slots button > *,
+.lia-interaction-flow-v099 .agenda-event-actions button > *,
+.lia-interaction-flow-v099 .tracking-actions-panel button > * {
+  position: relative;
+  z-index: 1;
+}
+
+.lia-interaction-flow-v099 .tracking-lane-card:hover::after,
+.lia-interaction-flow-v099 .alert-premium-card:hover::after,
+.lia-interaction-flow-v099 .available-slots button:hover::after,
+.lia-interaction-flow-v099 .agenda-event-actions button:hover::after,
+.lia-interaction-flow-v099 .tracking-actions-panel button:hover::after,
+.lia-interaction-flow-v099 .cockpit-action-active-v090::after {
+  opacity: 0.72;
+}
+/* lia-interaction-flow-v099-microfix END */

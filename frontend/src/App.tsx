@@ -52,23 +52,39 @@ export default function App() {
     const lower = instruction.toLowerCase();
     const context = viewContext[view];
 
+    if (lower.includes('abrir documento')) {
+      return `${context}: documento abierto con estado, responsable y decisión pendiente.`;
+    }
+
+    if (lower.includes('priorizar')) {
+      return `${context}: prioridad elevada. LÍA conectó alerta, responsable y siguiente cierre.`;
+    }
+
+    if (lower.includes('validación') || lower.includes('validar')) {
+      return `${context}: validación registrada. Queda pendiente confirmación humana y criterio de cierre.`;
+    }
+
     if (lower.includes('briefing') || lower.includes('guion')) {
-      return `${context}: briefing preparado con prioridades, riesgos y siguiente acción.`;
+      return `${context}: briefing listo con objetivo, riesgos, preguntas clave y salida esperada.`;
     }
 
     if (lower.includes('recordatorio') || lower.includes('alerta')) {
-      return `${context}: recordatorio preparado. Validación pendiente.`;
+      return `${context}: alerta preparada con origen, estado y acción recomendada.`;
     }
 
-    if (lower.includes('documento') || lower.includes('reporte') || lower.includes('contrato')) {
-      return `${context}: documento listo para revisión y cierre ejecutivo.`;
+    if (lower.includes('bloquear') || lower.includes('reservar')) {
+      return `${context}: bloque reservado para cerrar pendiente con responsable y resultado esperado.`;
     }
 
-    if (lower.includes('estado') || lower.includes('seguimiento') || lower.includes('priorizar')) {
-      return `${context}: prioridad detectada. Acción ejecutiva registrada.`;
+    if (lower.includes('responsable') || lower.includes('seguimiento') || lower.includes('frente')) {
+      return `${context}: seguimiento conectado. LÍA identificó responsable, riesgo y próximo movimiento.`;
     }
 
-    return fallback;
+    if (lower.includes('estado')) {
+      return `${context}: estado actualizado con prioridad, riesgo y continuidad operativa.`;
+    }
+
+    return `${context}: ${fallback}`;
   };
 
   const pushLÍALog = (text: string) => {
@@ -108,6 +124,7 @@ export default function App() {
   };
 
   const runLÍAAction = (instruction: string, result: string, onConfirm?: () => void) => {
+    const flowContext = viewContext[view];
     const contextualResult = buildContextualResult(instruction, result);
 
     setActiveLiaAction(instruction);
@@ -115,7 +132,7 @@ export default function App() {
     setLÍAMessages((current) => [
       ...current.slice(-5),
       { role: 'user' as const, text: instruction },
-      { role: 'assistant' as const, text: 'Interpretando contexto ejecutivo...' },
+      { role: 'assistant' as const, text: `Leyendo ${flowContext.toLowerCase()}, intención y siguiente movimiento...` },
     ]);
 
     window.setTimeout(() => {
@@ -124,14 +141,14 @@ export default function App() {
         const next = [...current];
         const last = next[next.length - 1];
 
-        if (last?.role === 'assistant' && last.text === 'Interpretando contexto ejecutivo...') {
+        if (last?.role === 'assistant' && last.text.startsWith('Leyendo ')) {
           next[next.length - 1] = { role: 'assistant' as const, text: contextualResult };
           return next.slice(-6);
         }
 
         return [...next, { role: 'assistant' as const, text: contextualResult }].slice(-6);
       });
-      pushLÍALog(`${viewContext[view]} · ${instruction}`);
+      pushLÍALog(`${flowContext} · ${instruction} · conectado`);
       setLivePulse((pulse) => (pulse + 1) % 8);
       onConfirm?.();
 
@@ -156,20 +173,64 @@ export default function App() {
       return;
     }
 
-    const label = button.textContent?.replace(/\s+/g, ' ').trim();
+    const rawLabel = button.textContent?.replace(/\s+/g, ' ').trim();
 
-    if (!label) return;
+    if (!rawLabel) return;
 
     const moduleActions: Record<string, string> = {
-      'Briefing': 'Briefing de evento preparado: contexto, riesgos y acuerdos sugeridos.',
-      'Recordatorio': 'Recordatorio operativo registrado para la siguiente ventana ejecutiva.',
-      'Guion': 'Guion ejecutivo abierto: objetivo, preguntas clave y salida esperada.',
+      Briefing: 'Briefing de evento preparado: contexto, riesgos y acuerdos sugeridos.',
+      Recordatorio: 'Recordatorio operativo registrado para la siguiente ventana ejecutiva.',
+      Guion: 'Guion ejecutivo abierto: objetivo, preguntas clave y salida esperada.',
       Revisar: 'Revisión ejecutiva iniciada: LÍA priorizó contexto, estado y siguiente acción.',
       Validar: 'Validación ejecutiva registrada: pendiente de confirmación ejecutiva final.',
-      'Limpiar alertas': 'Alertas marcadas para revisión ejecutiva.',
+      'Depurar alertas': 'Alertas depuradas. LÍA conserva la lectura prioritaria del centro ejecutivo.',
+      'Confirmar responsables de proceso crítico.': 'Responsables del proceso crítico listos para confirmación y cierre.',
+      'Generar resumen ejecutivo antes de junta de dirección.': 'Resumen ejecutivo preparado con decisiones, riesgos y puntos de cierre.',
+      'Validar documento comercial pendiente.': 'Documento comercial enviado a validación con criterio de cierre.',
+      'Bloquear espacio de revisión estratégica.': 'Bloque estratégico preparado para revisión y seguimiento.',
     };
 
-    const result = moduleActions[label];
+    let label = rawLabel;
+    let result = moduleActions[rawLabel] ?? '';
+    let activityText = `${label}: acción ejecutiva registrada.`;
+
+    const alertCard = button.closest('.alert-premium-card');
+    const trackingLane = button.closest('.tracking-lane-card');
+    const trackingAction = button.closest('.tracking-actions-panel');
+    const availableSlot = button.closest('.available-slots');
+    const agendaAction = button.closest('.agenda-event-actions');
+
+    if (trackingLane) {
+      const laneName = trackingLane.querySelector('.tracking-lane-top span')?.textContent?.trim() ?? 'Frente operativo';
+      const laneStatus = trackingLane.querySelector('.tracking-lane-top strong')?.textContent?.trim() ?? 'Estado activo';
+
+      label = `Abrir frente: ${laneName}`;
+      result = `Seguimiento operativo: frente ${laneName} abierto. Estado ${laneStatus}. LÍA preparó responsable, riesgo y próximo movimiento.`;
+      activityText = `${laneName}: frente operativo revisado.`;
+    } else if (alertCard && (rawLabel === 'Revisar' || rawLabel === 'Validar')) {
+      const alertTitle = alertCard.querySelector('h4')?.textContent?.trim() ?? 'Alerta ejecutiva';
+
+      label = `${rawLabel} alerta: ${alertTitle}`;
+      result = `Alertas: ${alertTitle}. LÍA vinculó origen, estado y criterio de validación.`;
+      activityText = `${alertTitle}: ${rawLabel.toLowerCase()} registrado.`;
+    } else if (availableSlot) {
+      const slotLabel = button.querySelector('strong')?.textContent?.trim() ?? 'Bloque disponible';
+      const slotTime = button.querySelector('span')?.textContent?.trim() ?? 'Horario abierto';
+
+      label = `Reservar bloque: ${slotLabel}`;
+      result = `Agenda ejecutiva: bloque ${slotTime} reservado para ${slotLabel}. LÍA preparó objetivo y salida esperada.`;
+      activityText = `${slotLabel}: bloque reservado en agenda.`;
+    } else if (agendaAction && moduleActions[rawLabel]) {
+      const eventCard = button.closest('.agenda-event-card');
+      const eventTitle = eventCard?.querySelector('h5')?.textContent?.trim() ?? 'Junta ejecutiva';
+
+      label = `${rawLabel}: ${eventTitle}`;
+      result = `${moduleActions[rawLabel]} Evento: ${eventTitle}.`;
+      activityText = `${eventTitle}: ${rawLabel.toLowerCase()} preparado.`;
+    } else if (trackingAction && !result) {
+      result = `Seguimiento operativo: movimiento preparado. ${rawLabel}`;
+      activityText = `${rawLabel}: movimiento recomendado registrado.`;
+    }
 
     if (!result) return;
 
@@ -179,7 +240,7 @@ export default function App() {
       button.classList.remove('cockpit-action-active-v090');
     }, 1400);
 
-    runLÍAAction(label, result, () => addActivity(`${label}: acción ejecutiva registrada.`));
+    runLÍAAction(label, result, () => addActivity(activityText));
   };
 
   const sendLÍA = () => {
@@ -191,25 +252,25 @@ export default function App() {
     if (lower.includes('documento') || lower.includes('reporte') || lower.includes('contrato')) {
       runLÍAAction(
         clean,
-        'Documento preparado para revisión y enlazado al módulo documental.',
+        'Documento conectado al centro documental con estado, responsable y decisión pendiente.',
         () => addDocument(clean.length > 34 ? `${clean.slice(0, 34)}…` : clean)
       );
     } else if (lower.includes('recordatorio') || lower.includes('alerta')) {
       runLÍAAction(
         clean,
-        'Recordatorio preparado con confirmación pendiente.',
+        'Recordatorio conectado al centro de alertas con origen, prioridad y validación pendiente.',
         () => addAlert(clean.length > 36 ? `${clean.slice(0, 36)}…` : clean)
       );
     } else if (lower.includes('briefing') || lower.includes('agenda')) {
       runLÍAAction(
         clean,
-        'Briefing preparado y registrado en actividad reciente.',
+        'Briefing conectado a agenda: objetivo, riesgos y salida esperada preparados.',
         () => addActivity('Briefing ejecutivo solicitado por texto.')
       );
     } else {
       runLÍAAction(
         clean,
-        'Instrucción recibida. Contexto ejecutivo actualizado.',
+        'Instrucción conectada al flujo ejecutivo. LÍA actualizó contexto y siguiente movimiento.',
         () => addActivity(`LÍA procesó: ${clean.length > 44 ? `${clean.slice(0, 44)}…` : clean}`)
       );
     }
@@ -468,7 +529,7 @@ export default function App() {
         </div>
       </aside>
 
-      <section className="main-panel executive-interaction-layer-v090 lia-visual-executive-refinement-v092 lia-executive-minimalism-v093 lia-label-minimal-fix-v093 lia-responsive-executive-v094 lia-orb-premium-v095 lia-executive-intelligence-v096 lia-visual-density-v097 lia-module-content-v098" onClickCapture={handleModuleActionCapture}>
+      <section className="main-panel executive-interaction-layer-v090 lia-visual-executive-refinement-v092 lia-executive-minimalism-v093 lia-label-minimal-fix-v093 lia-responsive-executive-v094 lia-orb-premium-v095 lia-executive-intelligence-v096 lia-visual-density-v097 lia-module-content-v098 lia-interaction-flow-v099" onClickCapture={handleModuleActionCapture}>
         <header className="topbar">
           <div>
             <p className="eyebrow">SOLUCIONES INFORMÁTICAS</p>
