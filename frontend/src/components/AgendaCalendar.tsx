@@ -170,7 +170,7 @@ const baseWeek: AgendaDay[] = [
         topics: ['Prioridades', 'Riesgos', 'Agenda', 'Documentos'],
         questions: ['¿Qué debe resolverse hoy?', '¿Qué reunión necesita preparación?', '¿Qué alerta requiere validación?'],
         risks: ['Saturación de agenda', 'Falta de contexto', 'Decisiones reactivas'],
-        outputs: ['Plan del día', 'Briefings generados', 'Alertas priorizadas'],
+        outputs: ['Plan del día', 'Briefings preparados', 'Alertas priorizadas'],
         docs: ['Resumen diario', 'Mapa cognitivo'],
       },
       {
@@ -343,7 +343,7 @@ export function AgendaCalendar() {
   const generateBriefing = (event: AgendaEvent) => {
     setSelectedEventId(event.id);
     setBriefedEvents((prev) => [...new Set([...prev, event.id])]);
-    saveAgendaAlert(`Agenda · ${event.time}`, `Briefing generado para ${event.title}. Guion, temas y preguntas listas.`);
+    saveAgendaAlert(`Agenda · ${event.time}`, `Briefing preparado para ${event.title}. Guion, riesgos y preguntas clave preparados.`);
   };
 
   const createReminder = (event: AgendaEvent) => {
@@ -400,7 +400,7 @@ export function AgendaCalendar() {
           <p className="eyebrow">AGENDA INTELIGENTE · CALENDARIO ACTIVO</p>
           <h3>Calendario ejecutivo contextual</h3>
           <p className="muted">
-            Semana operativa enlazada a briefings, alertas y decisiones de ejecución.
+            Semana ejecutiva conectada a prioridades, alertas y decisiones de cierre.
           </p>
         </div>
 
@@ -462,7 +462,7 @@ export function AgendaCalendar() {
         <section className="panel agenda-timeline-panel">
           <div className="agenda-section-head">
             <div>
-              <p className="eyebrow">DÍA SELECCIONADO</p>
+              <p className="eyebrow">DÍA EJECUTIVO</p>
               <h4>{day.label} {day.date}</h4>
             </div>
             <span className={`agenda-state-pill day-${day.tone}`}>{day.state}</span>
@@ -471,8 +471,8 @@ export function AgendaCalendar() {
           <div className="agenda-timeline">
             {day.events.length === 0 ? (
               <div className="agenda-empty-state">
-                <strong>Día sin citas críticas</strong>
-                <span>Disponible para planificación ejecutiva o bloqueos operativos.</span>
+                <strong>Día sin decisiones críticas</strong>
+                <span>Disponible para planeación, revisión documental o seguimiento estratégico.</span>
               </div>
             ) : (
               day.events.map((event) => {
@@ -496,7 +496,7 @@ export function AgendaCalendar() {
                         <span>{event.priority}</span>
                       </div>
                       <p>{event.context}</p>
-                <div className="agenda-primary-action">Acción: {isBriefed ? "Validar" : "Briefing"}</div>
+                <div className="agenda-primary-action">Siguiente movimiento: {isBriefed ? "Validar" : "Briefing"}</div>
 
                       <div className="agenda-event-meta">
                         <span>{event.owner}</span>
@@ -528,7 +528,7 @@ export function AgendaCalendar() {
             <section className="panel agenda-briefing-panel">
               <div className="agenda-section-head">
                 <div>
-                  <p className="eyebrow">BRIEFING DE JUNTA</p>
+                  <p className="eyebrow">PREPARACIÓN DE JUNTA</p>
                   <h4>{selectedEvent.title}</h4>
                 </div>
                 <span className={`meeting-readiness priority-${selectedEvent.priority.toLowerCase()}`}>
@@ -537,7 +537,7 @@ export function AgendaCalendar() {
               </div>
 
               <div className="briefing-script">
-                <span>Qué decir</span>
+                <span>Guion ejecutivo</span>
                 <strong>{selectedEvent.talkTrack}</strong>
               </div>
 
@@ -548,7 +548,7 @@ export function AgendaCalendar() {
 
               <div className="briefing-grid">
                 <div className="briefing-list">
-                  <span>Temas a tocar</span>
+                  <span>Temas clave</span>
                   {selectedEvent.topics.map((topic) => <em key={topic}>{topic}</em>)}
                 </div>
 
@@ -563,13 +563,13 @@ export function AgendaCalendar() {
                 </div>
 
                 <div className="briefing-list">
-                  <span>Salida esperada</span>
+                  <span>Resultado esperado</span>
                   {selectedEvent.outputs.map((output) => <em key={output}>{output}</em>)}
                 </div>
               </div>
 
               <div className="briefing-docs">
-                <span>Contexto requerido</span>
+                <span>Material requerido</span>
                 {selectedEvent.docs.map((doc) => <strong key={doc}>{doc}</strong>)}
               </div>
             </section>
@@ -578,8 +578,8 @@ export function AgendaCalendar() {
           <section className="panel agenda-availability-panel">
             <div className="agenda-section-head">
               <div>
-                <p className="eyebrow">DISPONIBILIDAD</p>
-                <h4>Espacios abiertos</h4>
+                <p className="eyebrow">VENTANAS DISPONIBLES</p>
+                <h4>Bloques útiles</h4>
               </div>
             </div>
 
@@ -588,20 +588,20 @@ export function AgendaCalendar() {
                 <button key={slot.id} type="button" onClick={() => blockSlot(slot)}>
                   <span>{slot.time}</span>
                   <strong>{slot.label}</strong>
-                  <em>Bloquear espacio</em>
+                  <em>Reservar bloque</em>
                 </button>
               ))}
             </div>
 
             <div className="agenda-ai-brief">
-              <p className="eyebrow">RECOMENDACIÓN LÍA</p>
+              <p className="eyebrow">LECTURA LÍA</p>
               <strong>
                 {day.tone === 'critical'
                   ? 'Prioriza riesgos antes de confirmar nuevas citas.'
-                  : 'Hay ventanas disponibles para preparar contexto.'}
+                  : 'Hay ventanas útiles para preparar contexto y cerrar pendientes.'}
               </strong>
               <span>
-                LÍA puede convertir espacios libres en sesiones de revisión, recordatorios o bloqueos operativos.
+                LÍA puede convertir espacios libres en revisión documental, confirmaciones o sesiones de cierre.
               </span>
             </div>
           </section>

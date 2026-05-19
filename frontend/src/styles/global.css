@@ -5635,3 +5635,47 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
 }
 
 /* lia-visual-density-v097 END */
+
+/* lia-module-content-v098 START */
+/* lia-executive-content-polish-v098 | lia-module-copy-v098 | lia-decision-language-v098 | lia-product-feel-v098 */
+
+.lia-module-content-v098 .module-header h3,
+.lia-module-content-v098 .tracking-hero-panel h3,
+.lia-module-content-v098 .agenda-planner-header h3,
+.lia-module-content-v098 .alerts-command-header h3 {
+  letter-spacing: -0.045em;
+}
+
+.lia-module-content-v098 .kpi p,
+.lia-module-content-v098 .risk-priority-head strong,
+.lia-module-content-v098 .agenda-section-head h4,
+.lia-module-content-v098 .tracking-detail-head h4,
+.lia-module-content-v098 .alert-premium-card h4,
+.lia-module-content-v098 .document-card h4 {
+  text-wrap: balance;
+}
+
+.lia-module-content-v098 .risk-priority-list article b,
+.lia-module-content-v098 .tracking-next-action strong,
+.lia-module-content-v098 .briefing-script strong {
+  color: rgba(224, 242, 254, 0.94);
+}
+
+.lia-module-content-v098 .document-meta-grid strong,
+.lia-module-content-v098 .alert-meta span,
+.lia-module-content-v098 .tracking-detail-metrics strong {
+  letter-spacing: -0.015em;
+}
+
+.lia-module-content-v098 .agenda-primary-action {
+  border-color: rgba(125, 211, 252, 0.18);
+  background:
+    linear-gradient(90deg, rgba(14, 165, 233, 0.14), rgba(15, 23, 42, 0.22));
+}
+
+.lia-module-content-v098 .alerts-toolbar span,
+.lia-module-content-v098 .tracking-legacy-signal {
+  color: rgba(186, 230, 253, 0.72);
+}
+
+/* lia-module-content-v098 END */

@@ -21,7 +21,7 @@ const nodes: GraphNode[] = [
     y: 38,
     depth: 'mid',
     status: 'active',
-    detail: '2 reuniones requieren contexto previo y briefing ejecutivo.',
+    detail: '2 reuniones requieren contexto previo, responsables y criterio de cierre.',
     actions: ['Briefing', 'Cruzar documentos', 'Preparar minuta'],
   },
   {
@@ -32,7 +32,7 @@ const nodes: GraphNode[] = [
     y: 22,
     depth: 'front',
     status: 'risk',
-    detail: '3 señales requieren validación antes de ejecutar decisiones críticas.',
+    detail: '3 señales requieren validación antes de autorizar movimiento crítico.',
     actions: ['Priorizar alerta', 'Solicitar validación', 'Crear seguimiento'],
   },
   {
@@ -43,7 +43,7 @@ const nodes: GraphNode[] = [
     y: 20,
     depth: 'back',
     status: 'stable',
-    detail: 'Información de operación, documentos y agenda enlazada al núcleo.',
+    detail: 'Agenda, documentos y operación conectados al núcleo de decisión.',
     actions: ['Actualizar contexto', 'Ver dependencias', 'Recalcular prioridad'],
   },
   {
@@ -54,8 +54,8 @@ const nodes: GraphNode[] = [
     y: 39,
     depth: 'front',
     status: 'priority',
-    detail: '4 decisiones dependen de agenda, riesgos y documentos activos.',
-    actions: ['Preparar decisión', 'Ver responsables', 'Crear aprobación'],
+    detail: '4 decisiones dependen de responsables, riesgos y documentos activos.',
+    actions: ['Preparar decisión', 'Ver responsables', 'Preparar aprobación'],
   },
   {
     id: 'operacion',
@@ -65,7 +65,7 @@ const nodes: GraphNode[] = [
     y: 68,
     depth: 'mid',
     status: 'active',
-    detail: 'Cadencia operativa estable con actualización de actividad reciente.',
+    detail: 'Cadencia operativa bajo control con bitácora ejecutiva activa.',
     actions: ['Ver estado', 'Medir avance', 'Abrir bitácora'],
   },
   {
@@ -76,8 +76,8 @@ const nodes: GraphNode[] = [
     y: 80,
     depth: 'front',
     status: 'active',
-    detail: '12 documentos detectados; 4 generados por LÍA esta sesión.',
-    actions: ['Generar documento', 'Revisar pendientes', 'Crear reporte'],
+    detail: '12 documentos activos; 4 requieren validación ejecutiva.',
+    actions: ['Preparar documento', 'Validar pendientes', 'Crear reporte'],
   },
   {
     id: 'seguimiento',
@@ -204,7 +204,7 @@ export function CognitiveGraph() {
           >
             <span className="core-inner-glow" />
             <strong>LÍA Core</strong>
-            <small>active intelligence</small>
+            <small>inteligencia activa</small>
           </button>
 
           {nodes.map((node, index) => (

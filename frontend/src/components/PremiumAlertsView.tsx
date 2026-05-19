@@ -11,9 +11,9 @@ type StoredAlert = {
 };
 
 const defaultAlerts: StoredAlert[] = [
-  { id: 1, level: 'Alta', title: 'Acción crítica sin confirmar', detail: 'Requiere autorización antes de ejecutar.', source: 'Seguimiento', state: 'Pendiente', recommendation: 'Validar responsable inmediato' },
-  { id: 2, level: 'Media', title: 'Briefing pendiente', detail: 'Contexto pendiente.', source: 'Agenda', state: 'En curso', recommendation: 'Preparar briefing' },
-  { id: 3, level: 'Media', title: 'Documento esperando revisión', detail: 'LÍA preparó un borrador para validar.', source: 'Documentos', state: 'Por validar', recommendation: 'Revisar y firmar' },
+  { id: 1, level: 'Alta', title: 'Decisión crítica sin confirmar', detail: 'Requiere autorización ejecutiva antes de continuar.', source: 'Seguimiento', state: 'Pendiente', recommendation: 'Validar responsable inmediato' },
+  { id: 2, level: 'Media', title: 'Briefing por preparar', detail: 'Contexto ejecutivo incompleto.', source: 'Agenda', state: 'En curso', recommendation: 'Preparar briefing' },
+  { id: 3, level: 'Media', title: 'Documento requiere validación', detail: 'Documento listo para revisión ejecutiva.', source: 'Documentos', state: 'Por validar', recommendation: 'Revisar y firmar' },
   { id: 4, level: 'Baja', title: 'Cadencia estable', detail: 'Operación dentro de parámetros esperados.', source: 'Sistema', state: 'Monitoreo', recommendation: 'Mantener seguimiento' },
 ];
 
@@ -59,9 +59,9 @@ export function PremiumAlertsView() {
       <div className="panel module-header alerts-command-header">
         <div>
           <p className="eyebrow">ALERTAS Y CONFIRMACIONES</p>
-          <h3>Centro de control preventivo</h3>
+          <h3>Centro de control ejecutivo</h3>
           <p className="muted">
-            Alertas conectadas a agenda, documentos, riesgos y decisiones pendientes.
+            Alertas conectadas a agenda, documentos, responsables y decisiones por cerrar.
           </p>
         </div>
 
@@ -73,8 +73,8 @@ export function PremiumAlertsView() {
       </div>
 
       <div className="alerts-toolbar">
-        <span>Priorización automática activa</span>
-        <button type="button" onClick={clearAgendaAlerts}>Limpiar alertas</button>
+        <span>Priorización ejecutiva activa</span>
+        <button type="button" onClick={clearAgendaAlerts}>Depurar alertas</button>
       </div>
 
       <div className="alerts-grid-live">
@@ -89,7 +89,7 @@ export function PremiumAlertsView() {
         <div className="alert-meta">
           <span><b>Origen:</b> {alert.source ?? (alert.title.includes('Agenda') ? 'Agenda' : alert.title.includes('Documento') ? 'Documento' : 'Sistema')}</span>
           <span><b>Estado:</b> {alert.state ?? 'Pendiente'}</span>
-          <span><b>Acción:</b> {alert.recommendation ?? 'Revisar alerta y validar criterio'}</span>
+          <span><b>Acción:</b> {alert.recommendation ?? 'Revisar señal y confirmar criterio'}</span>
         </div>
             <div className="alert-premium-actions">
               <button type="button">Revisar</button>

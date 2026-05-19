@@ -7,7 +7,7 @@ type TrackingCommandViewProps = {
 const executionLanes = [
   {
     id: 'contratos',
-    name: 'Contratos inteligentes',
+    name: 'Contratos ejecutivos',
     progress: 78,
     status: 'En tiempo',
     deadline: 'Hoy 18:00',
@@ -18,7 +18,7 @@ const executionLanes = [
   },
   {
     id: 'recordatorios',
-    name: 'Recordatorios ejecutivos',
+    name: 'Confirmaciones ejecutivas',
     progress: 62,
     status: 'En riesgo',
     deadline: 'Hoy 14:00',
@@ -29,7 +29,7 @@ const executionLanes = [
   },
   {
     id: 'dashboard',
-    name: 'Dashboard comercial',
+    name: 'Panel comercial',
     progress: 91,
     status: 'En tiempo',
     deadline: 'Lun 10:00',
@@ -40,7 +40,7 @@ const executionLanes = [
   },
   {
     id: 'documentos',
-    name: 'Documentos generados',
+    name: 'Documentos en validación',
     progress: 44,
     status: 'Retrasado',
     deadline: 'Hoy 12:30',
@@ -52,10 +52,10 @@ const executionLanes = [
 ];
 
 const recentCommitments = [
-  ['09:00', 'Briefing ejecutivo generado', 'Listo'],
+  ['09:00', 'Briefing ejecutivo preparado', 'Listo'],
   ['11:30', 'Proceso crítico requiere validación', 'Atención'],
   ['14:00', 'Seguimiento con dirección sin confirmar', 'Riesgo'],
-  ['17:30', 'Cierre operativo pendiente de bitácora', 'Pendiente'],
+  ['17:30', 'Cierre operativo requiere bitácora', 'Pendiente'],
 ];
 
 const nextActions = [
@@ -81,10 +81,10 @@ export function TrackingCommandView({ legacyTracking = [] }: TrackingCommandView
     <section className="tracking-command-shell tracking-control-room-v087">
       <div className="panel tracking-hero-panel">
         <div>
-          <p className="eyebrow">SEGUIMIENTO OPERATIVO · SISTEMA VIVO</p>
-          <h3>Cadencia, procesos activos y riesgos en una sola lectura</h3>
+          <p className="eyebrow">EJECUCIÓN OPERATIVA · CONTROL VIVO</p>
+          <h3>Procesos, responsables y decisiones bajo control ejecutivo</h3>
           <p className="muted">
-            Avance, responsables, riesgos, compromisos y próximos pasos visibles en tiempo real.
+            Avance, responsables, riesgos y próximos movimientos organizados para decisión.
           </p>
         </div>
 
@@ -93,7 +93,7 @@ export function TrackingCommandView({ legacyTracking = [] }: TrackingCommandView
             <span />
             <strong>{globalProgress}%</strong>
           </div>
-          <em>Cadencia general</em>
+          <em>Avance general</em>
         </div>
       </div>
 
@@ -128,7 +128,7 @@ export function TrackingCommandView({ legacyTracking = [] }: TrackingCommandView
         <section className="panel tracking-detail-panel">
           <div className="tracking-detail-head">
             <div>
-              <p className="eyebrow">PROCESO SELECCIONADO</p>
+              <p className="eyebrow">FRENTE SELECCIONADO</p>
               <h4>{selectedLane.name}</h4>
             </div>
             <span className={`tracking-risk-chip risk-${selectedLane.risk.toLowerCase()}`}>
@@ -156,7 +156,7 @@ export function TrackingCommandView({ legacyTracking = [] }: TrackingCommandView
           </div>
 
           <div className="tracking-commitments">
-            <p className="eyebrow">COMPROMISOS ABIERTOS</p>
+            <p className="eyebrow">COMPROMISOS POR CERRAR</p>
             {selectedLane.commitments.map((commitment) => (
               <article key={commitment}>
                 <span />
@@ -166,14 +166,14 @@ export function TrackingCommandView({ legacyTracking = [] }: TrackingCommandView
           </div>
 
           <div className="tracking-next-action">
-            <span>Siguiente movimiento recomendado</span>
+            <span>Movimiento recomendado</span>
             <strong>{selectedLane.next}</strong>
           </div>
         </section>
 
         <aside className="tracking-side-stack">
           <section className="panel tracking-timeline-panel">
-            <p className="eyebrow">BITÁCORA DE EJECUCIÓN</p>
+            <p className="eyebrow">BITÁCORA OPERATIVA</p>
             {recentCommitments.map(([time, title, status], index) => (
               <article key={`${time}-${title}`}>
               <i style={{ width: `${42 + index * 15}%` }} />
@@ -185,7 +185,7 @@ export function TrackingCommandView({ legacyTracking = [] }: TrackingCommandView
           </section>
 
           <section className="panel tracking-actions-panel">
-            <p className="eyebrow">ACCIONES RECOMENDADAS</p>
+            <p className="eyebrow">MOVIMIENTOS RECOMENDADOS</p>
             {nextActions.map((action) => (
               <button key={action} type="button">
                 {action}
@@ -197,7 +197,7 @@ export function TrackingCommandView({ legacyTracking = [] }: TrackingCommandView
 
       {legacyTracking.length > 0 ? (
         <div className="tracking-legacy-signal" aria-hidden="true">
-          {legacyTracking.length} señales heredadas sincronizadas
+          {legacyTracking.length} señales operativas sincronizadas
         </div>
       ) : null}
     </section>

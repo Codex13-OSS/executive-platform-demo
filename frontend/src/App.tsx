@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import { CognitiveGraph } from './components/CognitiveGraph';
 import { NeuralCore } from './components/NeuralCore';
-import { activity, agenda, alerts, documents, tracking } from './data/liaOsDemoData';
+import { activity, agenda, alerts, documents, tracking } from './data/liaOsExecutiveData';
 import { mobileLÍAFixStyles, styles } from './styles/liaOsStyles';
 import { AgendaCalendar } from './components/AgendaCalendar';
 import { PremiumAlertsView } from './components/PremiumAlertsView';
@@ -375,7 +375,7 @@ export default function App() {
     ['dashboard', 'Dashboard'],
     ['agenda', 'Agenda'],
     ['tracking', 'Seguimiento'],
-    ['documents', 'Documentos listos'],
+    ['documents', 'Documentos en validación'],
     ['alerts', 'Alertas'],
   ] as const;
 
@@ -468,7 +468,7 @@ export default function App() {
         </div>
       </aside>
 
-      <section className="main-panel executive-interaction-layer-v090 lia-visual-executive-refinement-v092 lia-executive-minimalism-v093 lia-label-minimal-fix-v093 lia-responsive-executive-v094 lia-orb-premium-v095 lia-executive-intelligence-v096 lia-visual-density-v097" onClickCapture={handleModuleActionCapture}>
+      <section className="main-panel executive-interaction-layer-v090 lia-visual-executive-refinement-v092 lia-executive-minimalism-v093 lia-label-minimal-fix-v093 lia-responsive-executive-v094 lia-orb-premium-v095 lia-executive-intelligence-v096 lia-visual-density-v097 lia-module-content-v098" onClickCapture={handleModuleActionCapture}>
         <header className="topbar">
           <div>
             <p className="eyebrow">SOLUCIONES INFORMÁTICAS</p>
@@ -481,10 +481,10 @@ export default function App() {
         {view === 'dashboard' && (
           <section className="executive-cockpit-layout-v088">
             <section className="kpi-grid executive-first-screen-v087 executive-cockpit-kpis-v088">
-              <div className="card kpi info"><p>Información activa</p><strong>4</strong><span>2 sesiones con briefing</span></div>
-              <div className="card kpi critical"><p>Riesgos críticos</p><strong>8</strong><span>3 requieren decisión</span></div>
-              <div className="card kpi warning"><p>Documentos listos</p><strong>12</strong><span>4 listos para validar</span></div>
-              <div className="card kpi stable live-card"><p>Cadencia operativa</p><strong>{87 + Math.min(livePulse, 6)}%</strong><span>{livePulse > 0 ? 'actualizado por LÍA' : 'operación estable'}</span></div>
+              <div className="card kpi info"><p>Contexto ejecutivo</p><strong>4</strong><span>2 decisiones preparadas</span></div>
+              <div className="card kpi critical"><p>Decisiones críticas</p><strong>8</strong><span>3 requieren confirmación</span></div>
+              <div className="card kpi warning"><p>Documentos en validación</p><strong>12</strong><span>4 requieren cierre</span></div>
+              <div className="card kpi stable live-card"><p>Cadencia ejecutiva</p><strong>{87 + Math.min(livePulse, 6)}%</strong><span>{livePulse > 0 ? 'actualizada por LÍA' : 'operación bajo control'}</span></div>
             </section>
 
             <section className="executive-cockpit-main-v088">
@@ -499,20 +499,20 @@ export default function App() {
               <aside className="panel risk-priority-panel cockpit-decision-core-v088">
                 <div className="risk-priority-head">
                   <p className="eyebrow">RIESGO / CONEXIÓN / ACCIÓN</p>
-                  <strong>Decisión ejecutiva inmediata</strong>
+                  <strong>Prioridad ejecutiva del día</strong>
                 </div>
                 <div className="risk-priority-list">
                   <article>
                     <em className="critical">Crítico</em>
-                    <span>Seguimiento con dirección sin confirmar.</span>
-                    <small>Conexión: Agenda + Alertas + Documentos.</small>
-                    <b>Acción: validar responsable y cierre antes de 14:00.</b>
+                    <span>Reunión de dirección requiere confirmación y síntesis.</span>
+                    <small>Cruce: Agenda, alertas y documentos ejecutivos.</small>
+                    <b>Acción: confirmar responsable, criterio y hora de cierre.</b>
                   </article>
                   <article>
                     <em className="warning">Prioridad</em>
-                    <span>Documento comercial pendiente de firma.</span>
-                    <small>Conexión: Documentos + Seguimiento.</small>
-                    <b>Acción: revisión legal en la próxima ventana libre.</b>
+                    <span>Propuesta comercial lista para cierre.</span>
+                    <small>Cruce: documentos, seguimiento y oportunidad comercial.</small>
+                    <b>Acción: validar versión final y preparar aprobación.</b>
                   </article>
                 <div className="cockpit-decision-actions-v090">
                   {[
@@ -535,7 +535,7 @@ export default function App() {
 
             <section className="cockpit-secondary-grid-v088">
               <div className="panel cockpit-agenda-card-v088">
-                <p className="eyebrow">AGENDA INTELIGENTE</p>
+                <p className="eyebrow">AGENDA EJECUTIVA</p>
                 {agenda.map(([time, title, priority]) => (
                   <div className="row" key={title}>
                     <b>{time}</b>
@@ -546,7 +546,7 @@ export default function App() {
               </div>
 
               <div className="panel cockpit-tracking-card-v088">
-                <p className="eyebrow">SEGUIMIENTO OPERATIVO</p>
+                <p className="eyebrow">EJECUCIÓN OPERATIVA</p>
                 {tracking.map(([name, pct, status]) => (
                   <div className="track" key={name}>
                     <div><span>{name}</span><b>{status}</b></div>
@@ -556,7 +556,7 @@ export default function App() {
               </div>
 
               <div className="panel activity cockpit-activity-card-v088">
-                <p className="eyebrow">ACTIVIDAD RECIENTE</p>
+                <p className="eyebrow">BITÁCORA EJECUTIVA</p>
                 {activityFeed.map((item, index) => <div className="activity-item" key={`${item}-${index}`}>{item}</div>)}
               </div>
             </section>
@@ -570,10 +570,10 @@ export default function App() {
         {view === 'documents' && (
           <section className="module-grid docs-depth-pass-v087">
             <div className="panel module-header">
-              <p className="eyebrow">DOCUMENTOS INTELIGENTES</p>
-              <h3>Generación documental asistida</h3>
+              <p className="eyebrow">CENTRO DOCUMENTAL</p>
+              <h3>Documentos para decisión y cierre</h3>
               <p className="muted">
-                Contratos, actas y reportes listos para revisión.
+                Contratos, reportes y propuestas organizados por prioridad.
               </p>
             </div>
 
@@ -583,10 +583,10 @@ export default function App() {
                 <h4>{title}</h4>
                 <span>{status}</span>
             <div className="document-meta-grid">
-              <div><small>Estado</small><strong>{status.includes('Listo') ? 'Listo para validación' : 'En progreso'}</strong></div>
+              <div><small>Estado</small><strong>{status.includes('Listo') ? 'Listo para validación' : 'En preparación'}</strong></div>
               <div><small>Responsable</small><strong>{index % 2 === 0 ? 'Dirección' : 'Operación'}</strong></div>
               <div><small>Última actividad</small><strong>Hace {8 + index * 3} min</strong></div>
-              <div><small>Siguiente acción</small><strong>Revisar y aprobar</strong></div>
+              <div><small>Siguiente acción</small><strong>Validar decisión</strong></div>
             </div>
             <div className="document-progress"><i style={{ width: `${62 + (index * 7) % 30}%` }} /></div>
                 <button
@@ -626,7 +626,7 @@ export default function App() {
                 : 'Acción registrada correctamente'}
         </div>
         <p className="muted">
-          Agenda, documentos, alertas y seguimiento en una sola lectura.
+          Prioridades, documentos, alertas y seguimiento bajo una sola lectura ejecutiva.
         </p>
 
         <div className="lia-chat">
@@ -646,7 +646,7 @@ export default function App() {
             onClick={() =>
               runLÍAAction(
                 'Briefing',
-                'Briefing preparado: prioridades, riesgos y decisiones clave.',
+                'Briefing listo: prioridades, riesgos, responsables y cierre sugerido.',
                 () => addActivity('Briefing ejecutivo del día preparado.')
               )
             }
@@ -670,7 +670,7 @@ export default function App() {
             onClick={() =>
               runLÍAAction(
                 'Documento',
-                'Documento ejecutivo listo para revisión.',
+                'Documento ejecutivo preparado para validación y cierre.',
                 () => addDocument('Documento listo para revisión')
               )
             }
@@ -682,7 +682,7 @@ export default function App() {
             onClick={() =>
               runLÍAAction(
                 'Estado',
-                'Estado recalculado: prioridades, riesgos y operación bajo lectura.',
+                'Estado ejecutivo actualizado: prioridad, riesgo y siguiente movimiento.',
                 () => addActivity('Estado operativo general actualizado.')
               )
             }
