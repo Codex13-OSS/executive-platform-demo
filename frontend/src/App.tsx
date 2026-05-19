@@ -188,6 +188,7 @@ export default function App() {
       'Generar resumen ejecutivo antes de junta de dirección.': 'Resumen ejecutivo preparado con decisiones, riesgos y puntos de cierre.',
       'Validar documento comercial pendiente.': 'Documento comercial enviado a validación con criterio de cierre.',
       'Bloquear espacio de revisión estratégica.': 'Bloque estratégico preparado para revisión y seguimiento.',
+      'Agendar reunión': 'Reunión ejecutiva agendada: LÍA preparó contexto, responsable, ubicación y siguiente acción.',
     };
 
     let label = rawLabel;

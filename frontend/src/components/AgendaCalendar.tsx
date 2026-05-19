@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type FormEvent } from 'react';
 
 type AgendaPriority = 'Alta' | 'Media' | 'Baja';
 type AgendaStatus = 'briefing listo' | 'requiere contexto' | 'sin confirmar' | 'confirmado' | 'bloqueado';
@@ -19,6 +19,8 @@ type AgendaEvent = {
   risks: string[];
   outputs: string[];
   docs: string[];
+  location?: string;
+  notes?: string;
 };
 
 type AgendaSlot = {
@@ -35,6 +37,69 @@ type AgendaDay = {
   tone: 'free' | 'busy' | 'critical';
   events: AgendaEvent[];
   slots: AgendaSlot[];
+  isToday?: boolean;
+};
+
+type AgendaBookingDraft = {
+  title: string;
+  time: string;
+  end: string;
+  location: string;
+  topic: string;
+  goal: string;
+  priority: AgendaPriority;
+  owner: string;
+  notes: string;
+};
+
+const createEmptyBookingDraft = (): AgendaBookingDraft => ({
+  title: '',
+  time: '10:00',
+  end: '11:00',
+  location: '',
+  topic: '',
+  goal: '',
+  priority: 'Media',
+  owner: 'Dirección',
+  notes: '',
+});
+
+const liveWeekIds = ['lun', 'mar', 'mie', 'jue', 'vie', 'sab', 'dom'];
+const liveWeekLabels = ['LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB', 'DOM'];
+const liveMonthIds = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'];
+
+const getMondayStart = (date: Date) => {
+  const copy = new Date(date);
+  copy.setHours(0, 0, 0, 0);
+  const mondayOffset = (copy.getDay() + 6) % 7;
+  copy.setDate(copy.getDate() - mondayOffset);
+  return copy;
+};
+
+const getTodayDayId = () => liveWeekIds[(new Date().getDay() + 6) % 7] ?? 'lun';
+
+const getCurrentMonthId = () => liveMonthIds[new Date().getMonth()] ?? 'MAY';
+
+const buildLiveWeek = (): AgendaDay[] => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const monday = getMondayStart(today);
+
+  return baseWeek.map((template, index) => {
+    const date = new Date(monday);
+    date.setDate(monday.getDate() + index);
+    const isToday = date.getTime() === today.getTime();
+
+    return {
+      ...template,
+      id: liveWeekIds[index] ?? template.id,
+      label: liveWeekLabels[index] ?? template.label,
+      date: String(date.getDate()),
+      isToday,
+      state: isToday ? 'hoy' : template.state,
+      tone: isToday && template.tone !== 'critical' ? 'busy' : template.tone,
+    };
+  });
 };
 
 const agendaYear = [
@@ -321,11 +386,17 @@ function saveAgendaAlert(title: string, detail: string) {
 }
 
 export function AgendaCalendar() {
-  const [week, setWeek] = useState(baseWeek);
-  const [selectedDay, setSelectedDay] = useState('mie');
+  const [week, setWeek] = useState<AgendaDay[]>(() => buildLiveWeek());
+  const [selectedDay, setSelectedDay] = useState(() => getTodayDayId());
   const [briefedEvents, setBriefedEvents] = useState<string[]>([]);
-  const [selectedEventId, setSelectedEventId] = useState('mie-1130');
-  const [selectedMonth, setSelectedMonth] = useState('MAY');
+  const [selectedEventId, setSelectedEventId] = useState(() => {
+    const liveWeek = buildLiveWeek();
+    const todayDayId = getTodayDayId();
+    return liveWeek.find((item) => item.id === todayDayId)?.events[0]?.id ?? '';
+  });
+  const [selectedMonth, setSelectedMonth] = useState(() => getCurrentMonthId());
+  const [bookingOpen, setBookingOpen] = useState(false);
+  const [bookingDraft, setBookingDraft] = useState<AgendaBookingDraft>(createEmptyBookingDraft());
 
   const day = week.find((item) => item.id === selectedDay) ?? week[0];
 
@@ -336,8 +407,77 @@ export function AgendaCalendar() {
 
   const selectDay = (dayId: string) => {
     const nextDay = week.find((item) => item.id === dayId);
+    const firstSlot = nextDay?.slots[0]?.time;
+
     setSelectedDay(dayId);
     setSelectedEventId(nextDay?.events[0]?.id ?? '');
+    setBookingOpen(true);
+
+    if (firstSlot) {
+      const [time, end] = firstSlot.split(' - ');
+      setBookingDraft((current) => ({
+        ...current,
+        time: time ?? current.time,
+        end: end ?? current.end,
+      }));
+    }
+  };
+
+  const updateBookingDraft = <Key extends keyof AgendaBookingDraft>(
+    key: Key,
+    value: AgendaBookingDraft[Key],
+  ) => {
+    setBookingDraft((current) => ({ ...current, [key]: value }));
+  };
+
+  const createBooking = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const title = bookingDraft.title.trim() || 'Nueva reunión ejecutiva';
+    const topic = bookingDraft.topic.trim() || 'Tema ejecutivo por definir';
+    const goal = bookingDraft.goal.trim() || 'Definir objetivo, responsable y siguiente acción.';
+    const owner = bookingDraft.owner.trim() || 'Dirección';
+    const location = bookingDraft.location.trim();
+    const notes = bookingDraft.notes.trim();
+
+    const newEvent: AgendaEvent = {
+      id: `booking-${selectedDay}-${Date.now()}`,
+      time: bookingDraft.time,
+      end: bookingDraft.end,
+      title,
+      priority: bookingDraft.priority,
+      status: bookingDraft.priority === 'Alta' ? 'sin confirmar' : 'requiere contexto',
+      owner,
+      context: `${topic}${location ? ` · ${location}` : ''}`,
+      goal,
+      talkTrack: 'Abrir con objetivo, confirmar datos clave, asignar responsable y cerrar con siguiente paso.',
+      topics: [topic, 'Responsable', 'Lugar / dirección', 'Siguiente paso'],
+      questions: ['¿Cuál es el objetivo de la reunión?', '¿Quién debe confirmar?', '¿Qué información falta antes de entrar?'],
+      risks: ['Reunión sin objetivo', 'Falta de responsable', 'No documentar acuerdos'],
+      outputs: ['Reunión agendada', 'Contexto ejecutivo preparado', 'Responsable asignado'],
+      docs: ['Agenda ejecutiva', 'Bitácora LÍA'],
+      location,
+      notes,
+    };
+
+    setWeek((prev) =>
+      prev.map((item) =>
+        item.id === selectedDay
+          ? {
+              ...item,
+              state: 'en curso',
+              tone: item.tone === 'critical' ? 'critical' : 'busy',
+              events: [...item.events, newEvent].sort((a, b) => a.time.localeCompare(b.time)),
+            }
+          : item
+      )
+    );
+
+    setSelectedEventId(newEvent.id);
+    setBriefedEvents((prev) => [...new Set([...prev, newEvent.id])]);
+    setBookingOpen(false);
+    setBookingDraft(createEmptyBookingDraft());
+    saveAgendaAlert(`Agenda · ${newEvent.time}`, `Reunión agendada: ${newEvent.title}. Tema: ${topic}.`);
   };
 
   const generateBriefing = (event: AgendaEvent) => {
@@ -447,16 +587,120 @@ export function AgendaCalendar() {
           <button
             key={item.id}
             type="button"
-            className={`agenda-day-card day-${item.tone} ${item.id === selectedDay ? 'active' : ''}`}
+            className={`agenda-day-card day-${item.tone} ${item.id === selectedDay ? 'active' : ''} ${item.isToday ? 'is-today' : ''}`}
             onClick={() => selectDay(item.id)}
           >
             <span>{item.label}</span>
             <strong>{item.date}</strong>
             <em>{item.events.length} citas</em>
-            <small>{item.state}</small>
+            <small>{item.isToday ? 'Hoy' : item.state}</small>
           </button>
         ))}
       </div>
+
+      {bookingOpen && (
+        <form className="panel agenda-booking-panel lia-agenda-booking-flow-v102" onSubmit={createBooking}>
+          <div className="agenda-booking-head">
+            <div>
+              <p className="eyebrow">NUEVA REUNIÓN EJECUTIVA</p>
+              <h4>Agendar en {day.isToday ? 'HOY' : day.label} {day.date}</h4>
+              <span>Nombre, lugar, hora, responsable y objetivo.</span>
+            </div>
+            <button type="button" onClick={() => setBookingOpen(false)}>Cerrar</button>
+          </div>
+
+          <div className="agenda-booking-grid">
+            <label>
+              <span>Nombre de reunión</span>
+              <input
+                value={bookingDraft.title}
+                onChange={(event) => updateBookingDraft('title', event.target.value)}
+                placeholder="Ej. Reunión con dirección"
+              />
+            </label>
+
+            <label>
+              <span>Dirección / lugar</span>
+              <input
+                value={bookingDraft.location}
+                onChange={(event) => updateBookingDraft('location', event.target.value)}
+                placeholder="Oficina, dirección o enlace"
+              />
+            </label>
+
+            <label>
+              <span>Hora inicio</span>
+              <input
+                type="time"
+                value={bookingDraft.time}
+                onChange={(event) => updateBookingDraft('time', event.target.value)}
+              />
+            </label>
+
+            <label>
+              <span>Hora cierre</span>
+              <input
+                type="time"
+                value={bookingDraft.end}
+                onChange={(event) => updateBookingDraft('end', event.target.value)}
+              />
+            </label>
+
+            <label>
+              <span>Prioridad</span>
+              <select
+                value={bookingDraft.priority}
+                onChange={(event) => updateBookingDraft('priority', event.target.value as AgendaPriority)}
+              >
+                <option>Alta</option>
+                <option>Media</option>
+                <option>Baja</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Responsable</span>
+              <input
+                value={bookingDraft.owner}
+                onChange={(event) => updateBookingDraft('owner', event.target.value)}
+                placeholder="Dirección, Comercial, Operación..."
+              />
+            </label>
+
+            <label className="agenda-booking-wide">
+              <span>Tema principal</span>
+              <input
+                value={bookingDraft.topic}
+                onChange={(event) => updateBookingDraft('topic', event.target.value)}
+                placeholder="Qué se va a revisar o decidir"
+              />
+            </label>
+
+            <label className="agenda-booking-wide">
+              <span>Objetivo / salida esperada</span>
+              <textarea
+                value={bookingDraft.goal}
+                onChange={(event) => updateBookingDraft('goal', event.target.value)}
+                placeholder="Qué debe quedar resuelto al terminar"
+              />
+            </label>
+
+            <label className="agenda-booking-wide">
+              <span>Notas importantes</span>
+              <textarea
+                value={bookingDraft.notes}
+                onChange={(event) => updateBookingDraft('notes', event.target.value)}
+                placeholder="Datos, documentos, personas o acuerdos previos"
+              />
+            </label>
+          </div>
+
+          <div className="agenda-booking-actions">
+            <button type="button" onClick={() => setBookingDraft(createEmptyBookingDraft())}>Limpiar</button>
+            <button type="submit">Agendar reunión</button>
+          </div>
+        </form>
+      )}
 
       <div className="agenda-day-layout agenda-day-layout-briefing">
         <section className="panel agenda-timeline-panel">
@@ -465,7 +709,12 @@ export function AgendaCalendar() {
               <p className="eyebrow">DÍA EJECUTIVO</p>
               <h4>{day.label} {day.date}</h4>
             </div>
-            <span className={`agenda-state-pill day-${day.tone}`}>{day.state}</span>
+            <div className="agenda-day-actions">
+              <span className={`agenda-state-pill day-${day.tone}`}>{day.state}</span>
+              <button type="button" className="agenda-booking-trigger" onClick={() => setBookingOpen(true)}>
+                Agendar reunión
+              </button>
+            </div>
           </div>
 
           <div className="agenda-timeline">

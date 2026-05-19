@@ -5771,3 +5771,242 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
   opacity: 0.72;
 }
 /* lia-interaction-flow-v099-microfix END */
+
+
+/* lia-agenda-booking-flow-v102 START */
+.agenda-day-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.agenda-booking-trigger,
+.agenda-booking-head button,
+.agenda-booking-actions button {
+  border: 1px solid rgba(125, 211, 252, .16);
+  border-radius: 14px;
+  padding: 9px 12px;
+  color: rgba(224, 242, 254, .86);
+  background: rgba(15, 23, 42, .52);
+}
+
+.agenda-booking-trigger {
+  color: #7dd3fc;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
+}
+
+.agenda-booking-panel {
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 85% 0%, rgba(56, 189, 248, .14), transparent 36%),
+    linear-gradient(180deg, rgba(15, 23, 42, .72), rgba(2, 6, 23, .78)) !important;
+}
+
+.agenda-booking-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.agenda-booking-head h4 {
+  margin: 4px 0 4px;
+  color: #f8fbff;
+  font-size: 1.28rem;
+}
+
+.agenda-booking-head span {
+  color: rgba(224, 242, 254, .58);
+  line-height: 1.45;
+}
+
+.agenda-booking-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.agenda-booking-grid label {
+  display: grid;
+  gap: 6px;
+}
+
+.agenda-booking-grid label span {
+  color: rgba(186, 230, 253, .62);
+  font-size: .64rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.agenda-booking-grid input,
+.agenda-booking-grid select,
+.agenda-booking-grid textarea {
+  width: 100%;
+  border: 1px solid rgba(125, 211, 252, .14);
+  border-radius: 14px;
+  padding: 10px 11px;
+  color: #e0f2fe;
+  background: rgba(2, 6, 23, .46);
+  outline: none;
+}
+
+.agenda-booking-grid textarea {
+  min-height: 74px;
+  resize: vertical;
+}
+
+.agenda-booking-grid input:focus,
+.agenda-booking-grid select:focus,
+.agenda-booking-grid textarea:focus {
+  border-color: rgba(125, 211, 252, .42);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, .08);
+}
+
+.agenda-booking-wide {
+  grid-column: 1 / -1;
+}
+
+.agenda-booking-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.agenda-booking-actions button[type="submit"] {
+  color: #02111d;
+  background: linear-gradient(135deg, #bae6fd, #38bdf8);
+  border-color: rgba(186, 230, 253, .72);
+  font-weight: 800;
+}
+
+.agenda-event-location {
+  margin-top: 5px !important;
+  color: rgba(186, 230, 253, .62) !important;
+  font-size: .76rem;
+}
+
+@media (max-width: 900px) {
+  .agenda-booking-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .agenda-booking-head,
+  .agenda-day-actions,
+  .agenda-booking-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+/* lia-agenda-booking-flow-v102 END */
+
+/* lia-agenda-live-sync-v102-fix START */
+.agenda-week-strip {
+  gap: 12px !important;
+}
+
+.agenda-day-card {
+  min-height: 88px !important;
+  padding: 14px 14px !important;
+}
+
+.agenda-day-card strong {
+  font-size: 1.55rem !important;
+  line-height: 1 !important;
+}
+
+.agenda-day-card span,
+.agenda-day-card em,
+.agenda-day-card small {
+  letter-spacing: .04em !important;
+}
+
+.agenda-day-card.is-today {
+  border-color: rgba(125, 211, 252, .74) !important;
+  background:
+    radial-gradient(circle at 90% 0%, rgba(56, 189, 248, .22), transparent 42%),
+    rgba(15, 23, 42, .76) !important;
+  box-shadow: 0 0 0 1px rgba(125, 211, 252, .16), 0 18px 44px rgba(8, 145, 178, .13) !important;
+}
+
+.agenda-day-card.is-today::after {
+  content: "HOY";
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  border-radius: 999px;
+  padding: 4px 7px;
+  color: #02111d;
+  background: linear-gradient(135deg, #bae6fd, #38bdf8);
+  font-size: .58rem;
+  font-weight: 900;
+  letter-spacing: .12em;
+}
+
+.agenda-booking-panel {
+  padding: 16px !important;
+}
+
+.agenda-booking-head {
+  margin-bottom: 12px !important;
+}
+
+.agenda-booking-head h4 {
+  font-size: 1.12rem !important;
+}
+
+.agenda-booking-head span {
+  font-size: .82rem !important;
+}
+
+.agenda-booking-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+}
+
+.agenda-booking-grid label span {
+  font-size: .62rem !important;
+  letter-spacing: .12em !important;
+}
+
+.agenda-booking-grid input,
+.agenda-booking-grid select,
+.agenda-booking-grid textarea {
+  min-height: 44px !important;
+  font-size: .9rem !important;
+}
+
+.agenda-booking-grid textarea {
+  min-height: 58px !important;
+}
+
+.agenda-event-card {
+  padding: 16px !important;
+}
+
+.agenda-event-title h5 {
+  font-size: 1rem !important;
+}
+
+.agenda-event-body p {
+  font-size: .86rem !important;
+  line-height: 1.45 !important;
+}
+
+.briefing-script,
+.briefing-block,
+.briefing-list,
+.briefing-docs {
+  font-size: .86rem !important;
+}
+
+@media (max-width: 900px) {
+  .agenda-booking-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+/* lia-agenda-live-sync-v102-fix END */
