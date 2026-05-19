@@ -468,7 +468,7 @@ export default function App() {
         </div>
       </aside>
 
-      <section className="main-panel executive-interaction-layer-v090 lia-visual-executive-refinement-v092 lia-executive-minimalism-v093 lia-label-minimal-fix-v093 lia-responsive-executive-v094 lia-orb-premium-v095 lia-executive-intelligence-v096" onClickCapture={handleModuleActionCapture}>
+      <section className="main-panel executive-interaction-layer-v090 lia-visual-executive-refinement-v092 lia-executive-minimalism-v093 lia-label-minimal-fix-v093 lia-responsive-executive-v094 lia-orb-premium-v095 lia-executive-intelligence-v096 lia-visual-density-v097" onClickCapture={handleModuleActionCapture}>
         <header className="topbar">
           <div>
             <p className="eyebrow">SOLUCIONES INFORMÁTICAS</p>
@@ -594,7 +594,7 @@ export default function App() {
                   onClick={() =>
                     runLÍAAction(
                       `Abrir documento: ${title}`,
-                      `Preview mock listo para ${title}.`
+                      `Vista ejecutiva lista para ${title}.`
                     )
                   }
                 >
@@ -619,10 +619,10 @@ export default function App() {
           <span />
           {liaState === 'En línea'
             ? 'Listo para recibir instrucciones'
-            : liaState === 'Analizando contexto'
+            : liaState === 'Leyendo contexto'
               ? 'Leyendo intención y contexto'
-              : liaState === 'Ejecutando acción'
-                ? 'Coordinando acción ejecutiva'
+              : liaState === 'Registrando acción'
+                ? 'Acción ejecutiva en registro'
                 : 'Acción registrada correctamente'}
         </div>
         <p className="muted">

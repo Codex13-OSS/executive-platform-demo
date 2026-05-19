@@ -5317,3 +5317,321 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
 }
 
 /* lia-executive-intelligence-v096 END */
+
+/* lia-visual-density-v097 START */
+/* lia-sidebar-premium-v097 | lia-right-panel-polish-v097 | lia-scroll-discreet-v097 | lia-laptop-density-v097 | lia-command-hierarchy-v097 */
+
+.os-shell:has(.lia-visual-density-v097) {
+  --lia-v097-rail: clamp(146px, 10.8vw, 166px);
+  --lia-v097-side: clamp(246px, 18vw, 292px);
+  --lia-v097-gap: clamp(10px, 1vw, 16px);
+  gap: var(--lia-v097-gap);
+  background:
+    radial-gradient(circle at 18% 10%, rgba(14, 165, 233, 0.08), transparent 28%),
+    radial-gradient(circle at 78% 14%, rgba(56, 189, 248, 0.07), transparent 30%),
+    linear-gradient(135deg, #020617 0%, #07111f 52%, #020617 100%);
+}
+
+.os-shell:has(.lia-visual-density-v097) .sidebar {
+  width: var(--lia-v097-rail);
+  padding: 18px 12px;
+  border-right: 1px solid rgba(125, 211, 252, 0.10);
+  background:
+    linear-gradient(180deg, rgba(15, 23, 42, 0.74), rgba(2, 6, 23, 0.82)),
+    rgba(2, 6, 23, 0.66);
+  box-shadow:
+    inset -1px 0 0 rgba(255, 255, 255, 0.035),
+    18px 0 54px rgba(2, 6, 23, 0.32);
+}
+
+.os-shell:has(.lia-visual-density-v097) .logo {
+  letter-spacing: -0.03em;
+  font-size: clamp(18px, 1.3vw, 22px);
+  line-height: 1;
+}
+
+.os-shell:has(.lia-visual-density-v097) .side-sub {
+  margin-top: 4px;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  opacity: 0.58;
+}
+
+.os-shell:has(.lia-visual-density-v097) .sidebar nav {
+  gap: 7px;
+}
+
+.os-shell:has(.lia-visual-density-v097) .nav-item {
+  min-height: 38px;
+  padding: 9px 10px;
+  border-radius: 14px;
+  font-size: 11.5px;
+  line-height: 1.08;
+  color: rgba(226, 232, 240, 0.76);
+  border: 1px solid transparent;
+  background: transparent;
+}
+
+.os-shell:has(.lia-visual-density-v097) .nav-item span {
+  opacity: 0.54;
+  transform: scale(0.82);
+}
+
+.os-shell:has(.lia-visual-density-v097) .nav-item.active {
+  color: rgba(240, 249, 255, 0.96);
+  border-color: rgba(125, 211, 252, 0.22);
+  background:
+    radial-gradient(circle at 14% 50%, rgba(34, 211, 238, 0.16), transparent 38%),
+    linear-gradient(90deg, rgba(14, 165, 233, 0.18), rgba(15, 23, 42, 0.24));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 14px 34px rgba(14, 165, 233, 0.09);
+}
+
+.os-shell:has(.lia-visual-density-v097) .system-status {
+  padding: 10px 11px;
+  border-radius: 16px;
+  font-size: 11px;
+  background: rgba(15, 23, 42, 0.48);
+  border: 1px solid rgba(125, 211, 252, 0.12);
+}
+
+.os-shell:has(.lia-visual-density-v097) .main-panel {
+  min-width: 0;
+  border-inline: 1px solid rgba(125, 211, 252, 0.075);
+}
+
+.os-shell:has(.lia-visual-density-v097) .topbar {
+  align-items: center;
+  gap: 12px;
+  padding-block: 10px 12px;
+  border-bottom: 1px solid rgba(125, 211, 252, 0.08);
+}
+
+.os-shell:has(.lia-visual-density-v097) .topbar h2 {
+  font-size: clamp(20px, 1.8vw, 27px);
+  letter-spacing: -0.04em;
+}
+
+.os-shell:has(.lia-visual-density-v097) .topbar .secondary {
+  min-height: 34px;
+  padding: 8px 12px;
+}
+
+.os-shell:has(.lia-visual-density-v097) .lia-panel {
+  width: var(--lia-v097-side);
+  padding: 16px 14px;
+  gap: 10px;
+  border-left: 1px solid rgba(125, 211, 252, 0.10);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(34, 211, 238, 0.10), transparent 34%),
+    linear-gradient(180deg, rgba(15, 23, 42, 0.82), rgba(2, 6, 23, 0.86));
+  box-shadow:
+    inset 1px 0 0 rgba(255, 255, 255, 0.035),
+    -18px 0 54px rgba(2, 6, 23, 0.28);
+}
+
+.os-shell:has(.lia-visual-density-v097) .lia-panel .lia-orb {
+  width: clamp(76px, 7vw, 96px);
+  height: clamp(76px, 7vw, 96px);
+  margin-inline: auto;
+  margin-bottom: 2px;
+}
+
+.os-shell:has(.lia-visual-density-v097) .lia-panel > .eyebrow {
+  text-align: center;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  opacity: 0.74;
+}
+
+.os-shell:has(.lia-visual-density-v097) .lia-panel h3 {
+  text-align: center;
+  font-size: clamp(19px, 1.45vw, 24px);
+  line-height: 1;
+}
+
+.os-shell:has(.lia-visual-density-v097) .lia-state {
+  min-height: 34px;
+  padding: 8px 10px;
+  font-size: 11px;
+  justify-content: center;
+  border-radius: 999px;
+}
+
+.os-shell:has(.lia-visual-density-v097) .lia-panel > .muted {
+  max-width: 24ch;
+  margin-inline: auto;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.35;
+  opacity: 0.68;
+}
+
+.os-shell:has(.lia-visual-density-v097) .lia-chat {
+  padding: 10px;
+  border-radius: 18px;
+  background: rgba(15, 23, 42, 0.34);
+  border: 1px solid rgba(125, 211, 252, 0.10);
+}
+
+.os-shell:has(.lia-visual-density-v097) .lia-chat-stream {
+  max-height: 116px;
+  overflow-y: auto;
+  padding-right: 3px;
+}
+
+.os-shell:has(.lia-visual-density-v097) .lia-bubble {
+  padding: 8px 10px;
+  font-size: 11px;
+  line-height: 1.35;
+  border-radius: 14px;
+}
+
+.os-shell:has(.lia-visual-density-v097) .quick-actions {
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+
+.os-shell:has(.lia-visual-density-v097) .quick-actions button {
+  min-height: 32px;
+  padding: 8px 7px;
+  border-radius: 13px;
+  font-size: 11px;
+  letter-spacing: -0.01em;
+}
+
+.os-shell:has(.lia-visual-density-v097) .lia-log {
+  padding: 10px;
+  border-radius: 18px;
+  max-height: 152px;
+  overflow-y: auto;
+}
+
+.os-shell:has(.lia-visual-density-v097) .lia-log-item {
+  padding: 7px 8px;
+  font-size: 10.5px;
+  line-height: 1.32;
+  border-radius: 12px;
+}
+
+.os-shell:has(.lia-visual-density-v097) .lia-input {
+  gap: 7px;
+  padding: 7px;
+  border-radius: 18px;
+  background: rgba(15, 23, 42, 0.44);
+  border: 1px solid rgba(125, 211, 252, 0.12);
+}
+
+.os-shell:has(.lia-visual-density-v097) .lia-input input {
+  min-height: 34px;
+  margin-top: 0;
+  padding: 8px 10px;
+  font-size: 12px;
+}
+
+.os-shell:has(.lia-visual-density-v097) .lia-input button {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  padding: 0;
+  border-radius: 12px;
+}
+
+.os-shell:has(.lia-visual-density-v097) .panel,
+.os-shell:has(.lia-visual-density-v097) .card,
+.os-shell:has(.lia-visual-density-v097) .document-card,
+.os-shell:has(.lia-visual-density-v097) .agenda-event-card,
+.os-shell:has(.lia-visual-density-v097) .alert-premium-card {
+  border-color: rgba(125, 211, 252, 0.105);
+}
+
+.os-shell:has(.lia-visual-density-v097) * {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(125, 211, 252, 0.26) rgba(15, 23, 42, 0.24);
+}
+
+.os-shell:has(.lia-visual-density-v097) *::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+.os-shell:has(.lia-visual-density-v097) *::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.22);
+  border-radius: 999px;
+}
+
+.os-shell:has(.lia-visual-density-v097) *::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(125, 211, 252, 0.34), rgba(14, 165, 233, 0.18));
+  border-radius: 999px;
+}
+
+@media (max-width: 1440px) {
+  .os-shell:has(.lia-visual-density-v097) {
+    --lia-v097-rail: 146px;
+    --lia-v097-side: 252px;
+  }
+
+  .os-shell:has(.lia-visual-density-v097) .sidebar {
+    padding-inline: 10px;
+  }
+
+  .os-shell:has(.lia-visual-density-v097) .lia-panel {
+    padding-inline: 12px;
+  }
+
+  .os-shell:has(.lia-visual-density-v097) .lia-panel > .muted {
+    display: none;
+  }
+
+  .os-shell:has(.lia-visual-density-v097) .lia-chat-stream {
+    max-height: 102px;
+  }
+
+  .os-shell:has(.lia-visual-density-v097) .lia-log {
+    max-height: 132px;
+  }
+}
+
+@media (max-height: 780px) {
+  .os-shell:has(.lia-visual-density-v097) .lia-panel {
+    gap: 8px;
+    padding-block: 12px;
+  }
+
+  .os-shell:has(.lia-visual-density-v097) .lia-panel .lia-orb {
+    width: 72px;
+    height: 72px;
+  }
+
+  .os-shell:has(.lia-visual-density-v097) .lia-chat-stream {
+    max-height: 92px;
+  }
+
+  .os-shell:has(.lia-visual-density-v097) .lia-log {
+    max-height: 118px;
+  }
+
+  .os-shell:has(.lia-visual-density-v097) .lia-log-item:nth-of-type(n + 5) {
+    display: none;
+  }
+}
+
+@media (max-width: 1120px) {
+  .os-shell:has(.lia-visual-density-v097) {
+    --lia-v097-side: auto;
+  }
+
+  .os-shell:has(.lia-visual-density-v097) .lia-panel {
+    width: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .os-shell:has(.lia-visual-density-v097) .nav-item,
+  .os-shell:has(.lia-visual-density-v097) .quick-actions button {
+    transition: none;
+  }
+}
+
+/* lia-visual-density-v097 END */
