@@ -1,4 +1,5 @@
 import { useMemo, useState, type FormEvent } from 'react';
+import { ExecutiveDayTimeline } from './ExecutiveDayTimeline';
 
 type AgendaPriority = 'Alta' | 'Media' | 'Baja';
 type AgendaStatus = 'briefing listo' | 'requiere contexto' | 'sin confirmar' | 'confirmado' | 'bloqueado';
@@ -701,6 +702,11 @@ export function AgendaCalendar() {
           </div>
         </form>
       )}
+
+      <ExecutiveDayTimeline
+        dayId={day.id}
+        dayLabel={day.label}
+      />
 
       <div className="agenda-day-layout agenda-day-layout-briefing">
         <section className="panel agenda-timeline-panel">
