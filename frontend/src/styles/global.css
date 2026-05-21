@@ -6383,3 +6383,108 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
   }
 }
 /* lia-os-v110-executive-24h-agenda-foundation END */
+
+/* lia-os-v111-executive-agenda-visual-merge START */
+.executive-next-move-card {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr) minmax(220px, 0.7fr);
+  gap: 12px;
+  align-items: stretch;
+  margin: 14px 0;
+  padding: 14px;
+  border-radius: 24px;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  background:
+    radial-gradient(circle at 12% 0%, rgba(34, 211, 238, 0.14), transparent 34%),
+    linear-gradient(135deg, rgba(15, 23, 42, 0.76), rgba(2, 6, 23, 0.54));
+}
+
+.executive-next-move-card.risk-alto {
+  border-color: rgba(248, 113, 113, 0.32);
+  background:
+    radial-gradient(circle at 88% 0%, rgba(248, 113, 113, 0.14), transparent 32%),
+    linear-gradient(135deg, rgba(15, 23, 42, 0.78), rgba(2, 6, 23, 0.56));
+}
+
+.executive-next-copy h3 {
+  margin: 4px 0;
+  color: #f8fafc;
+  font-size: clamp(1.25rem, 2vw, 1.8rem);
+  letter-spacing: -0.04em;
+}
+
+.executive-next-copy span,
+.executive-next-action span {
+  color: rgba(203, 213, 225, 0.7);
+  font-size: 12px;
+}
+
+.executive-next-signal {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.executive-next-signal article,
+.executive-next-action {
+  padding: 11px;
+  border-radius: 18px;
+  border: 1px solid rgba(148, 163, 184, 0.13);
+  background: rgba(2, 6, 23, 0.38);
+}
+
+.executive-next-signal span {
+  display: block;
+  color: rgba(148, 163, 184, 0.78);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.executive-next-signal strong {
+  display: block;
+  margin-top: 5px;
+  color: #e0f2fe;
+  font-size: 20px;
+}
+
+.executive-next-action {
+  display: grid;
+  gap: 6px;
+}
+
+.executive-next-action strong {
+  color: #f8fafc;
+  font-size: 13px;
+}
+
+.executive-next-action button {
+  border: 1px solid rgba(56, 189, 248, 0.24);
+  background: rgba(8, 47, 73, 0.34);
+  color: #bae6fd;
+  border-radius: 14px;
+  padding: 9px 12px;
+  font-size: 12px;
+}
+
+.agenda-day-layout-briefing {
+  opacity: 0.88;
+}
+
+.agenda-day-layout-briefing .agenda-event-card {
+  padding: 10px;
+}
+
+.agenda-day-layout-briefing .briefing-grid,
+.agenda-day-layout-briefing .briefing-docs {
+  display: none;
+}
+
+@media (max-width: 1180px) {
+  .executive-next-move-card {
+    grid-template-columns: 1fr;
+  }
+}
+/* lia-os-v111-executive-agenda-visual-merge END */
