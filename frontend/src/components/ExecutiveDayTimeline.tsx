@@ -1,5 +1,6 @@
 import { executiveAgendaTimeline } from '../data/executiveAgendaData';
 import { ExecutiveAgendaEventCard } from './ExecutiveAgendaEventCard';
+import { ExecutiveNextMoveCard } from './ExecutiveNextMoveCard';
 
 type ExecutiveDayTimelineProps = {
   dayId: string;
@@ -27,6 +28,7 @@ export function ExecutiveDayTimeline({
   const criticalEvents = events.filter((event) => event.status === 'critico').length;
   const followUps = events.filter((event) => event.followUpRequired).length;
   const highMobilityRisk = events.filter((event) => event.mobilityRisk === 'alto').length;
+  const nextEvent = events.find((event) => event.status !== 'libre') ?? events[0];
 
   return (
     <section className="panel executive-day-timeline">
@@ -61,6 +63,8 @@ export function ExecutiveDayTimeline({
           </article>
         </div>
       </div>
+
+      <ExecutiveNextMoveCard event={nextEvent} />
 
       <div className="executive-time-ruler">
         {timeMarkers.map((time) => (

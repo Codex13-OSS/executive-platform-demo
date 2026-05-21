@@ -59,7 +59,7 @@ export type ExecutiveAgendaEvent = {
 export const executiveAgendaTimeline: ExecutiveAgendaEvent[] = [
   {
     id: 'texon-breakfast',
-    dayId: 'lun',
+    dayId: 'mie',
 
     title: 'Desayuno con socios',
     type: 'reunion',
@@ -97,7 +97,7 @@ export const executiveAgendaTimeline: ExecutiveAgendaEvent[] = [
 
   {
     id: 'executive-gap',
-    dayId: 'lun',
+    dayId: 'mie',
 
     title: 'Ventana libre estratégica',
     type: 'seguimiento',
@@ -135,7 +135,7 @@ export const executiveAgendaTimeline: ExecutiveAgendaEvent[] = [
 
   {
     id: 'systems-meeting',
-    dayId: 'lun',
+    dayId: 'mie',
 
     title: 'Reunión con sistemas',
     type: 'reunion',
@@ -173,7 +173,7 @@ export const executiveAgendaTimeline: ExecutiveAgendaEvent[] = [
 
   {
     id: 'executive-dinner',
-    dayId: 'lun',
+    dayId: 'mie',
 
     title: 'Comida ejecutiva',
     type: 'comida',
@@ -211,7 +211,7 @@ export const executiveAgendaTimeline: ExecutiveAgendaEvent[] = [
 
   {
     id: 'texon-call',
-    dayId: 'lun',
+    dayId: 'mie',
 
     title: 'Llamada con grupo Texon',
     type: 'llamada',
