@@ -2,8 +2,10 @@ import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import { CognitiveGraph } from './components/CognitiveGraph';
 import { NeuralCore } from './components/NeuralCore';
 import { activity, agenda, alerts, documents, tracking } from './data/liaOsExecutiveData';
+import { executiveAgendaTimeline } from './data/executiveAgendaData';
 import { mobileLÍAFixStyles, styles } from './styles/liaOsStyles';
 import { AgendaCalendar } from './components/AgendaCalendar';
+import { ExecutiveNextMoveCard } from './components/ExecutiveNextMoveCard';
 import { PremiumAlertsView } from './components/PremiumAlertsView';
 import { TrackingCommandView } from './components/TrackingCommandView';
 import { ExecutiveEnvironmentCard } from './components/ExecutiveEnvironmentCard';
@@ -530,7 +532,7 @@ export default function App() {
         </div>
       </aside>
 
-      <section className="main-panel executive-interaction-layer-v090 lia-visual-executive-refinement-v092 lia-executive-minimalism-v093 lia-label-minimal-fix-v093 lia-responsive-executive-v094 lia-orb-premium-v095 lia-executive-intelligence-v096 lia-visual-density-v097 lia-module-content-v098 lia-interaction-flow-v099" onClickCapture={handleModuleActionCapture}>
+      <section className="main-panel executive-interaction-layer-v090 lia-visual-executive-refinement-v092 lia-executive-minimalism-v093 lia-label-minimal-fix-v093 lia-responsive-executive-v094 lia-orb-premium-v095 lia-executive-intelligence-v096 lia-visual-density-v097 lia-module-content-v098 lia-interaction-flow-v099 lia-cognitive-visual-system-v112" onClickCapture={handleModuleActionCapture}>
         <header className="topbar">
           <div>
             <p className="eyebrow">SOLUCIONES INFORMÁTICAS</p>
@@ -541,7 +543,12 @@ export default function App() {
         </header>
 
         {view === 'dashboard' && (
-          <section className="executive-cockpit-layout-v088">
+          <section className="executive-cockpit-layout-v088 executive-cockpit-layout-v112">
+            <section className="dashboard-command-strip-v112">
+              <ExecutiveNextMoveCard
+                event={executiveAgendaTimeline.find((event) => event.dayId === 'mie' && event.status !== 'libre')}
+              />
+            </section>
             <section className="kpi-grid executive-first-screen-v087 executive-cockpit-kpis-v088">
               <div className="card kpi info"><p>Contexto ejecutivo</p><strong>4</strong><span>2 decisiones preparadas</span></div>
               <div className="card kpi critical"><p>Decisiones críticas</p><strong>8</strong><span>3 requieren confirmación</span></div>
@@ -671,7 +678,7 @@ export default function App() {
 
       </section>
 
-      <aside className="lia-panel lia-panel-compact-v087 lia-executive-copilot-v088">
+      <aside className="lia-panel lia-panel-compact-v087 lia-executive-copilot-v088 lia-cognitive-rail-v112">
         <div className="lia-orb">
           <NeuralCore />
         </div>
@@ -690,6 +697,25 @@ export default function App() {
         <p className="muted">
           Prioridades, documentos, alertas y seguimiento bajo una sola lectura ejecutiva.
         </p>
+
+        <div className="lia-presence-matrix-v112">
+          <article>
+            <span>Agenda</span>
+            <strong>Activa</strong>
+          </article>
+          <article>
+            <span>Riesgo</span>
+            <strong>Medio</strong>
+          </article>
+          <article>
+            <span>Movilidad</span>
+            <strong>Sync</strong>
+          </article>
+          <article>
+            <span>Acción</span>
+            <strong>Lista</strong>
+          </article>
+        </div>
 
         <div className="lia-chat">
           <p className="eyebrow">CONVERSACIÓN</p>
