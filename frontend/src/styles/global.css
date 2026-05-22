@@ -7365,3 +7365,76 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
 }
 
 /* lia-os-v130-cognitive-space-engine END */
+
+.dynamic-command-layer {
+  display: grid;
+  gap: 0.72rem;
+  max-height: 430px;
+  overflow: hidden;
+  background: linear-gradient(145deg, rgba(14, 26, 46, 0.88), rgba(7, 16, 30, 0.92));
+  border: 1px solid rgba(96, 180, 255, 0.24);
+}
+
+.dynamic-command-head {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.dynamic-command-head strong {
+  font-size: 0.95rem;
+  color: #d8ebff;
+}
+
+.dynamic-command-list {
+  display: grid;
+  gap: 0.5rem;
+  max-height: 310px;
+  overflow-y: auto;
+  padding-right: 0.18rem;
+}
+
+.dynamic-command-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.7rem;
+  align-items: center;
+  padding: 0.62rem;
+  border-radius: 12px;
+  border: 1px solid rgba(134, 167, 213, 0.22);
+  background: rgba(9, 19, 33, 0.68);
+}
+
+.dynamic-command-item p { color: #e5f2ff; font-weight: 600; font-size: 0.84rem; }
+.dynamic-command-item small { color: #90a9c8; font-size: 0.7rem; }
+.dynamic-command-item em { color: #7fd1ff; font-style: normal; font-size: 0.68rem; }
+
+.dynamic-command-meta { display: flex; gap: 0.35rem; margin: 0.34rem 0; }
+.status, .type-chip {
+  font-size: 0.66rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 0.16rem 0.42rem;
+}
+.status { border: 1px solid rgba(168, 197, 235, 0.4); color: #b3d8ff; }
+.status-prepared { color: #9ff8c8; border-color: rgba(120, 232, 178, 0.44); }
+.status-blocked { color: #ffc0c0; border-color: rgba(255, 142, 142, 0.4); }
+.status-waiting_confirmation { color: #ffe5ad; border-color: rgba(255, 205, 116, 0.5); }
+.type-chip { background: rgba(85, 176, 255, 0.12); color: #7ec7ff; }
+
+.priority-high, .priority-critical { box-shadow: inset 0 0 0 1px rgba(70, 175, 255, 0.24); }
+.priority-critical { box-shadow: inset 0 0 0 1px rgba(255, 113, 113, 0.26); }
+
+.dynamic-command-confirm {
+  border-radius: 12px;
+  border: 1px solid rgba(255, 188, 99, 0.44);
+  background: rgba(35, 24, 12, 0.7);
+  padding: 0.7rem;
+  display: grid;
+  gap: 0.45rem;
+}
+.dynamic-command-confirm p { font-size: 0.75rem; color: #ffd89a; text-transform: uppercase; letter-spacing: 0.08em; }
+.dynamic-command-confirm strong { color: #fff1d8; font-size: 0.9rem; }
+.dynamic-command-confirm small { color: #e4ccb0; }
+.dynamic-command-confirm-actions { display: flex; gap: 0.45rem; }
+.dynamic-command-confirm-actions button { padding: 0.45rem 0.6rem; font-size: 0.76rem; }

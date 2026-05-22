@@ -10,6 +10,7 @@ import { ExecutivePredictivePanel } from './components/ExecutivePredictivePanel'
 import { PremiumAlertsView } from './components/PremiumAlertsView';
 import { TrackingCommandView } from './components/TrackingCommandView';
 import { ExecutiveEnvironmentCard } from './components/ExecutiveEnvironmentCard';
+import { DynamicCommandLayer } from './components/DynamicCommandLayer';
 
 type View = 'dashboard' | 'agenda' | 'tracking' | 'documents' | 'alerts';
 
@@ -606,6 +607,16 @@ export default function App() {
             </section>
 
             <section className="cockpit-secondary-grid-v088">
+              <DynamicCommandLayer
+                onExecuteCommand={(command) =>
+                  runLÍAAction(
+                    command.label,
+                    `${command.label}: comando ejecutivo preparado en modo mock.`,
+                    () => addActivity(`${command.label}: ${command.feedback.toLowerCase()}.`),
+                  )
+                }
+              />
+
               <div className="panel cockpit-agenda-card-v088">
                 <p className="eyebrow">AGENDA EJECUTIVA</p>
                 {agenda.map(([time, title, priority]) => (
