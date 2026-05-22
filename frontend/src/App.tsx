@@ -2,10 +2,11 @@ import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import { CognitiveGraph } from './components/CognitiveGraph';
 import { NeuralCore } from './components/NeuralCore';
 import { activity, agenda, alerts, documents, tracking } from './data/liaOsExecutiveData';
-import { executiveAgendaTimeline } from './data/executiveAgendaData';
+import { getExecutiveAgendaEventsForDay, getExecutiveTodayDayId } from './data/executiveAgendaData';
 import { mobileLÍAFixStyles, styles } from './styles/liaOsStyles';
 import { AgendaCalendar } from './components/AgendaCalendar';
 import { ExecutiveNextMoveCard } from './components/ExecutiveNextMoveCard';
+import { ExecutivePredictivePanel } from './components/ExecutivePredictivePanel';
 import { PremiumAlertsView } from './components/PremiumAlertsView';
 import { TrackingCommandView } from './components/TrackingCommandView';
 import { ExecutiveEnvironmentCard } from './components/ExecutiveEnvironmentCard';
@@ -49,6 +50,9 @@ export default function App() {
     documents: 'Documentos',
     alerts: 'Alertas',
   };
+
+  const currentExecutiveEvents = getExecutiveAgendaEventsForDay(getExecutiveTodayDayId());
+  const currentNextMove = currentExecutiveEvents.find((event) => event.status !== 'libre');
 
   const buildContextualResult = (instruction: string, fallback: string) => {
     const lower = instruction.toLowerCase();
@@ -544,10 +548,9 @@ export default function App() {
 
         {view === 'dashboard' && (
           <section className="executive-cockpit-layout-v088 executive-cockpit-layout-v112">
-            <section className="dashboard-command-strip-v112">
-              <ExecutiveNextMoveCard
-                event={executiveAgendaTimeline.find((event) => event.dayId === 'mie' && event.status !== 'libre')}
-              />
+            <section className="dashboard-command-strip-v112 dashboard-command-strip-v120">
+              <ExecutiveNextMoveCard event={currentNextMove} />
+              <ExecutivePredictivePanel events={currentExecutiveEvents} variant="dashboard" />
             </section>
             <section className="kpi-grid executive-first-screen-v087 executive-cockpit-kpis-v088">
               <div className="card kpi info"><p>Contexto ejecutivo</p><strong>4</strong><span>2 decisiones preparadas</span></div>
