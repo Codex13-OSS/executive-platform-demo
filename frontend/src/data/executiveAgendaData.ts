@@ -247,3 +247,26 @@ export const executiveAgendaTimeline: ExecutiveAgendaEvent[] = [
     notes: 'LÍA recomienda briefing previo antes de iniciar.',
   },
 ];
+
+
+const liveExecutiveWeekIds = ['dom', 'lun', 'mar', 'mie', 'jue', 'vie', 'sab'];
+
+export const getExecutiveTodayDayId = () =>
+  liveExecutiveWeekIds[new Date().getDay()] ?? 'mie';
+
+export const getExecutiveAgendaEventsForDay = (dayId: string) => {
+  const directEvents = executiveAgendaTimeline.filter((event) => event.dayId === dayId);
+
+  if (directEvents.length > 0) {
+    return directEvents;
+  }
+
+  if (dayId === getExecutiveTodayDayId()) {
+    return executiveAgendaTimeline.map((event) => ({
+      ...event,
+      dayId,
+    }));
+  }
+
+  return directEvents;
+};

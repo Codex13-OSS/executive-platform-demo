@@ -1,6 +1,7 @@
-import { executiveAgendaTimeline } from '../data/executiveAgendaData';
+import { getExecutiveAgendaEventsForDay } from '../data/executiveAgendaData';
 import { ExecutiveAgendaEventCard } from './ExecutiveAgendaEventCard';
 import { ExecutiveNextMoveCard } from './ExecutiveNextMoveCard';
+import { ExecutivePredictivePanel } from './ExecutivePredictivePanel';
 
 type ExecutiveDayTimelineProps = {
   dayId: string;
@@ -21,8 +22,7 @@ export function ExecutiveDayTimeline({
   dayId,
   dayLabel,
 }: ExecutiveDayTimelineProps) {
-  const events = executiveAgendaTimeline
-    .filter((event) => event.dayId === dayId)
+  const events = getExecutiveAgendaEventsForDay(dayId)
     .sort((a, b) => a.startTime.localeCompare(b.startTime));
 
   const criticalEvents = events.filter((event) => event.status === 'critico').length;
@@ -65,6 +65,8 @@ export function ExecutiveDayTimeline({
       </div>
 
       <ExecutiveNextMoveCard event={nextEvent} />
+
+      <ExecutivePredictivePanel events={events} variant="timeline" />
 
       <div className="executive-time-ruler">
         {timeMarkers.map((time) => (
