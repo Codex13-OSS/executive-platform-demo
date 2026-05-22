@@ -7194,3 +7194,108 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
   }
 }
 /* lia-os-v120-final-readability-polish END */
+
+/* lia-os-v130-cognitive-space-engine START */
+.cognitive-space-engine-v130 {
+  display: grid;
+  gap: 0.9rem;
+}
+.cse-v130-head { display: flex; justify-content: space-between; align-items: center; }
+.cse-v130-sync {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #7dd3fc;
+}
+.cse-v130-stage {
+  position: relative;
+  min-height: 430px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(125, 211, 252, 0.22);
+  background: radial-gradient(circle at 50% 45%, rgba(17, 56, 92, 0.48), rgba(4, 13, 26, 0.92) 62%);
+  box-shadow: inset 0 0 42px rgba(56, 189, 248, 0.14), 0 18px 44px rgba(2, 6, 23, 0.58);
+}
+.cse-v130-depth { position: absolute; inset: 0; }
+.cse-v130-particles {
+  background-image: radial-gradient(circle, rgba(186, 230, 253, 0.32) 1px, transparent 1.8px);
+  background-size: 34px 34px;
+  opacity: 0.34;
+  animation: cseDriftV130 22s linear infinite;
+}
+.cse-v130-grid {
+  background: radial-gradient(circle at 50% 50%, rgba(34, 211, 238, 0.13), transparent 55%);
+  filter: blur(0.4px);
+}
+.cse-v130-links { position: absolute; inset: 0; width: 100%; height: 100%; }
+.cse-v130-link {
+  fill: none;
+  stroke: rgba(125, 211, 252, 0.24);
+  stroke-width: 0.34;
+}
+.cse-v130-link.active {
+  stroke: rgba(125, 211, 252, 0.84);
+  filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.7));
+}
+.cse-v130-core {
+  position: absolute;
+  left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: 148px; height: 148px; border-radius: 50%;
+  border: 1px solid rgba(103, 232, 249, 0.65);
+  background: radial-gradient(circle at 32% 30%, rgba(125, 211, 252, 0.58), rgba(8, 47, 73, 0.9) 70%);
+  box-shadow: 0 0 30px rgba(56, 189, 248, 0.5), inset 0 0 26px rgba(186, 230, 253, 0.3);
+  color: #ecfeff;
+  display: grid; place-content: center; gap: .1rem;
+  z-index: 8;
+  animation: csePulseV130 5.6s ease-in-out infinite;
+}
+.cse-v130-core strong { font-size: 0.84rem; letter-spacing: 0.04em; text-transform: uppercase; }
+.cse-v130-core small { font-size: 0.67rem; color: rgba(186, 230, 253, 0.95); }
+.cse-v130-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: 14px;
+  border: 1px solid rgba(125, 211, 252, 0.3);
+  min-width: 96px;
+  padding: 0.5rem 0.55rem;
+  color: #dbeafe;
+  background: linear-gradient(160deg, rgba(15, 30, 53, 0.92), rgba(6, 14, 28, 0.88));
+  backdrop-filter: blur(8px);
+  display: grid;
+  gap: 0.08rem;
+  z-index: 6;
+  animation: cseFloatV130 6.2s ease-in-out infinite;
+}
+.cse-v130-node.depth-front { z-index: 7; }
+.cse-v130-node.depth-back { opacity: 0.82; filter: blur(.15px); }
+.cse-v130-node strong { font-size: 0.88rem; }
+.cse-v130-node em { font-size: 0.66rem; font-style: normal; text-transform: uppercase; letter-spacing: .06em; color: #93c5fd; }
+.cse-v130-node span { font-size: 0.64rem; color: #bae6fd; }
+.cse-v130-node.active { transform: translate(-50%, -50%) scale(1.06); box-shadow: 0 0 0 1px rgba(103, 232, 249, 0.55), 0 0 14px rgba(56, 189, 248, 0.5); }
+.cse-v130-node.state-stable { border-color: rgba(103, 232, 249, 0.35); }
+.cse-v130-node.state-attention { border-color: rgba(250, 204, 21, 0.5); }
+.cse-v130-node.state-critical { border-color: rgba(248, 113, 113, 0.66); }
+.cse-v130-node.state-active { border-color: rgba(74, 222, 128, 0.58); }
+.cse-v130-context { display: flex; align-items: center; gap: 0.55rem; color: #cbd5e1; }
+.cse-v130-state {
+  padding: 0.2rem 0.52rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.cse-v130-state.attention { border-color: rgba(250, 204, 21, 0.62); color: #fde68a; }
+.cse-v130-state.critical { border-color: rgba(248, 113, 113, 0.7); color: #fecaca; }
+.cse-v130-state.active { border-color: rgba(74, 222, 128, 0.7); color: #bbf7d0; }
+
+@keyframes csePulseV130 { 0%,100% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.03); } }
+@keyframes cseFloatV130 { 0%,100% { transform: translate(-50%, -50%) translateY(0); } 50% { transform: translate(-50%, -50%) translateY(-4px); } }
+@keyframes cseDriftV130 { from { transform: translateY(0); } to { transform: translateY(-24px); } }
+
+@media (max-width: 1024px) {
+  .cse-v130-stage { min-height: 380px; }
+  .cse-v130-node { min-width: 88px; padding: 0.42rem 0.48rem; }
+  .cse-v130-core { width: 132px; height: 132px; }
+}
+/* lia-os-v130-cognitive-space-engine END */
