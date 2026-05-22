@@ -7194,3 +7194,49 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
   }
 }
 /* lia-os-v120-final-readability-polish END */
+
+/* lia-os-v130-cognitive-space-engine START */
+.lia-cognitive-space-engine-v130 .cognitive-compact-stage-v088 {
+  border-color: rgba(109, 168, 255, 0.35);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 20px 38px rgba(5, 10, 20, 0.35);
+}
+
+.cognitive-space-engine-v130 {
+  display: grid;
+  gap: 12px;
+}
+
+.cognitive-space-engine-v130 > header {
+  display: grid;
+  gap: 3px;
+}
+
+.cognitive-space-engine-v130 > header span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.cognitive-space-grid-v130 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.space-node-v130 {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  display: grid;
+  gap: 4px;
+}
+
+.space-node-v130 b {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.space-node-v130.stable b { color: #67e5a2; }
+.space-node-v130.attention b { color: #ffd56d; }
+.space-node-v130.critical b { color: #ff8d8d; }
+/* lia-os-v130-cognitive-space-engine END */
