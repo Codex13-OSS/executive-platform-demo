@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type MouseEvent } from 'react';
-import { CognitiveGraph } from './components/CognitiveGraph';
+import { CognitiveSpaceEngine } from './components/CognitiveSpaceEngine';
 import { NeuralCore } from './components/NeuralCore';
 import { activity, agenda, alerts, documents, tracking } from './data/liaOsExecutiveData';
 import { getExecutiveAgendaEventsForDay, getExecutiveTodayDayId } from './data/executiveAgendaData';
@@ -565,7 +565,7 @@ export default function App() {
                   <p className="eyebrow">MAPA COGNITIVO</p>
                   <strong>Núcleo ejecutivo en vivo</strong>
                 </div>
-                <CognitiveGraph />
+                <CognitiveSpaceEngine />
               </article>
 
               <aside className="panel risk-priority-panel cockpit-decision-core-v088">
