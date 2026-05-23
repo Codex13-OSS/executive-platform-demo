@@ -27,6 +27,8 @@ export function ReadOnlySourceRuntimeCard() {
         <span>{snapshot.normalizedReadEvents.length} normalized events</span>
         <span>{snapshot.brainBusImpact.length} brain impacts</span>
         <span>audit safe</span>
+        <span>handshake prep ready</span>
+        <span>activation locked</span>
       </div>
 
       <ul className="read-only-source-runtime-flow-v200">

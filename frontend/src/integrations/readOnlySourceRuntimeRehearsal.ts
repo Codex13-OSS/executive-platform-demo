@@ -49,6 +49,9 @@ export type ReadOnlySourceRuntimeSnapshot = {
   commandSuggestionPreview: Array<{ id: string; sourceEventId: string; suggestion: string; requiresHumanApproval: true }>;
   auditPreview: ReadOnlySourceRuntimeAuditPreview;
   safeToRender: boolean;
+  handshakePrepared: true;
+  handshakeGateState: 'locked';
+  approvalRequiredForHandshake: true;
   nextEvolutionStep: string;
 };
 
@@ -117,6 +120,9 @@ export function getReadOnlySourceRuntimeRehearsalSnapshot(): ReadOnlySourceRunti
       approvalRequiredForFutureWrite: true,
     },
     safeToRender: connectorValidation.status === 'safe',
+    handshakePrepared: true,
+    handshakeGateState: 'locked',
+    approvalRequiredForHandshake: true,
     nextEvolutionStep: 'Prepare controlled read-only source handshake without enabling real endpoints.',
   };
 }
