@@ -7595,3 +7595,43 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
 .read-only-foundation-domains-v170 .state-stale {
   color: rgba(253, 224, 71, 0.92);
 }
+
+.read-only-source-runtime-card-v200 {
+  position: relative;
+  border-radius: 18px;
+  border: 1px solid rgba(130, 212, 255, 0.25);
+  background: linear-gradient(145deg, rgba(10, 28, 56, 0.55), rgba(10, 20, 45, 0.35));
+  padding: 14px;
+  box-shadow: 0 10px 24px rgba(16, 64, 110, 0.2), inset 0 0 0 1px rgba(118, 204, 255, 0.08);
+}
+.read-only-source-runtime-card-v200.is-safe::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 18px;
+  box-shadow: 0 0 24px rgba(67, 199, 255, 0.16);
+  pointer-events: none;
+}
+.runtime-chip-row-v200 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.runtime-chip-v200 {
+  font-size: 11px;
+  color: #d6ecff;
+  background: rgba(79, 166, 225, 0.16);
+  border: 1px solid rgba(126, 204, 255, 0.28);
+  border-radius: 999px;
+  padding: 4px 8px;
+}
+.runtime-flow-v200 {
+  margin-top: 10px;
+  display: grid;
+  gap: 4px;
+}
+.runtime-flow-v200 small {
+  color: #9ec9ea;
+  font-size: 11px;
+}
