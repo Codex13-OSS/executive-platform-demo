@@ -7549,3 +7549,161 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+.read-only-foundation-chips-v170 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem;
+  margin-top: 0.7rem;
+}
+
+.read-only-foundation-chips-v170 span {
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid rgba(125, 211, 252, 0.2);
+  border-radius: 999px;
+  padding: 0.24rem 0.52rem;
+  background: rgba(8, 30, 54, 0.34);
+  color: rgba(186, 230, 253, 0.88);
+}
+
+.read-only-foundation-domains-v170 {
+  margin-top: 0.65rem;
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.33rem;
+}
+
+.read-only-foundation-domains-v170 li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(186, 230, 253, 0.8);
+}
+
+.read-only-foundation-domains-v170 b {
+  font-weight: 600;
+  color: rgba(147, 197, 253, 0.95);
+}
+
+.read-only-foundation-domains-v170 .state-degraded,
+.read-only-foundation-domains-v170 .state-unavailable,
+.read-only-foundation-domains-v170 .state-stale {
+  color: rgba(253, 224, 71, 0.92);
+}
+
+.cognitive-brain-bus-card-v180 {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(125, 211, 252, 0.22);
+  border-radius: 22px;
+  padding: 16px;
+  display: grid;
+  gap: 10px;
+  background:
+    radial-gradient(circle at 86% 12%, rgba(34, 211, 238, 0.16), transparent 34%),
+    linear-gradient(145deg, rgba(3, 11, 28, 0.86), rgba(7, 21, 40, 0.78));
+  box-shadow: 0 22px 56px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(16px);
+}
+
+.cognitive-brain-bus-orb-v180 {
+  position: absolute;
+  width: 84px;
+  height: 84px;
+  right: -20px;
+  top: -20px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(103, 232, 249, 0.44), rgba(14, 165, 233, 0.04) 62%, transparent 75%);
+  animation: brainBusPulseV180 6.8s ease-in-out infinite;
+}
+
+.cognitive-brain-bus-head-v180 {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.cognitive-brain-bus-head-v180 span {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(226, 232, 240, 0.95);
+}
+
+.cognitive-brain-bus-head-v180 b {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #67e8f9;
+}
+
+.cognitive-brain-bus-card-v180 p {
+  margin: 0;
+  color: rgba(186, 230, 253, 0.78);
+  font-size: 12px;
+}
+
+.cognitive-brain-bus-grid-v180 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.cognitive-brain-bus-grid-v180 article {
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 12px;
+  padding: 8px 10px;
+  background: rgba(10, 20, 36, 0.58);
+  display: grid;
+  gap: 2px;
+}
+
+.cognitive-brain-bus-grid-v180 small {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(148, 163, 184, 0.88);
+}
+
+.cognitive-brain-bus-grid-v180 strong {
+  font-size: 12px;
+  color: rgba(240, 249, 255, 0.96);
+}
+
+.cognitive-brain-flow-v180 {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.cognitive-brain-flow-v180 li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(125, 211, 252, 0.12);
+  border-radius: 10px;
+  padding: 6px 8px;
+  background: rgba(6, 18, 34, 0.52);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 10px;
+}
+
+.cognitive-brain-flow-v180 span { color: rgba(191, 219, 254, 0.86); }
+.cognitive-brain-flow-v180 b { color: rgba(103, 232, 249, 0.96); font-weight: 700; }
+
+@keyframes brainBusPulseV180 {
+  0%, 100% { transform: scale(0.94); opacity: 0.45; }
+  50% { transform: scale(1.05); opacity: 0.88; }
+}
