@@ -1,3 +1,10 @@
+import {
+  getReadOnlyDataAdapterSimulation,
+  validateReadOnlyDataAdapterSimulation,
+  type ReadOnlyDataAdapter,
+  type ReadOnlyDataAdapterValidation,
+} from './readOnlyDataAdapters';
+
 export type ExecutiveReadOnlyMode = 'mock_readonly' | 'contract_only';
 export type ExecutiveReadOnlyDomain =
   | 'agenda'
@@ -73,6 +80,8 @@ export type ExecutiveReadOnlyAuditEvent = {
 };
 
 export type ExecutiveReadOnlySnapshot = {
+  adapterSimulation: ReadOnlyDataAdapter[];
+  adapterValidation: ReadOnlyDataAdapterValidation;
   mode: ExecutiveReadOnlyMode;
   generatedAt: string;
   writesEnabled: false;
@@ -109,6 +118,8 @@ export function areExecutiveWritesEnabled() {
 
 export function getExecutiveReadOnlySnapshot(): ExecutiveReadOnlySnapshot {
   const generatedAt = new Date().toISOString();
+  const adapterSimulation = getReadOnlyDataAdapterSimulation();
+  const adapterValidation = validateReadOnlyDataAdapterSimulation(adapterSimulation);
 
   const sources: ExecutiveReadOnlySource[] = [
     {
@@ -154,6 +165,8 @@ export function getExecutiveReadOnlySnapshot(): ExecutiveReadOnlySnapshot {
   ];
 
   return {
+    adapterSimulation,
+    adapterValidation,
     mode: EXECUTIVE_READ_ONLY_MODE,
     generatedAt,
     writesEnabled: EXECUTIVE_WRITES_ENABLED,
@@ -217,6 +230,11 @@ export function validateExecutiveReadOnlySnapshot(
       id: 'mock-sources',
       label: 'Mock sources available',
       passed: snapshot.sources.length > 0,
+    },
+    {
+      id: 'adapter-simulation-safe',
+      label: 'Adapter simulation safe',
+      passed: snapshot.adapterValidation.safe,
     },
     {
       id: 'timestamp',
