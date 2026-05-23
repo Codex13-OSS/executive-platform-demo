@@ -13,6 +13,7 @@ import { ExecutiveEnvironmentCard } from './components/ExecutiveEnvironmentCard'
 import { DynamicCommandLayer } from './components/DynamicCommandLayer';
 import { ReadOnlyFoundationCard } from './components/ReadOnlyFoundationCard';
 import { CognitiveBrainDataBusCard } from './components/CognitiveBrainDataBusCard';
+import { ReadOnlyConnectorContractCard } from './components/ReadOnlyConnectorContractCard';
 
 type View = 'dashboard' | 'agenda' | 'tracking' | 'documents' | 'alerts';
 
@@ -622,6 +623,8 @@ export default function App() {
               <ReadOnlyFoundationCard />
 
               <CognitiveBrainDataBusCard />
+
+              <ReadOnlyConnectorContractCard />
 
               <div className="panel cockpit-agenda-card-v088">
                 <p className="eyebrow">AGENDA EJECUTIVA</p>
