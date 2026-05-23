@@ -7549,3 +7549,49 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+.read-only-foundation-chips-v170 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem;
+  margin-top: 0.7rem;
+}
+
+.read-only-foundation-chips-v170 span {
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid rgba(125, 211, 252, 0.2);
+  border-radius: 999px;
+  padding: 0.24rem 0.52rem;
+  background: rgba(8, 30, 54, 0.34);
+  color: rgba(186, 230, 253, 0.88);
+}
+
+.read-only-foundation-domains-v170 {
+  margin-top: 0.65rem;
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.33rem;
+}
+
+.read-only-foundation-domains-v170 li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(186, 230, 253, 0.8);
+}
+
+.read-only-foundation-domains-v170 b {
+  font-weight: 600;
+  color: rgba(147, 197, 253, 0.95);
+}
+
+.read-only-foundation-domains-v170 .state-degraded,
+.read-only-foundation-domains-v170 .state-unavailable,
+.read-only-foundation-domains-v170 .state-stale {
+  color: rgba(253, 224, 71, 0.92);
+}
