@@ -15,6 +15,7 @@ import { CognitiveBrainDataBusCard } from './components/CognitiveBrainDataBusCar
 import { ReadOnlySourceStackCard } from './components/ReadOnlySourceStackCard';
 import { ConnectorActivationReviewCard } from './components/ConnectorActivationReviewCard';
 import { ConnectorActivationPermissionGateCard } from './components/ConnectorActivationPermissionGateCard';
+import { ConnectorActivationDryRunControlPanelCard } from './components/ConnectorActivationDryRunControlPanelCard';
 
 type View = 'dashboard' | 'agenda' | 'tracking' | 'documents' | 'alerts';
 
@@ -626,6 +627,7 @@ export default function App() {
               <ReadOnlySourceStackCard />
               <ConnectorActivationReviewCard />
               <ConnectorActivationPermissionGateCard />
+              <ConnectorActivationDryRunControlPanelCard />
 
               <div className="panel cockpit-agenda-card-v088">
                 <p className="eyebrow">AGENDA EJECUTIVA</p>
