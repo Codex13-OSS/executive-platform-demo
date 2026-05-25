@@ -11,11 +11,8 @@ import { PremiumAlertsView } from './components/PremiumAlertsView';
 import { TrackingCommandView } from './components/TrackingCommandView';
 import { ExecutiveEnvironmentCard } from './components/ExecutiveEnvironmentCard';
 import { DynamicCommandLayer } from './components/DynamicCommandLayer';
-import { ReadOnlyFoundationCard } from './components/ReadOnlyFoundationCard';
 import { CognitiveBrainDataBusCard } from './components/CognitiveBrainDataBusCard';
-import { ReadOnlyConnectorContractCard } from './components/ReadOnlyConnectorContractCard';
-import { ReadOnlySourceRuntimeCard } from './components/ReadOnlySourceRuntimeCard';
-import { ReadOnlySourceHandshakeCard } from './components/ReadOnlySourceHandshakeCard';
+import { ReadOnlySourceStackCard } from './components/ReadOnlySourceStackCard';
 
 type View = 'dashboard' | 'agenda' | 'tracking' | 'documents' | 'alerts';
 
@@ -622,15 +619,9 @@ export default function App() {
                 }
               />
 
-              <ReadOnlyFoundationCard />
-
               <CognitiveBrainDataBusCard />
 
-              <ReadOnlyConnectorContractCard />
-
-              <ReadOnlySourceRuntimeCard />
-
-              <ReadOnlySourceHandshakeCard />
+              <ReadOnlySourceStackCard />
 
               <div className="panel cockpit-agenda-card-v088">
                 <p className="eyebrow">AGENDA EJECUTIVA</p>
