@@ -14,6 +14,7 @@ import { DynamicCommandLayer } from './components/DynamicCommandLayer';
 import { CognitiveBrainDataBusCard } from './components/CognitiveBrainDataBusCard';
 import { ReadOnlySourceStackCard } from './components/ReadOnlySourceStackCard';
 import { ConnectorActivationReviewCard } from './components/ConnectorActivationReviewCard';
+import { ConnectorActivationPermissionGateCard } from './components/ConnectorActivationPermissionGateCard';
 
 type View = 'dashboard' | 'agenda' | 'tracking' | 'documents' | 'alerts';
 
@@ -624,6 +625,7 @@ export default function App() {
 
               <ReadOnlySourceStackCard />
               <ConnectorActivationReviewCard />
+              <ConnectorActivationPermissionGateCard />
 
               <div className="panel cockpit-agenda-card-v088">
                 <p className="eyebrow">AGENDA EJECUTIVA</p>
