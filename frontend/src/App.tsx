@@ -3,7 +3,7 @@ import { CognitiveSpaceEngine } from './components/CognitiveSpaceEngine';
 import { NeuralCore } from './components/NeuralCore';
 import { activity, agenda, alerts, documents, tracking } from './data/liaOsExecutiveData';
 import { getExecutiveAgendaEventsForDay, getExecutiveTodayDayId } from './data/executiveAgendaData';
-import { mobileLÍAFixStyles, styles } from './styles/liaOsStyles';
+import { connectorPremiumStyles, mobileLÍAFixStyles, styles } from './styles/liaOsStyles';
 import { AgendaCalendar } from './components/AgendaCalendar';
 import { ExecutiveNextMoveCard } from './components/ExecutiveNextMoveCard';
 import { ExecutivePredictivePanel } from './components/ExecutivePredictivePanel';
@@ -13,11 +13,7 @@ import { ExecutiveEnvironmentCard } from './components/ExecutiveEnvironmentCard'
 import { DynamicCommandLayer } from './components/DynamicCommandLayer';
 import { CognitiveBrainDataBusCard } from './components/CognitiveBrainDataBusCard';
 import { ReadOnlySourceStackCard } from './components/ReadOnlySourceStackCard';
-import { ConnectorActivationReviewCard } from './components/ConnectorActivationReviewCard';
-import { ConnectorActivationPermissionGateCard } from './components/ConnectorActivationPermissionGateCard';
-import { ConnectorActivationDryRunControlPanelCard } from './components/ConnectorActivationDryRunControlPanelCard';
-import { ConnectorActivationAuditRollbackReadinessCard } from './components/ConnectorActivationAuditRollbackReadinessCard';
-import { ReadOnlyRealConnectorPreparationCard } from './components/ReadOnlyRealConnectorPreparationCard';
+import { PremiumAgendaConnectorCard } from './components/PremiumAgendaConnectorCard';
 
 type View = 'dashboard' | 'agenda' | 'tracking' | 'documents' | 'alerts';
 
@@ -324,6 +320,7 @@ export default function App() {
     return (
       <main className="lia-login-premium">
         <style>{styles}</style>
+        <style>{connectorPremiumStyles}</style>
         <style>{mobileLÍAFixStyles}</style>
 
         <div className="login-cinematic-bg" aria-hidden="true" />
@@ -459,6 +456,7 @@ export default function App() {
     <>
     <main className="os-shell">
       <style>{styles}</style>
+        <style>{connectorPremiumStyles}</style>
         <style>{mobileLÍAFixStyles}</style>
 
 
@@ -627,11 +625,7 @@ export default function App() {
               <CognitiveBrainDataBusCard />
 
               <ReadOnlySourceStackCard />
-              <ConnectorActivationReviewCard />
-              <ConnectorActivationPermissionGateCard />
-              <ConnectorActivationDryRunControlPanelCard />
-              <ConnectorActivationAuditRollbackReadinessCard />
-              <ReadOnlyRealConnectorPreparationCard />
+              <PremiumAgendaConnectorCard />
 
               <div className="panel cockpit-agenda-card-v088">
                 <p className="eyebrow">AGENDA EJECUTIVA</p>
