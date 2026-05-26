@@ -17,6 +17,7 @@ import { ConnectorActivationReviewCard } from './components/ConnectorActivationR
 import { ConnectorActivationPermissionGateCard } from './components/ConnectorActivationPermissionGateCard';
 import { ConnectorActivationDryRunControlPanelCard } from './components/ConnectorActivationDryRunControlPanelCard';
 import { ConnectorActivationAuditRollbackReadinessCard } from './components/ConnectorActivationAuditRollbackReadinessCard';
+import { ReadOnlyRealConnectorPreparationCard } from './components/ReadOnlyRealConnectorPreparationCard';
 
 type View = 'dashboard' | 'agenda' | 'tracking' | 'documents' | 'alerts';
 
@@ -630,6 +631,7 @@ export default function App() {
               <ConnectorActivationPermissionGateCard />
               <ConnectorActivationDryRunControlPanelCard />
               <ConnectorActivationAuditRollbackReadinessCard />
+              <ReadOnlyRealConnectorPreparationCard />
 
               <div className="panel cockpit-agenda-card-v088">
                 <p className="eyebrow">AGENDA EJECUTIVA</p>
