@@ -11,9 +11,6 @@ import { PremiumAlertsView } from './components/PremiumAlertsView';
 import { TrackingCommandView } from './components/TrackingCommandView';
 import { ExecutiveEnvironmentCard } from './components/ExecutiveEnvironmentCard';
 import { DynamicCommandLayer } from './components/DynamicCommandLayer';
-import { CognitiveBrainDataBusCard } from './components/CognitiveBrainDataBusCard';
-import { ReadOnlySourceStackCard } from './components/ReadOnlySourceStackCard';
-import { PremiumAgendaConnectorCard } from './components/PremiumAgendaConnectorCard';
 
 type View = 'dashboard' | 'agenda' | 'tracking' | 'documents' | 'alerts';
 
@@ -330,7 +327,7 @@ export default function App() {
           <div className="login-brand-mark">LÍA</div>
           <div>
             <strong>LÍA O.S</strong>
-            <span>Executive Command Center</span>
+            <span>Centro de mando ejecutivo</span>
           </div>
         </header>
 
@@ -351,7 +348,7 @@ export default function App() {
           </p>
 
           <div className="login-sync-stack">
-            <div><span>Neural Sync</span><strong>98%</strong></div>
+            <div><span>Neural Lista</span><strong>98%</strong></div>
             <div><span>Mapa Cognitivo</span><strong>Enlazado</strong></div>
             <div><span>Módulos</span><strong>Listos</strong></div>
           </div>
@@ -448,7 +445,7 @@ export default function App() {
     ['dashboard', 'Dashboard'],
     ['agenda', 'Agenda'],
     ['tracking', 'Seguimiento'],
-    ['documents', 'Documentos en validación'],
+    ['documents', 'Pendientes clave'],
     ['alerts', 'Alertas'],
   ] as const;
 
@@ -521,7 +518,7 @@ export default function App() {
       <aside className="sidebar">
         <div>
           <div className="logo">LÍA O.S</div>
-          <p className="side-sub">Executive Command Center</p>
+          <p className="side-sub">Centro de mando ejecutivo</p>
         </div>
 
         <nav>
@@ -546,7 +543,7 @@ export default function App() {
         <header className="topbar">
           <div>
             <p className="eyebrow">SOLUCIONES INFORMÁTICAS</p>
-            <h2>{view === 'dashboard' ? 'Centro de Comando Ejecutivo' : nav.find(([id]) => id === view)?.[1]}</h2>
+            <h2>{view === 'dashboard' ? 'Centro de mando ejecutivo' : nav.find(([id]) => id === view)?.[1]}</h2>
           </div>
           <ExecutiveEnvironmentCard variant="compact" />
           <button className="secondary" onClick={() => setLogged(false)}>Cerrar sesión</button>
@@ -559,44 +556,45 @@ export default function App() {
               <ExecutivePredictivePanel events={currentExecutiveEvents} variant="dashboard" />
             </section>
             <section className="kpi-grid executive-first-screen-v087 executive-cockpit-kpis-v088">
-              <div className="card kpi info"><p>Contexto ejecutivo</p><strong>4</strong><span>2 decisiones preparadas</span></div>
-              <div className="card kpi critical"><p>Decisiones críticas</p><strong>8</strong><span>3 requieren confirmación</span></div>
-              <div className="card kpi warning"><p>Documentos en validación</p><strong>12</strong><span>4 requieren cierre</span></div>
-              <div className="card kpi stable live-card"><p>Cadencia ejecutiva</p><strong>{87 + Math.min(livePulse, 6)}%</strong><span>{livePulse > 0 ? 'actualizada por LÍA' : 'operación bajo control'}</span></div>
+              <div className="card kpi info"><p>En foco hoy</p><strong>4</strong><span>2 decisiones preparadas</span></div>
+              <div className="card kpi critical"><p>Por resolver</p><strong>8</strong><span>3 requieren confirmación</span></div>
+              <div className="card kpi warning"><p>Pendientes clave</p><strong>12</strong><span>4 requieren cierre</span></div>
+              <div className="card kpi stable live-card"><p>Ritmo del día</p><strong>{87 + Math.min(livePulse, 6)}%</strong><span>{livePulse > 0 ? 'actualizada por LÍA' : 'operación bajo control'}</span></div>
             </section>
 
             <section className="executive-cockpit-main-v088">
               <article className="panel cognitive-compact-stage-v088">
                 <div className="cockpit-section-head-v088">
-                  <p className="eyebrow">MAPA COGNITIVO</p>
-                  <strong>Núcleo ejecutivo en vivo</strong>
+                  <p className="eyebrow">ESTADO DE LÍA</p>
+                  <strong>Vista general del día</strong>
                 </div>
                 <CognitiveSpaceEngine />
               </article>
 
               <aside className="panel risk-priority-panel cockpit-decision-core-v088">
                 <div className="risk-priority-head">
-                  <p className="eyebrow">RIESGO / CONEXIÓN / ACCIÓN</p>
+                  <p className="eyebrow">PRIORIDADES DEL DÍA</p>
                   <strong>Prioridad ejecutiva del día</strong>
                 </div>
                 <div className="risk-priority-list">
                   <article>
                     <em className="critical">Crítico</em>
                     <span>Reunión de dirección requiere confirmación y síntesis.</span>
-                    <small>Cruce: Agenda, alertas y documentos ejecutivos.</small>
+                    <small>Pendiente para hoy.</small>
                     <b>Acción: confirmar responsable, criterio y hora de cierre.</b>
                   </article>
                   <article>
                     <em className="warning">Prioridad</em>
                     <span>Propuesta comercial lista para cierre.</span>
-                    <small>Cruce: documentos, seguimiento y oportunidad comercial.</small>
+                    <small>Lista para cierre.</small>
                     <b>Acción: validar versión final y preparar aprobación.</b>
                   </article>
                 <div className="cockpit-decision-actions-v090">
                   {[
-                    ['Priorizar alerta', 'Alerta priorizada en el flujo ejecutivo inmediato.'],
-                    ['Solicitar validación', 'Validación preparada para dirección con contexto y siguiente acción.'],
-                    ['Crear seguimiento', 'Seguimiento agregado al control ejecutivo del día.'],
+                    ['Preparar briefing', 'Briefing del día preparado con contexto y decisiones pendientes.'],
+                    ['Confirmar responsable', 'Responsable confirmado para el siguiente movimiento.'],
+                    ['Solicitar validación', 'Solicitud enviada para validación de dirección.'],
+                    ['Crear seguimiento', 'Seguimiento creado para asegurar cierre.'],
                   ].map(([label, result]) => (
                     <button
                       key={label}
@@ -622,10 +620,6 @@ export default function App() {
                 }
               />
 
-              <CognitiveBrainDataBusCard />
-
-              <ReadOnlySourceStackCard />
-              <PremiumAgendaConnectorCard />
 
               <div className="panel cockpit-agenda-card-v088">
                 <p className="eyebrow">AGENDA EJECUTIVA</p>
@@ -639,7 +633,7 @@ export default function App() {
               </div>
 
               <div className="panel cockpit-tracking-card-v088">
-                <p className="eyebrow">EJECUCIÓN OPERATIVA</p>
+                <p className="eyebrow">SEGUIMIENTO CLAVE</p>
                 {tracking.map(([name, pct, status]) => (
                   <div className="track" key={name}>
                     <div><span>{name}</span><b>{status}</b></div>
@@ -649,7 +643,7 @@ export default function App() {
               </div>
 
               <div className="panel activity cockpit-activity-card-v088">
-                <p className="eyebrow">BITÁCORA EJECUTIVA</p>
+                <p className="eyebrow">RESUMEN DEL DÍA</p>
                 {activityFeed.map((item, index) => <div className="activity-item" key={`${item}-${index}`}>{item}</div>)}
               </div>
             </section>
@@ -706,7 +700,7 @@ export default function App() {
         <div className="lia-orb">
           <NeuralCore />
         </div>
-        <p className="eyebrow">LÍA COGNITIVE CORE</p>
+        <p className="eyebrow">ESTADO DE LÍA</p>
         <h3>{liaState}</h3>
         <div className={`lia-state ${liaState.toLowerCase().replace(/\s+/g, '-')}`}>
           <span />
@@ -733,7 +727,7 @@ export default function App() {
           </article>
           <article>
             <span>Movilidad</span>
-            <strong>Sync</strong>
+            <strong>Lista</strong>
           </article>
           <article>
             <span>Acción</span>
@@ -742,7 +736,7 @@ export default function App() {
         </div>
 
         <div className="lia-chat">
-          <p className="eyebrow">CONVERSACIÓN</p>
+          <p className="eyebrow">ASISTENTE</p>
           <div className="lia-chat-stream">
             {liaMessages.map((item, index) => (
               <div className={`lia-bubble ${item.role} ${item.role === 'assistant' && index === liaMessages.length - 1 ? 'lia-action-response-v090' : ''}`} key={`${item.role}-${index}-${item.text}`}>
@@ -804,7 +798,7 @@ export default function App() {
         </div>
 
         <div className="lia-log">
-          <p className="eyebrow">BITÁCORA IA</p>
+          <p className="eyebrow">RESUMEN DEL DÍA</p>
           {liaLog.map((item, index) => (
             <div className={`lia-log-item ${index === 0 ? 'lia-live-activity-v090' : ''}`} key={`${item}-${index}`}>{item}</div>
           ))}

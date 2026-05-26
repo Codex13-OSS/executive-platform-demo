@@ -43,10 +43,10 @@ export function DynamicCommandLayer({ onExecuteCommand }: DynamicCommandLayerPro
   };
 
   return (
-    <section className="panel dynamic-command-layer" aria-label="Dynamic Command Layer">
+    <section className="panel dynamic-command-layer" aria-label="Acciones sugeridas">
       <div className="dynamic-command-head">
-        <p className="eyebrow">DYNAMIC COMMAND LAYER</p>
-        <strong>Comandos sugeridos por contexto</strong>
+        <p className="eyebrow">ACCIONES SUGERIDAS</p>
+        <strong>Siguientes pasos recomendados</strong>
       </div>
 
       {confirmingCommand ? (
@@ -59,7 +59,7 @@ export function DynamicCommandLayer({ onExecuteCommand }: DynamicCommandLayerPro
               Mantener pendiente
             </button>
             <button type="button" className="compact" onClick={confirmCommand}>
-              Confirmar mock
+              Confirmar
             </button>
           </div>
         </div>
@@ -72,8 +72,7 @@ export function DynamicCommandLayer({ onExecuteCommand }: DynamicCommandLayerPro
               <p>{command.label}</p>
               <small>{command.hint}</small>
               <div className="dynamic-command-meta">
-                <span className={`status status-${command.status}`}>{command.status.replace('_', ' ')}</span>
-                <span className="type-chip">{command.type}</span>
+                <span className={`status status-${command.status}`}>{command.status === 'prepared' ? 'listo' : command.status === 'waiting_confirmation' ? 'requiere confirmación' : command.status === 'blocked' ? 'pendiente' : 'en preparación'}</span>
               </div>
               <em>{command.feedback}</em>
             </div>
