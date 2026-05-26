@@ -1,9 +1,39 @@
-import { useState } from 'react';
-import { agendaConnectorReadOnlyRehearsal } from '../integrations/agendaConnectorReadOnlyRehearsal';
+import { useMemo, useState } from 'react';
+import {
+  agendaConnectorReadOnlyRehearsal,
+  agendaEventStatusOptions,
+  type AgendaEventStatus,
+} from '../integrations/agendaConnectorReadOnlyRehearsal';
+
+type EventStatusMap = Record<string, AgendaEventStatus>;
+
+const initialEventStatuses = agendaConnectorReadOnlyRehearsal.events.reduce<EventStatusMap>((acc, event) => {
+  acc[event.id] = event.initialStatus;
+  return acc;
+}, {});
 
 export function PremiumAgendaConnectorCard() {
   const [showDetails, setShowDetails] = useState(false);
   const [showAudit, setShowAudit] = useState(false);
+  const [eventStatuses, setEventStatuses] = useState<EventStatusMap>(initialEventStatuses);
+  const [hasLocalInteraction, setHasLocalInteraction] = useState(false);
+
+  const summary = useMemo(() => {
+    const totals = agendaConnectorReadOnlyRehearsal.events.reduce(
+      (acc, event) => {
+        acc[eventStatuses[event.id]] += 1;
+        return acc;
+      },
+      { revisado: 0, pendiente: 0, preparado: 0 } as Record<AgendaEventStatus, number>,
+    );
+
+    return `${totals.revisado} revisado · ${totals.pendiente} pendiente · ${totals.preparado} preparado`;
+  }, [eventStatuses]);
+
+  const updateEventStatus = (eventId: string, status: AgendaEventStatus) => {
+    setEventStatuses((current) => ({ ...current, [eventId]: status }));
+    setHasLocalInteraction(true);
+  };
 
   return (
     <article className="panel premium-agenda-connector-card" aria-label="Conector de Agenda">
@@ -34,11 +64,36 @@ export function PremiumAgendaConnectorCard() {
 
       {showDetails ? (
         <section className="premium-agenda-connector-expand" aria-label="Detalles del conector">
-          {agendaConnectorReadOnlyRehearsal.events.map((event) => (
-            <p key={`${event.time}-${event.title}`}>
-              <strong>{event.time}</strong> · {event.title}
-            </p>
-          ))}
+          <p className="premium-agenda-interaction-summary">{summary}</p>
+
+          <div className="premium-agenda-event-list">
+            {agendaConnectorReadOnlyRehearsal.events.map((event) => (
+              <article
+                className={`premium-agenda-event premium-agenda-event-${eventStatuses[event.id]}`}
+                key={event.id}
+              >
+                <p>
+                  <strong>{event.time}</strong> · {event.title}
+                </p>
+                <div className="premium-agenda-event-actions" aria-label={`Estado de ${event.title}`}>
+                  {agendaEventStatusOptions.map((option) => (
+                    <button
+                      type="button"
+                      key={option.id}
+                      className={eventStatuses[event.id] === option.id ? 'active' : ''}
+                      onClick={() => updateEventStatus(event.id, option.id)}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+
+          {hasLocalInteraction ? (
+            <p className="premium-agenda-local-log">{agendaConnectorReadOnlyRehearsal.localLog}</p>
+          ) : null}
         </section>
       ) : null}
 
