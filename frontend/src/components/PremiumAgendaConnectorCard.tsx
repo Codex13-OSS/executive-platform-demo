@@ -17,22 +17,36 @@ export function PremiumAgendaConnectorCard() {
   const [showAudit, setShowAudit] = useState(false);
   const [eventStatuses, setEventStatuses] = useState<EventStatusMap>(initialEventStatuses);
   const [hasLocalInteraction, setHasLocalInteraction] = useState(false);
+  const [handoffPrepared, setHandoffPrepared] = useState(false);
 
-  const summary = useMemo(() => {
-    const totals = agendaConnectorReadOnlyRehearsal.events.reduce(
+  const totals = useMemo(() => {
+    return agendaConnectorReadOnlyRehearsal.events.reduce(
       (acc, event) => {
         acc[eventStatuses[event.id]] += 1;
         return acc;
       },
       { revisado: 0, pendiente: 0, preparado: 0 } as Record<AgendaEventStatus, number>,
     );
-
-    return `${totals.revisado} revisado · ${totals.pendiente} pendiente · ${totals.preparado} preparado`;
   }, [eventStatuses]);
+
+  const summary = `${totals.revisado} revisado · ${totals.pendiente} pendiente · ${totals.preparado} preparado`;
+
+  const executiveHandoff = useMemo(() => {
+    if (totals.pendiente > 1) {
+      return 'Agenda con pendientes: prioriza los puntos abiertos antes del cierre del día.';
+    }
+
+    if (totals.pendiente === 1) {
+      return 'Agenda revisada: 1 pendiente requiere seguimiento antes del cierre.';
+    }
+
+    return 'Agenda lista: los eventos clave están preparados para seguimiento ejecutivo.';
+  }, [totals.pendiente]);
 
   const updateEventStatus = (eventId: string, status: AgendaEventStatus) => {
     setEventStatuses((current) => ({ ...current, [eventId]: status }));
     setHasLocalInteraction(true);
+    setHandoffPrepared(false);
   };
 
   return (
@@ -90,6 +104,17 @@ export function PremiumAgendaConnectorCard() {
               </article>
             ))}
           </div>
+
+          <section className="premium-agenda-handoff" aria-label="Handoff ejecutivo">
+            <span>Handoff ejecutivo</span>
+            <p>{executiveHandoff}</p>
+            <button type="button" className="secondary" onClick={() => setHandoffPrepared(true)}>
+              Preparar resumen
+            </button>
+            {handoffPrepared ? (
+              <p className="premium-agenda-local-log">{agendaConnectorReadOnlyRehearsal.handoffPreparedLog}</p>
+            ) : null}
+          </section>
 
           {hasLocalInteraction ? (
             <p className="premium-agenda-local-log">{agendaConnectorReadOnlyRehearsal.localLog}</p>
