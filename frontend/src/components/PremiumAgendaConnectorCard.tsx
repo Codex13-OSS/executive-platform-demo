@@ -22,6 +22,7 @@ export function PremiumAgendaConnectorCard() {
   const [handoffPrepared, setHandoffPrepared] = useState(false);
   const [followUpMarked, setFollowUpMarked] = useState(false);
   const [executiveClosureMarked, setExecutiveClosureMarked] = useState(false);
+  const [briefingMarked, setBriefingMarked] = useState(false);
 
   const totals = useMemo(() => {
     return agendaConnectorReadOnlyRehearsal.events.reduce(
@@ -61,6 +62,12 @@ export function PremiumAgendaConnectorCard() {
 
   const suggestedAction = agendaFollowUpActions[suggestedActionId];
   const canShowExecutiveClosure = handoffPrepared && followUpMarked;
+  const briefingPendingText =
+    totals.pendiente === 0
+      ? 'Sin pendientes abiertos.'
+      : totals.pendiente === 1
+        ? '1 pendiente requiere seguimiento.'
+        : `${totals.pendiente} pendientes requieren seguimiento.`;
 
   const updateEventStatus = (eventId: string, status: AgendaEventStatus) => {
     setEventStatuses((current) => ({ ...current, [eventId]: status }));
@@ -68,6 +75,9 @@ export function PremiumAgendaConnectorCard() {
     setHandoffPrepared(false);
     setFollowUpMarked(false);
     setExecutiveClosureMarked(false);
+    setBriefingMarked(false);
+    setBriefingMarked(false);
+    setBriefingMarked(false);
   };
 
   const prepareHandoffSummary = () => {
@@ -83,6 +93,11 @@ export function PremiumAgendaConnectorCard() {
 
   const markExecutiveClosure = () => {
     setExecutiveClosureMarked(true);
+    setBriefingMarked(false);
+  };
+
+  const markBriefingReady = () => {
+    setBriefingMarked(true);
   };
 
   return (
@@ -171,6 +186,23 @@ export function PremiumAgendaConnectorCard() {
                 </button>
                 {executiveClosureMarked ? (
                   <p className="premium-agenda-local-log">{agendaConnectorReadOnlyRehearsal.executiveClosureLog}</p>
+                ) : null}
+              </div>
+            ) : null}
+
+            {executiveClosureMarked ? (
+              <div className="premium-agenda-briefing-output" aria-label="Briefing ejecutivo">
+                <span>Briefing ejecutivo</span>
+                <h4>Briefing ejecutivo listo</h4>
+                <p>Agenda revisada con seguimiento activo.</p>
+                <p>{briefingPendingText}</p>
+                <p>Acción sugerida marcada en modo seguro.</p>
+                <p>Cierre listo para revisión ejecutiva.</p>
+                <button type="button" onClick={markBriefingReady}>
+                  Marcar briefing listo
+                </button>
+                {briefingMarked ? (
+                  <p className="premium-agenda-local-log">{agendaConnectorReadOnlyRehearsal.briefingMarkedLog}</p>
                 ) : null}
               </div>
             ) : null}
