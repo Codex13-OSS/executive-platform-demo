@@ -1,10 +1,30 @@
 export type AgendaEventStatus = 'revisado' | 'pendiente' | 'preparado';
 
+export type AgendaFollowUpActionId = 'confirmar-responsable' | 'preparar-seguimiento' | 'cerrar-agenda';
+
 export const agendaEventStatusOptions: Array<{ id: AgendaEventStatus; label: string }> = [
   { id: 'revisado', label: 'Revisado' },
   { id: 'pendiente', label: 'Pendiente' },
   { id: 'preparado', label: 'Preparado' },
 ];
+
+export const agendaFollowUpActions: Record<
+  AgendaFollowUpActionId,
+  { label: string; message: string }
+> = {
+  'confirmar-responsable': {
+    label: 'Confirmar responsable',
+    message: 'Hay puntos pendientes que requieren dueño antes del cierre.',
+  },
+  'preparar-seguimiento': {
+    label: 'Preparar seguimiento',
+    message: 'La agenda está lista para preparar el siguiente paso.',
+  },
+  'cerrar-agenda': {
+    label: 'Cerrar agenda',
+    message: 'El resumen está listo para cierre ejecutivo.',
+  },
+};
 
 export const agendaConnectorReadOnlyRehearsal = {
   status: 'Ensayo de lectura listo',
@@ -18,11 +38,13 @@ export const agendaConnectorReadOnlyRehearsal = {
   ],
   localLog: 'Evento actualizado en modo seguro.',
   handoffPreparedLog: 'Resumen ejecutivo preparado en modo seguro.',
+  followUpActionLog: 'Acción marcada en modo seguro.',
   audit: [
     'Ensayo ejecutado en modo seguro.',
     'Sin credenciales cargadas.',
     'Sin escritura ni conexión real.',
     'Interacciones ejecutadas solo en modo local.',
     'Resumen preparado solo de forma local.',
+    'Acciones de seguimiento ejecutadas solo de forma local.',
   ],
 };
