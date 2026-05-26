@@ -348,7 +348,7 @@ export default function App() {
           </p>
 
           <div className="login-sync-stack">
-            <div><span>Neural Lista</span><strong>98%</strong></div>
+            <div><span>LÍA lista</span><strong>98%</strong></div>
             <div><span>Mapa Cognitivo</span><strong>Enlazado</strong></div>
             <div><span>Módulos</span><strong>Listos</strong></div>
           </div>
@@ -359,8 +359,8 @@ export default function App() {
             <NeuralCore />
           </div>
           <div className="orb-caption">
-            <span>LÍA Core</span>
-            <strong>Cognitive sync active</strong>
+            <span>LÍA activa</span>
+            <strong>Sistema activo</strong>
           </div>
         </section>
 
@@ -614,7 +614,7 @@ export default function App() {
                 onExecuteCommand={(command) =>
                   runLÍAAction(
                     command.label,
-                    `${command.label}: comando ejecutivo preparado en modo mock.`,
+                    `${command.label}: comando ejecutivo preparado en modo seguro.`,
                     () => addActivity(`${command.label}: ${command.feedback.toLowerCase()}.`),
                   )
                 }

@@ -42,9 +42,9 @@ export function ExecutivePredictivePanel({
     <section className={`executive-predictive-panel predictive-${variant}`}>
       <div className="executive-predictive-head">
         <div>
-          <p className="eyebrow">PREDICTIVE INTELLIGENCE</p>
-          <h3>LÍA anticipa próximos riesgos</h3>
-          <span>Movilidad, agenda, seguimiento y decisiones críticas.</span>
+          <p className="eyebrow">LECTURA EJECUTIVA</p>
+          <h3>Riesgos próximos</h3>
+          <span>Agenda, riesgos y decisiones.</span>
         </div>
 
         <div className="executive-predictive-summary">
@@ -72,7 +72,7 @@ export function ExecutivePredictivePanel({
       <div className="executive-predictive-footer">
         <i />
         <span>
-          Modo predictivo mock · LÍA prepara acciones · ejecución requiere confirmación.
+          Acciones listas para confirmar.
         </span>
       </div>
     </section>
