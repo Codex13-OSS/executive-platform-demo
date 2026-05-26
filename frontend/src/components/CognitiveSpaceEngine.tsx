@@ -19,11 +19,11 @@ export function CognitiveSpaceEngine() {
   const coreScore = Math.round(cognitiveSpaceNodes.reduce((acc, node) => acc + node.score, 0) / cognitiveSpaceNodes.length);
 
   return (
-    <section className="cognitive-space-engine-v130" aria-label="Executive cognitive map v1.3.0">
+    <section className="cognitive-space-engine-v130" aria-label="Mapa ejecutivo v1.3.0">
       <div className="cse-orbital-v130" role="presentation">
         <div className="cse-depth-glow-v130" aria-hidden="true" />
-        <div className="cse-core-v130" aria-label="Executive Core" role="img">
-          <small>Executive Core</small>
+        <div className="cse-core-v130" aria-label="Centro ejecutivo" role="img">
+          <small>Centro ejecutivo</small>
           <strong>{coreScore}%</strong>
           <em>{statusLabel.active}</em>
         </div>
