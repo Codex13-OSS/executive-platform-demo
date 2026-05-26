@@ -31,7 +31,7 @@ export const agendaConnectorReadOnlyRehearsal = {
   summary: 'Agenda lista para revisión.',
   indicators: ['Lectura OK', '3 eventos', 'Sin conexión real', 'Pendiente aprobación'],
   events: [
-    { id: 'briefing-directivo', time: '09:00', title: 'Briefing directivo', initialStatus: 'pendiente' as AgendaEventStatus },
+    { id: 'resumen-directivo', time: '09:00', title: 'Resumen directivo', initialStatus: 'pendiente' as AgendaEventStatus },
     { id: 'mesa-resolucion', time: '11:30', title: 'Mesa de resolución operativa', initialStatus: 'revisado' as AgendaEventStatus },
     { id: 'cierre-ejecutivo', time: '17:30', title: 'Cierre ejecutivo del día', initialStatus: 'preparado' as AgendaEventStatus },
   ],
@@ -39,7 +39,7 @@ export const agendaConnectorReadOnlyRehearsal = {
   handoffPreparedLog: 'Resumen listo.',
   followUpActionLog: 'Acción lista.',
   executiveClosureLog: 'Cierre listo.',
-  briefingMarkedLog: 'Briefing listo.',
+  briefingMarkedLog: 'Resumen listo.',
   audit: [
     'Ensayo seguro.',
     'Sin credenciales.',
@@ -48,6 +48,6 @@ export const agendaConnectorReadOnlyRehearsal = {
     'Resumen local.',
     'Acción local.',
     'Cierre local.',
-    'Briefing local.',
+    'Resumen local.',
   ],
 };

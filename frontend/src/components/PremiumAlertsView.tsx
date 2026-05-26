@@ -12,7 +12,7 @@ type StoredAlert = {
 
 const defaultAlerts: StoredAlert[] = [
   { id: 1, level: 'Alta', title: 'Decisión crítica sin confirmar', detail: 'Requiere autorización ejecutiva antes de continuar.', source: 'Seguimiento', state: 'Pendiente', recommendation: 'Validar responsable inmediato' },
-  { id: 2, level: 'Media', title: 'Briefing por preparar', detail: 'Contexto ejecutivo incompleto.', source: 'Agenda', state: 'En curso', recommendation: 'Preparar briefing' },
+  { id: 2, level: 'Media', title: 'Resumen por preparar', detail: 'Contexto ejecutivo incompleto.', source: 'Agenda', state: 'En curso', recommendation: 'Preparar resumen' },
   { id: 3, level: 'Media', title: 'Documento requiere validación', detail: 'Documento listo para revisión ejecutiva.', source: 'Documentos', state: 'Por validar', recommendation: 'Revisar y firmar' },
   { id: 4, level: 'Baja', title: 'Cadencia estable', detail: 'Operación dentro de parámetros esperados.', source: 'Sistema', state: 'Monitoreo', recommendation: 'Mantener seguimiento' },
 ];

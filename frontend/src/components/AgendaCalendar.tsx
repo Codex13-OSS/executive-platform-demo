@@ -2,7 +2,7 @@ import { useMemo, useState, type FormEvent } from 'react';
 import { ExecutiveDayTimeline } from './ExecutiveDayTimeline';
 
 type AgendaPriority = 'Alta' | 'Media' | 'Baja';
-type AgendaStatus = 'briefing listo' | 'requiere contexto' | 'sin confirmar' | 'confirmado' | 'bloqueado';
+type AgendaStatus = 'resumen listo' | 'requiere contexto' | 'sin confirmar' | 'confirmado' | 'bloqueado';
 
 type AgendaEvent = {
   id: string;
@@ -130,9 +130,9 @@ const baseWeek: AgendaDay[] = [
         id: 'lun-0900',
         time: '09:00',
         end: '09:45',
-        title: 'Briefing ejecutivo del día',
+        title: 'Resumen ejecutivo del día',
         priority: 'Alta',
-        status: 'briefing listo',
+        status: 'resumen listo',
         owner: 'Dirección',
         context: 'Resumen operativo, riesgos y documentos pendientes.',
         goal: 'Alinear prioridades del día y decidir qué temas requieren atención inmediata.',
@@ -210,7 +210,7 @@ const baseWeek: AgendaDay[] = [
       },
     ],
     slots: [
-      { id: 'mar-slot-1030', time: '10:30 - 11:30', label: 'Disponible para briefing corto' },
+      { id: 'mar-slot-1030', time: '10:30 - 11:30', label: 'Disponible para resumen corto' },
       { id: 'mar-slot-1400', time: '14:00 - 15:30', label: 'Disponible para decisión ejecutiva' },
       { id: 'mar-slot-1730', time: '17:30 - 18:00', label: 'Disponible para cierre' },
     ],
@@ -226,9 +226,9 @@ const baseWeek: AgendaDay[] = [
         id: 'mie-0900',
         time: '09:00',
         end: '09:30',
-        title: 'Briefing ejecutivo del día',
+        title: 'Resumen ejecutivo del día',
         priority: 'Alta',
-        status: 'briefing listo',
+        status: 'resumen listo',
         owner: 'LÍA',
         context: 'Vista diaria preparada con riesgos y prioridades.',
         goal: 'Preparar al ejecutivo para operar el día con claridad y foco.',
@@ -236,7 +236,7 @@ const baseWeek: AgendaDay[] = [
         topics: ['Prioridades', 'Riesgos', 'Agenda', 'Documentos'],
         questions: ['¿Qué debe resolverse hoy?', '¿Qué reunión necesita preparación?', '¿Qué alerta requiere validación?'],
         risks: ['Saturación de agenda', 'Falta de contexto', 'Decisiones reactivas'],
-        outputs: ['Plan del día', 'Briefings preparados', 'Alertas priorizadas'],
+        outputs: ['Plan del día', 'Resúmenes preparados', 'Alertas priorizadas'],
         docs: ['Resumen diario', 'Mapa cognitivo'],
       },
       {
@@ -354,7 +354,7 @@ const baseWeek: AgendaDay[] = [
       },
     ],
     slots: [
-      { id: 'vie-slot-0900', time: '09:00 - 10:30', label: 'Disponible para briefing' },
+      { id: 'vie-slot-0900', time: '09:00 - 10:30', label: 'Disponible para resumen' },
       { id: 'vie-slot-1230', time: '12:30 - 14:00', label: 'Disponible para seguimiento' },
     ],
   },
@@ -484,7 +484,7 @@ export function AgendaCalendar() {
   const generateBriefing = (event: AgendaEvent) => {
     setSelectedEventId(event.id);
     setBriefedEvents((prev) => [...new Set([...prev, event.id])]);
-    saveAgendaAlert(`Agenda · ${event.time}`, `Briefing preparado para ${event.title}. Guion, riesgos y preguntas clave preparados.`);
+    saveAgendaAlert(`Agenda · ${event.time}`, `Resumen preparado para ${event.title}. Guion, riesgos y preguntas clave preparados.`);
   };
 
   const createReminder = (event: AgendaEvent) => {
@@ -731,7 +731,7 @@ export function AgendaCalendar() {
               </div>
             ) : (
               day.events.map((event) => {
-                const isBriefed = briefedEvents.includes(event.id) || event.status === 'briefing listo';
+                const isBriefed = briefedEvents.includes(event.id) || event.status === 'resumen listo';
                 const isSelected = selectedEvent?.id === event.id;
 
                 return (
@@ -751,17 +751,17 @@ export function AgendaCalendar() {
                         <span>{event.priority}</span>
                       </div>
                       <p>{event.context}</p>
-                <div className="agenda-primary-action">Siguiente movimiento: {isBriefed ? "Validar" : "Briefing"}</div>
+                <div className="agenda-primary-action">Siguiente movimiento: {isBriefed ? "Validar" : "Resumen"}</div>
 
                       <div className="agenda-event-meta">
                         <span>{event.owner}</span>
-                        <span>{isBriefed ? 'briefing listo' : event.status}</span>
+                        <span>{isBriefed ? 'resumen listo' : event.status}</span>
                   <span>{event.priority === 'Alta' ? 'riesgo alto' : event.priority === 'Media' ? 'riesgo moderado' : 'riesgo controlado'}</span>
                       </div>
 
                       <div className="agenda-event-actions">
                         <button type="button" onClick={(e) => { e.stopPropagation(); generateBriefing(event); }}>
-                          Briefing
+                          Resumen
                         </button>
                         <button type="button" onClick={(e) => { e.stopPropagation(); createReminder(event); }}>
                           Recordatorio

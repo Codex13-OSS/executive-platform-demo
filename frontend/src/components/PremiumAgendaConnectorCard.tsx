@@ -186,9 +186,9 @@ export function PremiumAgendaConnectorCard() {
             ) : null}
 
             {executiveClosureMarked ? (
-              <div className="premium-agenda-briefing-output" aria-label="Briefing ejecutivo">
-                <span>Briefing</span>
-                <h4>Briefing listo</h4>
+              <div className="premium-agenda-briefing-output" aria-label="Resumen ejecutivo">
+                <span>Resumen</span>
+                <h4>Resumen listo</h4>
                 <p>Agenda revisada.</p>
                 <p>{briefingPendingText}</p>
                 <p>Cierre listo.</p>

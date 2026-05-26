@@ -181,7 +181,7 @@ export function getExecutiveReadOnlySnapshot(): ExecutiveReadOnlySnapshot {
       checkedAt: generatedAt,
     },
     events: [
-      { id: 'event-briefing', title: 'Briefing ejecutivo', window: '08:30', priority: 'high', sourceId: 'source-agenda-mock' },
+      { id: 'event-resumen', title: 'Resumen ejecutivo', window: '08:30', priority: 'high', sourceId: 'source-agenda-mock' },
       { id: 'event-review', title: 'Revisión de decisiones', window: '11:00', priority: 'medium', sourceId: 'source-agenda-mock' },
     ],
     contacts: [

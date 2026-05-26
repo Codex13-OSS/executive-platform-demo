@@ -1,6 +1,6 @@
 export type CommandStatus = 'ready' | 'waiting_confirmation' | 'prepared' | 'blocked';
 export type CommandPriority = 'low' | 'medium' | 'high' | 'critical';
-export type CommandType = 'briefing' | 'followup' | 'document' | 'agenda' | 'risk' | 'team';
+export type CommandType = 'resumen' | 'followup' | 'document' | 'agenda' | 'risk' | 'team';
 
 export type DynamicCommand = {
   id: string;
@@ -15,12 +15,12 @@ export type DynamicCommand = {
 
 export const dynamicCommandMock: DynamicCommand[] = [
   {
-    id: 'prepare-briefing',
-    label: 'Preparar briefing',
+    id: 'prepare-resumen',
+    label: 'Preparar resumen',
     hint: 'Junta de dirección · 09:30',
     status: 'ready',
     priority: 'high',
-    type: 'briefing',
+    type: 'resumen',
     requiresConfirmation: true,
     feedback: 'Listo para revisión',
   },

@@ -21,7 +21,7 @@ export function ExecutiveNextMoveCard({ event }: ExecutiveNextMoveCardProps) {
     event.mobilityRisk === 'alto'
       ? 'Salir antes o avisar posible retraso'
       : event.followUpRequired
-        ? 'Preparar briefing y confirmar responsable'
+        ? 'Preparar resumen y confirmar responsable'
         : 'Mantener agenda bajo observación';
 
   return (
