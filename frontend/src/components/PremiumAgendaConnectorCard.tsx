@@ -1,6 +1,5 @@
 import { useState } from 'react';
-
-const indicators = ['Lectura lista', 'Escritura desactivada', 'Credenciales protegidas', 'Aprobación pendiente'];
+import { agendaConnectorReadOnlyRehearsal } from '../integrations/agendaConnectorReadOnlyRehearsal';
 
 export function PremiumAgendaConnectorCard() {
   const [showDetails, setShowDetails] = useState(false);
@@ -10,16 +9,16 @@ export function PremiumAgendaConnectorCard() {
     <article className="panel premium-agenda-connector-card" aria-label="Conector de Agenda">
       <div className="premium-agenda-connector-head">
         <p className="eyebrow">CONECTOR DE AGENDA</p>
-        <span className="premium-agenda-connector-status">Preparado de forma segura</span>
+        <span className="premium-agenda-connector-status">{agendaConnectorReadOnlyRehearsal.status}</span>
       </div>
 
       <h3>Conector de Agenda</h3>
       <p className="premium-agenda-connector-summary">
-        La agenda está lista para conectarse en modo lectura. La escritura y las credenciales siguen protegidas hasta autorización.
+        {agendaConnectorReadOnlyRehearsal.summary}
       </p>
 
       <ul className="premium-agenda-connector-indicators">
-        {indicators.map((label) => (
+        {agendaConnectorReadOnlyRehearsal.indicators.map((label) => (
           <li key={label}>{label}</li>
         ))}
       </ul>
@@ -35,15 +34,19 @@ export function PremiumAgendaConnectorCard() {
 
       {showDetails ? (
         <section className="premium-agenda-connector-expand" aria-label="Detalles del conector">
-          <p>Agenda lista para conexión segura.</p>
-          <p>Lectura preparada y conexión real aún protegida.</p>
+          {agendaConnectorReadOnlyRehearsal.events.map((event) => (
+            <p key={`${event.time}-${event.title}`}>
+              <strong>{event.time}</strong> · {event.title}
+            </p>
+          ))}
         </section>
       ) : null}
 
       {showAudit ? (
         <section className="premium-agenda-connector-expand" aria-label="Auditoría del conector">
-          <p>Auditoría disponible con trazabilidad de activación y controles aplicados.</p>
-          <p>Reversa preparada en modo preventivo, sin acciones reales de escritura.</p>
+          {agendaConnectorReadOnlyRehearsal.audit.map((line) => (
+            <p key={line}>{line}</p>
+          ))}
         </section>
       ) : null}
     </article>
