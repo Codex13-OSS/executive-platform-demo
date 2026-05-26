@@ -94,7 +94,7 @@ export function getReadOnlySourceRuntimeRehearsalSnapshot(): ReadOnlySourceRunti
     .map((event) => ({
       id: `command-${event.id}`,
       sourceEventId: event.sourceEventId,
-      suggestion: event.cognitiveRiskHint === 'high' ? 'Preparar seguimiento crítico' : 'Preparar briefing de contexto',
+      suggestion: event.cognitiveRiskHint === 'high' ? 'Preparar seguimiento crítico' : 'Preparar resumen de contexto',
       requiresHumanApproval: true as const,
     }));
 

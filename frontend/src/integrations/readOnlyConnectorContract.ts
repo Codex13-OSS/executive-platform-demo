@@ -112,9 +112,9 @@ export function getReadOnlyConnectorRehearsalSnapshot(): ReadOnlyConnectorRehear
 
   const rehearsalEvents: ReadOnlyConnectorRehearsalEvent[] = [
     {
-      id: 'rehearsal-agenda-briefing',
+      id: 'rehearsal-agenda-resumen',
       sourceEventId: 'external-calendar-mock-001',
-      title: 'Briefing directivo',
+      title: 'Resumen directivo',
       startTime: '09:00',
       endTime: '09:30',
       location: 'Sala ejecutiva',

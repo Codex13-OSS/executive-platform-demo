@@ -52,7 +52,7 @@ const executionLanes = [
 ];
 
 const recentCommitments = [
-  ['09:00', 'Briefing ejecutivo preparado', 'Listo'],
+  ['09:00', 'Resumen ejecutivo preparado', 'Listo'],
   ['11:30', 'Proceso crítico requiere validación', 'Atención'],
   ['14:00', 'Seguimiento con dirección sin confirmar', 'Riesgo'],
   ['17:30', 'Cierre operativo requiere bitácora', 'Pendiente'],

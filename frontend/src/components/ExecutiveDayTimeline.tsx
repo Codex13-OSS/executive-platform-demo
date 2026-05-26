@@ -34,7 +34,7 @@ export function ExecutiveDayTimeline({
     <section className="panel executive-day-timeline">
       <div className="executive-timeline-header">
         <div>
-          <p className="eyebrow">Executive 24h Agenda</p>
+          <p className="eyebrow">AGENDA DEL DÍA</p>
           <h3>{dayLabel} · línea operativa</h3>
           <span>
             LÍA cruza eventos, movilidad, riesgo y seguimiento.
@@ -78,7 +78,7 @@ export function ExecutiveDayTimeline({
         <div className="executive-empty-day">
           <strong>Día sin bloques ejecutivos</strong>
           <span>
-            LÍA puede convertir este espacio en seguimiento, briefing o preparación documental.
+            LÍA puede convertir este espacio en seguimiento, resumen o preparación documental.
           </span>
         </div>
       ) : (
@@ -92,7 +92,7 @@ export function ExecutiveDayTimeline({
       <div className="executive-timeline-signal">
         <i />
         <span>
-          Mock premium activo · sin APIs reales · acciones críticas requieren confirmación.
+          Modo seguro activo · acciones críticas requieren confirmación.
         </span>
       </div>
     </section>

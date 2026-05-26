@@ -71,8 +71,8 @@ export default function App() {
       return `${context}: validación registrada. Queda pendiente confirmación humana y criterio de cierre.`;
     }
 
-    if (lower.includes('briefing') || lower.includes('guion')) {
-      return `${context}: briefing listo con objetivo, riesgos, preguntas clave y salida esperada.`;
+    if (lower.includes('resumen') || lower.includes('guion')) {
+      return `${context}: resumen listo con objetivo, riesgos, preguntas clave y salida esperada.`;
     }
 
     if (lower.includes('recordatorio') || lower.includes('alerta')) {
@@ -185,7 +185,7 @@ export default function App() {
     if (!rawLabel) return;
 
     const moduleActions: Record<string, string> = {
-      Briefing: 'Briefing de evento preparado: contexto, riesgos y acuerdos sugeridos.',
+      Resumen: 'Resumen de evento preparado: contexto, riesgos y acuerdos sugeridos.',
       Recordatorio: 'Recordatorio operativo registrado para la siguiente ventana ejecutiva.',
       Guion: 'Guion ejecutivo abierto: objetivo, preguntas clave y salida esperada.',
       Revisar: 'Revisión ejecutiva iniciada: LÍA priorizó contexto, estado y siguiente acción.',
@@ -269,11 +269,11 @@ export default function App() {
         'Recordatorio conectado al centro de alertas con origen, prioridad y validación pendiente.',
         () => addAlert(clean.length > 36 ? `${clean.slice(0, 36)}…` : clean)
       );
-    } else if (lower.includes('briefing') || lower.includes('agenda')) {
+    } else if (lower.includes('resumen') || lower.includes('agenda')) {
       runLÍAAction(
         clean,
-        'Briefing conectado a agenda: objetivo, riesgos y salida esperada preparados.',
-        () => addActivity('Briefing ejecutivo solicitado por texto.')
+        'Resumen conectado a agenda: objetivo, riesgos y salida esperada preparados.',
+        () => addActivity('Resumen ejecutivo solicitado por texto.')
       );
     } else {
       runLÍAAction(
@@ -442,7 +442,7 @@ export default function App() {
 
 
   const nav = [
-    ['dashboard', 'Dashboard'],
+    ['dashboard', 'Inicio'],
     ['agenda', 'Agenda'],
     ['tracking', 'Seguimiento'],
     ['documents', 'Pendientes clave'],
@@ -591,7 +591,7 @@ export default function App() {
                   </article>
                 <div className="cockpit-decision-actions-v090">
                   {[
-                    ['Preparar briefing', 'Briefing del día preparado con contexto y decisiones pendientes.'],
+                    ['Preparar resumen', 'Resumen del día preparado con contexto y decisiones pendientes.'],
                     ['Confirmar responsable', 'Responsable confirmado para el siguiente movimiento.'],
                     ['Solicitar validación', 'Solicitud enviada para validación de dirección.'],
                     ['Crear seguimiento', 'Seguimiento creado para asegurar cierre.'],
@@ -748,16 +748,16 @@ export default function App() {
 
         <div className="quick-actions">
           <button
-            className={`lia-simulated-feedback-v090 ${activeLiaAction === 'Briefing' ? 'cockpit-action-active-v090' : ''}`}
+            className={`lia-simulated-feedback-v090 ${activeLiaAction === 'Resumen' ? 'cockpit-action-active-v090' : ''}`}
             onClick={() =>
               runLÍAAction(
-                'Briefing',
-                'Briefing listo: prioridades, riesgos, responsables y cierre sugerido.',
-                () => addActivity('Briefing ejecutivo del día preparado.')
+                'Resumen',
+                'Resumen listo: prioridades, riesgos, responsables y cierre sugerido.',
+                () => addActivity('Resumen ejecutivo del día preparado.')
               )
             }
           >
-            Briefing
+            Resumen
           </button>
           <button
             className={`lia-simulated-feedback-v090 ${activeLiaAction === 'Recordatorio' ? 'cockpit-action-active-v090' : ''}`}
