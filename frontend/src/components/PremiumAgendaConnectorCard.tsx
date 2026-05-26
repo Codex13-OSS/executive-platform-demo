@@ -37,15 +37,11 @@ export function PremiumAgendaConnectorCard() {
   const summary = `${totals.revisado} revisado · ${totals.pendiente} pendiente · ${totals.preparado} preparado`;
 
   const executiveHandoff = useMemo(() => {
-    if (totals.pendiente > 1) {
-      return 'Agenda con pendientes: prioriza los puntos abiertos antes del cierre del día.';
+    if (totals.pendiente > 0) {
+      return 'Pendientes por dueño.';
     }
 
-    if (totals.pendiente === 1) {
-      return 'Agenda revisada: 1 pendiente requiere seguimiento antes del cierre.';
-    }
-
-    return 'Agenda lista: los eventos clave están preparados para seguimiento ejecutivo.';
+    return 'Agenda lista.';
   }, [totals.pendiente]);
 
   const suggestedActionId = useMemo<AgendaFollowUpActionId>(() => {
@@ -62,33 +58,32 @@ export function PremiumAgendaConnectorCard() {
 
   const suggestedAction = agendaFollowUpActions[suggestedActionId];
   const canShowExecutiveClosure = handoffPrepared && followUpMarked;
-  const briefingPendingText =
-    totals.pendiente === 0
-      ? 'Sin pendientes abiertos.'
-      : totals.pendiente === 1
-        ? '1 pendiente requiere seguimiento.'
-        : `${totals.pendiente} pendientes requieren seguimiento.`;
+  const briefingPendingText = `Pendientes: ${totals.pendiente}`;
 
-  const updateEventStatus = (eventId: string, status: AgendaEventStatus) => {
-    setEventStatuses((current) => ({ ...current, [eventId]: status }));
-    setHasLocalInteraction(true);
+  const resetFinalFlow = () => {
     setHandoffPrepared(false);
     setFollowUpMarked(false);
     setExecutiveClosureMarked(false);
     setBriefingMarked(false);
-    setBriefingMarked(false);
-    setBriefingMarked(false);
+  };
+
+  const updateEventStatus = (eventId: string, status: AgendaEventStatus) => {
+    setEventStatuses((current) => ({ ...current, [eventId]: status }));
+    setHasLocalInteraction(true);
+    resetFinalFlow();
   };
 
   const prepareHandoffSummary = () => {
     setHandoffPrepared(true);
     setFollowUpMarked(false);
     setExecutiveClosureMarked(false);
+    setBriefingMarked(false);
   };
 
   const markFollowUpAction = () => {
     setFollowUpMarked(true);
     setExecutiveClosureMarked(false);
+    setBriefingMarked(false);
   };
 
   const markExecutiveClosure = () => {
@@ -157,7 +152,7 @@ export function PremiumAgendaConnectorCard() {
           </div>
 
           <section className="premium-agenda-handoff" aria-label="Handoff ejecutivo">
-            <span>Handoff ejecutivo</span>
+            <span>Handoff</span>
             <p>{executiveHandoff}</p>
             <button type="button" className="secondary" onClick={prepareHandoffSummary}>
               Preparar resumen
@@ -166,8 +161,8 @@ export function PremiumAgendaConnectorCard() {
               <p className="premium-agenda-local-log">{agendaConnectorReadOnlyRehearsal.handoffPreparedLog}</p>
             ) : null}
 
-            <div className="premium-agenda-followup" aria-label="Siguiente acción sugerida">
-              <span>Siguiente acción sugerida</span>
+            <div className="premium-agenda-followup" aria-label="Acción sugerida">
+              <span>Acción</span>
               <p>{suggestedAction.message}</p>
               <button type="button" onClick={markFollowUpAction}>
                 {suggestedAction.label}
@@ -179,10 +174,10 @@ export function PremiumAgendaConnectorCard() {
 
             {canShowExecutiveClosure ? (
               <div className="premium-agenda-executive-closure" aria-label="Cierre ejecutivo">
-                <span>Cierre ejecutivo</span>
-                <p>Agenda lista para cierre ejecutivo.</p>
+                <span>Cierre</span>
+                <p>Listo para cierre.</p>
                 <button type="button" onClick={markExecutiveClosure}>
-                  Cerrar en modo seguro
+                  Cerrar seguro
                 </button>
                 {executiveClosureMarked ? (
                   <p className="premium-agenda-local-log">{agendaConnectorReadOnlyRehearsal.executiveClosureLog}</p>
@@ -192,14 +187,13 @@ export function PremiumAgendaConnectorCard() {
 
             {executiveClosureMarked ? (
               <div className="premium-agenda-briefing-output" aria-label="Briefing ejecutivo">
-                <span>Briefing ejecutivo</span>
-                <h4>Briefing ejecutivo listo</h4>
-                <p>Agenda revisada con seguimiento activo.</p>
+                <span>Briefing</span>
+                <h4>Briefing listo</h4>
+                <p>Agenda revisada.</p>
                 <p>{briefingPendingText}</p>
-                <p>Acción sugerida marcada en modo seguro.</p>
-                <p>Cierre listo para revisión ejecutiva.</p>
+                <p>Cierre listo.</p>
                 <button type="button" onClick={markBriefingReady}>
-                  Marcar briefing listo
+                  Marcar listo
                 </button>
                 {briefingMarked ? (
                   <p className="premium-agenda-local-log">{agendaConnectorReadOnlyRehearsal.briefingMarkedLog}</p>
