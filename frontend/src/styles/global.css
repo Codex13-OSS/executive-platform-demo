@@ -8706,3 +8706,165 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
   }
 }
 
+/* v2.6.0 — Connector activation audit + rollback readiness */
+.connector-audit-rollback-card-v260 {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(125, 211, 252, 0.2);
+  border-radius: 24px;
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+  background:
+    radial-gradient(circle at 88% 10%, rgba(34, 211, 238, 0.14), transparent 34%),
+    radial-gradient(circle at 12% 90%, rgba(59, 130, 246, 0.11), transparent 38%),
+    linear-gradient(145deg, rgba(3, 12, 28, 0.94), rgba(8, 23, 42, 0.82));
+  box-shadow: 0 24px 62px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(16px);
+}
+
+.connector-audit-rollback-card-v260::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(120deg, transparent, rgba(125, 211, 252, 0.07), transparent);
+  opacity: 0.55;
+}
+
+.connector-audit-rollback-head-v260 {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.connector-audit-rollback-head-v260 span {
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: rgba(240, 249, 255, 0.96);
+}
+
+.connector-audit-rollback-head-v260 p {
+  margin: 4px 0 0;
+  color: rgba(186, 230, 253, 0.74);
+  font-size: 12px;
+}
+
+.connector-audit-rollback-head-v260 b,
+.connector-audit-rollback-decision-v260 span {
+  border: 1px solid rgba(103, 232, 249, 0.22);
+  border-radius: 999px;
+  padding: 5px 8px;
+  color: rgba(103, 232, 249, 0.96);
+  background: rgba(8, 47, 73, 0.28);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.connector-audit-rollback-grid-v260 {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.connector-audit-rollback-grid-v260 article,
+.connector-audit-rollback-items-v260 article {
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 13px;
+  padding: 8px;
+  background: rgba(10, 20, 36, 0.56);
+  display: grid;
+  gap: 3px;
+}
+
+.connector-audit-rollback-grid-v260 small {
+  color: rgba(148, 163, 184, 0.86);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.connector-audit-rollback-grid-v260 strong {
+  color: rgba(240, 249, 255, 0.96);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.connector-audit-rollback-items-v260 {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.connector-audit-rollback-items-v260 span {
+  color: rgba(191, 219, 254, 0.9);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.connector-audit-rollback-items-v260 b {
+  color: rgba(103, 232, 249, 0.96);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.connector-audit-rollback-items-v260 p {
+  margin: 0;
+  color: rgba(186, 230, 253, 0.72);
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.connector-audit-rollback-actions-v260 {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.connector-audit-rollback-actions-v260 span {
+  border: 1px solid rgba(125, 211, 252, 0.16);
+  border-radius: 999px;
+  padding: 5px 8px;
+  color: rgba(186, 230, 253, 0.86);
+  background: rgba(6, 18, 34, 0.5);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.connector-audit-rollback-decision-v260 {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 8px;
+  border-top: 1px solid rgba(125, 211, 252, 0.12);
+  padding-top: 10px;
+}
+
+.connector-audit-rollback-decision-v260 strong {
+  color: rgba(240, 249, 255, 0.92);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+@media (max-width: 920px) {
+  .connector-audit-rollback-grid-v260,
+  .connector-audit-rollback-items-v260 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
