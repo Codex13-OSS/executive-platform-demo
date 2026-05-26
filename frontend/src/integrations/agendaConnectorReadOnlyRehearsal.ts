@@ -17,10 +17,12 @@ export const agendaConnectorReadOnlyRehearsal = {
     { id: 'cierre-ejecutivo', time: '17:30', title: 'Cierre ejecutivo del día', initialStatus: 'preparado' as AgendaEventStatus },
   ],
   localLog: 'Evento actualizado en modo seguro.',
+  handoffPreparedLog: 'Resumen ejecutivo preparado en modo seguro.',
   audit: [
     'Ensayo ejecutado en modo seguro.',
     'Sin credenciales cargadas.',
     'Sin escritura ni conexión real.',
     'Interacciones ejecutadas solo en modo local.',
+    'Resumen preparado solo de forma local.',
   ],
 };

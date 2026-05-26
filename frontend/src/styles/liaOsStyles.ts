@@ -899,4 +899,8 @@ export const connectorPremiumStyles = `
 .premium-agenda-event-pendiente{border-color:rgba(251,191,36,.28)}
 .premium-agenda-event-preparado{border-color:rgba(34,211,238,.3)}
 .premium-agenda-local-log{color:#bbf7d0!important}
+.premium-agenda-handoff{display:grid;gap:8px;border:1px solid rgba(34,197,94,.22);background:rgba(34,197,94,.08);border-radius:14px;padding:12px}
+.premium-agenda-handoff span{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#bbf7d0}
+.premium-agenda-handoff p{color:rgba(234,246,255,.76);margin:0}
+.premium-agenda-handoff .secondary{width:max-content;max-width:100%;padding:7px 11px}
 `;
