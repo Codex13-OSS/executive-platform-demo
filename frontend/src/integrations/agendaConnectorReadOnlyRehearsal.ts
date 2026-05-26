@@ -39,6 +39,7 @@ export const agendaConnectorReadOnlyRehearsal = {
   localLog: 'Evento actualizado en modo seguro.',
   handoffPreparedLog: 'Resumen ejecutivo preparado en modo seguro.',
   followUpActionLog: 'Acción marcada en modo seguro.',
+  executiveClosureLog: 'Cierre marcado en modo seguro.',
   audit: [
     'Ensayo ejecutado en modo seguro.',
     'Sin credenciales cargadas.',
@@ -46,5 +47,6 @@ export const agendaConnectorReadOnlyRehearsal = {
     'Interacciones ejecutadas solo en modo local.',
     'Resumen preparado solo de forma local.',
     'Acciones de seguimiento ejecutadas solo de forma local.',
+    'Cierre ejecutivo marcado solo de forma local.',
   ],
 };

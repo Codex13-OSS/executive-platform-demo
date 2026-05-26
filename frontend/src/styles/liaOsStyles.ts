@@ -906,4 +906,7 @@ export const connectorPremiumStyles = `
 .premium-agenda-followup{display:grid;gap:7px;border-top:1px solid rgba(125,211,252,.14);padding-top:10px;margin-top:2px}
 .premium-agenda-followup span{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#8be9ff}
 .premium-agenda-followup button{width:max-content;max-width:100%;font-size:12px;border-radius:999px;border:1px solid rgba(34,211,238,.3);background:rgba(34,211,238,.12);color:#ecfeff;padding:7px 11px;cursor:pointer}
+.premium-agenda-executive-closure{display:grid;gap:7px;border-top:1px solid rgba(34,197,94,.18);padding-top:10px;margin-top:2px}
+.premium-agenda-executive-closure span{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#bbf7d0}
+.premium-agenda-executive-closure button{width:max-content;max-width:100%;font-size:12px;border-radius:999px;border:1px solid rgba(34,197,94,.3);background:rgba(34,197,94,.12);color:#ecfdf5;padding:7px 11px;cursor:pointer}
 `;

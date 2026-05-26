@@ -21,6 +21,7 @@ export function PremiumAgendaConnectorCard() {
   const [hasLocalInteraction, setHasLocalInteraction] = useState(false);
   const [handoffPrepared, setHandoffPrepared] = useState(false);
   const [followUpMarked, setFollowUpMarked] = useState(false);
+  const [executiveClosureMarked, setExecutiveClosureMarked] = useState(false);
 
   const totals = useMemo(() => {
     return agendaConnectorReadOnlyRehearsal.events.reduce(
@@ -59,21 +60,29 @@ export function PremiumAgendaConnectorCard() {
   }, [handoffPrepared, totals.pendiente]);
 
   const suggestedAction = agendaFollowUpActions[suggestedActionId];
+  const canShowExecutiveClosure = handoffPrepared && followUpMarked;
 
   const updateEventStatus = (eventId: string, status: AgendaEventStatus) => {
     setEventStatuses((current) => ({ ...current, [eventId]: status }));
     setHasLocalInteraction(true);
     setHandoffPrepared(false);
     setFollowUpMarked(false);
+    setExecutiveClosureMarked(false);
   };
 
   const prepareHandoffSummary = () => {
     setHandoffPrepared(true);
     setFollowUpMarked(false);
+    setExecutiveClosureMarked(false);
   };
 
   const markFollowUpAction = () => {
     setFollowUpMarked(true);
+    setExecutiveClosureMarked(false);
+  };
+
+  const markExecutiveClosure = () => {
+    setExecutiveClosureMarked(true);
   };
 
   return (
@@ -152,6 +161,19 @@ export function PremiumAgendaConnectorCard() {
                 <p className="premium-agenda-local-log">{agendaConnectorReadOnlyRehearsal.followUpActionLog}</p>
               ) : null}
             </div>
+
+            {canShowExecutiveClosure ? (
+              <div className="premium-agenda-executive-closure" aria-label="Cierre ejecutivo">
+                <span>Cierre ejecutivo</span>
+                <p>Agenda lista para cierre ejecutivo.</p>
+                <button type="button" onClick={markExecutiveClosure}>
+                  Cerrar en modo seguro
+                </button>
+                {executiveClosureMarked ? (
+                  <p className="premium-agenda-local-log">{agendaConnectorReadOnlyRehearsal.executiveClosureLog}</p>
+                ) : null}
+              </div>
+            ) : null}
           </section>
 
           {hasLocalInteraction ? (
