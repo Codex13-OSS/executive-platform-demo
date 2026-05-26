@@ -2,7 +2,9 @@ import { useMemo, useState } from 'react';
 import {
   agendaConnectorReadOnlyRehearsal,
   agendaEventStatusOptions,
+  agendaFollowUpActions,
   type AgendaEventStatus,
+  type AgendaFollowUpActionId,
 } from '../integrations/agendaConnectorReadOnlyRehearsal';
 
 type EventStatusMap = Record<string, AgendaEventStatus>;
@@ -18,6 +20,7 @@ export function PremiumAgendaConnectorCard() {
   const [eventStatuses, setEventStatuses] = useState<EventStatusMap>(initialEventStatuses);
   const [hasLocalInteraction, setHasLocalInteraction] = useState(false);
   const [handoffPrepared, setHandoffPrepared] = useState(false);
+  const [followUpMarked, setFollowUpMarked] = useState(false);
 
   const totals = useMemo(() => {
     return agendaConnectorReadOnlyRehearsal.events.reduce(
@@ -43,10 +46,34 @@ export function PremiumAgendaConnectorCard() {
     return 'Agenda lista: los eventos clave están preparados para seguimiento ejecutivo.';
   }, [totals.pendiente]);
 
+  const suggestedActionId = useMemo<AgendaFollowUpActionId>(() => {
+    if (totals.pendiente > 0) {
+      return 'confirmar-responsable';
+    }
+
+    if (!handoffPrepared) {
+      return 'preparar-seguimiento';
+    }
+
+    return 'cerrar-agenda';
+  }, [handoffPrepared, totals.pendiente]);
+
+  const suggestedAction = agendaFollowUpActions[suggestedActionId];
+
   const updateEventStatus = (eventId: string, status: AgendaEventStatus) => {
     setEventStatuses((current) => ({ ...current, [eventId]: status }));
     setHasLocalInteraction(true);
     setHandoffPrepared(false);
+    setFollowUpMarked(false);
+  };
+
+  const prepareHandoffSummary = () => {
+    setHandoffPrepared(true);
+    setFollowUpMarked(false);
+  };
+
+  const markFollowUpAction = () => {
+    setFollowUpMarked(true);
   };
 
   return (
@@ -108,12 +135,23 @@ export function PremiumAgendaConnectorCard() {
           <section className="premium-agenda-handoff" aria-label="Handoff ejecutivo">
             <span>Handoff ejecutivo</span>
             <p>{executiveHandoff}</p>
-            <button type="button" className="secondary" onClick={() => setHandoffPrepared(true)}>
+            <button type="button" className="secondary" onClick={prepareHandoffSummary}>
               Preparar resumen
             </button>
             {handoffPrepared ? (
               <p className="premium-agenda-local-log">{agendaConnectorReadOnlyRehearsal.handoffPreparedLog}</p>
             ) : null}
+
+            <div className="premium-agenda-followup" aria-label="Siguiente acción sugerida">
+              <span>Siguiente acción sugerida</span>
+              <p>{suggestedAction.message}</p>
+              <button type="button" onClick={markFollowUpAction}>
+                {suggestedAction.label}
+              </button>
+              {followUpMarked ? (
+                <p className="premium-agenda-local-log">{agendaConnectorReadOnlyRehearsal.followUpActionLog}</p>
+              ) : null}
+            </div>
           </section>
 
           {hasLocalInteraction ? (

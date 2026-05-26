@@ -903,4 +903,7 @@ export const connectorPremiumStyles = `
 .premium-agenda-handoff span{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#bbf7d0}
 .premium-agenda-handoff p{color:rgba(234,246,255,.76);margin:0}
 .premium-agenda-handoff .secondary{width:max-content;max-width:100%;padding:7px 11px}
+.premium-agenda-followup{display:grid;gap:7px;border-top:1px solid rgba(125,211,252,.14);padding-top:10px;margin-top:2px}
+.premium-agenda-followup span{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#8be9ff}
+.premium-agenda-followup button{width:max-content;max-width:100%;font-size:12px;border-radius:999px;border:1px solid rgba(34,211,238,.3);background:rgba(34,211,238,.12);color:#ecfeff;padding:7px 11px;cursor:pointer}
 `;
