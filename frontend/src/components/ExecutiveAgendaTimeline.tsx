@@ -96,6 +96,22 @@ const minutesFromTime = (time: string) => {
   return Number(hour) * 60 + Number(minute);
 };
 
+const getBrowserToday = () => {
+  const today = new Date();
+  today.setHours(12, 0, 0, 0);
+
+  return today;
+};
+
+const getMonthStart = (date: Date) => new Date(date.getFullYear(), date.getMonth(), 1);
+
+const addDays = (date: Date, days: number) => {
+  const copy = new Date(date);
+  copy.setDate(copy.getDate() + days);
+
+  return copy;
+};
+
 const getDominantTone = (dayEvents: ExecutiveEvent[]): AgendaTone => {
   if (dayEvents.length === 0) {
     return 'libre';
@@ -116,127 +132,135 @@ const createDraft = (): EventDraft => ({
   goal: '',
 });
 
-const initialEvents: ExecutiveEvent[] = [
-  {
-    id: 'may-26-0830',
-    dateKey: '2026-05-26',
-    start: '08:30',
-    end: '09:10',
-    title: 'Alineación ejecutiva del día',
-    owner: 'Dirección',
-    priority: 'Alta',
-    tone: 'alto',
-    location: 'Sala norte',
-    goal: 'Ordenar decisiones críticas y responsables antes de abrir operación.',
-    context: 'LÍA detecta alta carga entre decisiones, documentos y seguimiento operativo.',
-    recommendedExit: 'Llegar 10 min antes con prioridades cerradas.',
-  },
-  {
-    id: 'may-26-1100',
-    dateKey: '2026-05-26',
-    start: '11:00',
-    end: '12:00',
-    title: 'Comité de riesgos abiertos',
-    owner: 'Riesgos',
-    priority: 'Alta',
-    tone: 'critico',
-    location: 'Mesa ejecutiva',
-    goal: 'Definir mitigación, responsable y fecha de cierre para cada riesgo activo.',
-    context: 'Requiere entrar con matriz de riesgos y acuerdos previos listos.',
-    recommendedExit: 'Entrar con 3 decisiones límite y criterio de escalamiento.',
-  },
-  {
-    id: 'may-26-1430',
-    dateKey: '2026-05-26',
-    start: '14:30',
-    end: '15:20',
-    title: 'Revisión de contrato prioritario',
-    owner: 'Legal',
-    priority: 'Media',
-    tone: 'medio',
-    location: 'Sala documental',
-    goal: 'Confirmar cláusulas pendientes y preparar salida para firma.',
-    context: 'Documento sensible con dependencias de validación y cierre comercial.',
-    recommendedExit: 'Preparar versión final y responsable de firma.',
-  },
-  {
-    id: 'may-26-1730',
-    dateKey: '2026-05-26',
-    start: '17:30',
-    end: '18:00',
-    title: 'Cierre ejecutivo y siguientes pasos',
-    owner: 'Operación',
-    priority: 'Baja',
-    tone: 'seguimiento',
-    location: 'Remoto',
-    goal: 'Consolidar acuerdos del día y dejar acciones listas para mañana.',
-    context: 'Bloque corto para reducir pendientes sin dueño antes del cierre.',
-    recommendedExit: 'Cerrar minuta y enviar responsables antes de las 18:20.',
-  },
-  {
-    id: 'may-27-0920',
-    dateKey: '2026-05-27',
-    start: '09:20',
-    end: '10:00',
-    title: 'Mapa de traslados ejecutivos',
-    owner: 'Asistente ejecutivo',
-    priority: 'Media',
-    tone: 'movilidad',
-    location: 'Ruta ejecutiva',
-    goal: 'Confirmar ventanas de traslado y puntos de preparación entre reuniones.',
-    context: 'La agenda requiere margen operativo para evitar decisiones con prisa.',
-    recommendedExit: 'Reservar salida 25 min antes del siguiente bloque.',
-  },
-  {
-    id: 'may-28-1210',
-    dateKey: '2026-05-28',
-    start: '12:10',
-    end: '12:45',
-    title: 'Seguimiento de acuerdos críticos',
-    owner: 'Operación',
-    priority: 'Baja',
-    tone: 'seguimiento',
-    location: 'Sala breve',
-    goal: 'Revisar acuerdos vencidos y convertirlos en responsables accionables.',
-    context: 'Bloque diseñado para reducir pendientes abiertos antes del cierre semanal.',
-    recommendedExit: 'Salir con 3 responsables y fecha de confirmación.',
-  },
-  {
-    id: 'may-29-1600',
-    dateKey: '2026-05-29',
-    start: '16:00',
-    end: '16:50',
-    title: 'Cierre comercial prioritario',
-    owner: 'Comercial',
-    priority: 'Alta',
-    tone: 'alto',
-    location: 'Mesa comercial',
-    goal: 'Cerrar condiciones pendientes y preparar confirmación de decisión.',
-    context: 'Oportunidad relevante con riesgo de diluirse si no hay cierre claro.',
-    recommendedExit: 'Enviar confirmación ejecutiva antes de las 17:20.',
-  },
-  {
-    id: 'may-31-1030',
-    dateKey: '2026-05-31',
-    start: '10:30',
-    end: '11:30',
-    title: 'Planeación estratégica compacta',
-    owner: 'Dirección',
-    priority: 'Media',
-    tone: 'medio',
-    location: 'Sala estratégica',
-    goal: 'Definir foco de la semana y tres decisiones de alto impacto.',
-    context: 'Bloque de preparación para iniciar la siguiente semana con claridad.',
-    recommendedExit: 'Cerrar narrativa y prioridades antes del mediodía.',
-  },
-];
+const createDemoEvents = (anchorDate: Date): ExecutiveEvent[] => {
+  const todayKey = formatDateKey(anchorDate);
+  const tomorrowKey = formatDateKey(addDays(anchorDate, 1));
+  const secondDayKey = formatDateKey(addDays(anchorDate, 2));
+  const thirdDayKey = formatDateKey(addDays(anchorDate, 3));
+  const fifthDayKey = formatDateKey(addDays(anchorDate, 5));
+
+  return [
+    {
+      id: 'demo-today-0830',
+      dateKey: todayKey,
+      start: '08:30',
+      end: '09:10',
+      title: 'Alineación ejecutiva del día',
+      owner: 'Dirección',
+      priority: 'Alta',
+      tone: 'alto',
+      location: 'Sala norte',
+      goal: 'Ordenar decisiones críticas y responsables antes de abrir operación.',
+      context: 'LÍA detecta alta carga entre decisiones, documentos y seguimiento operativo.',
+      recommendedExit: 'Llegar 10 min antes con prioridades cerradas.',
+    },
+    {
+      id: 'demo-today-1100',
+      dateKey: todayKey,
+      start: '11:00',
+      end: '12:00',
+      title: 'Comité de riesgos abiertos',
+      owner: 'Riesgos',
+      priority: 'Alta',
+      tone: 'critico',
+      location: 'Mesa ejecutiva',
+      goal: 'Definir mitigación, responsable y fecha de cierre para cada riesgo activo.',
+      context: 'Requiere entrar con matriz de riesgos y acuerdos previos listos.',
+      recommendedExit: 'Entrar con 3 decisiones límite y criterio de escalamiento.',
+    },
+    {
+      id: 'demo-today-1430',
+      dateKey: todayKey,
+      start: '14:30',
+      end: '15:20',
+      title: 'Revisión de contrato prioritario',
+      owner: 'Legal',
+      priority: 'Media',
+      tone: 'medio',
+      location: 'Sala documental',
+      goal: 'Confirmar cláusulas pendientes y preparar salida para firma.',
+      context: 'Documento sensible con dependencias de validación y cierre comercial.',
+      recommendedExit: 'Preparar versión final y responsable de firma.',
+    },
+    {
+      id: 'demo-today-1730',
+      dateKey: todayKey,
+      start: '17:30',
+      end: '18:00',
+      title: 'Cierre ejecutivo y siguientes pasos',
+      owner: 'Operación',
+      priority: 'Baja',
+      tone: 'seguimiento',
+      location: 'Remoto',
+      goal: 'Consolidar acuerdos del día y dejar acciones listas para mañana.',
+      context: 'Bloque corto para reducir pendientes sin dueño antes del cierre.',
+      recommendedExit: 'Cerrar minuta y enviar responsables antes de las 18:20.',
+    },
+    {
+      id: 'demo-plus-1-0920',
+      dateKey: tomorrowKey,
+      start: '09:20',
+      end: '10:00',
+      title: 'Mapa de traslados ejecutivos',
+      owner: 'Asistente ejecutivo',
+      priority: 'Media',
+      tone: 'movilidad',
+      location: 'Ruta ejecutiva',
+      goal: 'Confirmar ventanas de traslado y puntos de preparación entre reuniones.',
+      context: 'La agenda requiere margen operativo para evitar decisiones con prisa.',
+      recommendedExit: 'Reservar salida 25 min antes del siguiente bloque.',
+    },
+    {
+      id: 'demo-plus-2-1210',
+      dateKey: secondDayKey,
+      start: '12:10',
+      end: '12:45',
+      title: 'Seguimiento de acuerdos críticos',
+      owner: 'Operación',
+      priority: 'Baja',
+      tone: 'seguimiento',
+      location: 'Sala breve',
+      goal: 'Revisar acuerdos vencidos y convertirlos en responsables accionables.',
+      context: 'Bloque diseñado para reducir pendientes abiertos antes del cierre semanal.',
+      recommendedExit: 'Salir con 3 responsables y fecha de confirmación.',
+    },
+    {
+      id: 'demo-plus-3-1600',
+      dateKey: thirdDayKey,
+      start: '16:00',
+      end: '16:50',
+      title: 'Cierre comercial prioritario',
+      owner: 'Comercial',
+      priority: 'Alta',
+      tone: 'alto',
+      location: 'Mesa comercial',
+      goal: 'Cerrar condiciones pendientes y preparar confirmación de decisión.',
+      context: 'Oportunidad relevante con riesgo de diluirse si no hay cierre claro.',
+      recommendedExit: 'Enviar confirmación ejecutiva antes de las 17:20.',
+    },
+    {
+      id: 'demo-plus-5-1030',
+      dateKey: fifthDayKey,
+      start: '10:30',
+      end: '11:30',
+      title: 'Planeación estratégica compacta',
+      owner: 'Dirección',
+      priority: 'Media',
+      tone: 'medio',
+      location: 'Sala estratégica',
+      goal: 'Definir foco de la semana y tres decisiones de alto impacto.',
+      context: 'Bloque de preparación para iniciar la siguiente semana con claridad.',
+      recommendedExit: 'Cerrar narrativa y prioridades antes del mediodía.',
+    },
+  ];
+};
 
 export function ExecutiveAgendaTimeline() {
   const [todayKey, setTodayKey] = useState(() => formatDateKey(new Date()));
   const [now, setNow] = useState(() => new Date());
-  const [visibleMonth, setVisibleMonth] = useState(() => new Date(2026, 4, 1));
-  const [selectedDate, setSelectedDate] = useState(() => new Date(2026, 4, 26));
-  const [events, setEvents] = useState<ExecutiveEvent[]>(initialEvents);
+  const [visibleMonth, setVisibleMonth] = useState(() => getMonthStart(getBrowserToday()));
+  const [selectedDate, setSelectedDate] = useState(() => getBrowserToday());
+  const [events, setEvents] = useState<ExecutiveEvent[]>(() => createDemoEvents(getBrowserToday()));
   const [draft, setDraft] = useState<EventDraft>(() => createDraft());
   const [actionFeedback, setActionFeedback] = useState<string | null>(null);
   const [formOpen, setFormOpen] = useState(false);
@@ -320,7 +344,9 @@ export function ExecutiveAgendaTimeline() {
   }, [eventsByDate, selectedDate]);
 
   const nowMinutes = now.getHours() * 60 + now.getMinutes();
-  const nextEvent = selectedEvents.find((event) => minutesFromTime(event.start) >= nowMinutes);
+  const upcomingEvents =
+    selectedKey === todayKey ? selectedEvents.filter((event) => minutesFromTime(event.start) >= nowMinutes) : selectedEvents;
+  const nextEvent = upcomingEvents[0] ?? selectedEvents[0];
   const criticalCount = selectedEvents.filter((event) => event.priority === 'Alta').length;
   const criticalBlockCount = selectedEvents.filter((event) => event.tone === 'critico' || event.priority === 'Alta').length;
   const followUpCount = selectedEvents.filter((event) => event.tone === 'seguimiento' || event.tone === 'movilidad').length;
