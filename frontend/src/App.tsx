@@ -334,7 +334,7 @@ export default function App() {
         <div className="login-system-status">
           <span className="login-status-dot" />
           <div>
-            <small>ESTADO DEL SISTEMA</small>
+            <small>ESTADO OPERATIVO</small>
             <strong>ÓPTIMO</strong>
           </div>
         </div>
@@ -542,7 +542,7 @@ export default function App() {
       <section className="main-panel executive-interaction-layer-v090 lia-visual-executive-refinement-v092 lia-executive-minimalism-v093 lia-label-minimal-fix-v093 lia-responsive-executive-v094 lia-orb-premium-v095 lia-executive-intelligence-v096 lia-visual-density-v097 lia-module-content-v098 lia-interaction-flow-v099 lia-cognitive-visual-system-v112 lia-cognitive-space-engine-v130" onClickCapture={handleModuleActionCapture}>
         <header className="topbar">
           <div>
-            <p className="eyebrow">SOLUCIONES INFORMÁTICAS</p>
+            <p className="eyebrow">CENTRO EJECUTIVO</p>
             <h2>{view === 'dashboard' ? 'Centro de mando ejecutivo' : nav.find(([id]) => id === view)?.[1]}</h2>
           </div>
           <ExecutiveEnvironmentCard variant="compact" />
