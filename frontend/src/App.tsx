@@ -4,7 +4,7 @@ import { NeuralCore } from './components/NeuralCore';
 import { activity, agenda, alerts, documents, tracking } from './data/liaOsExecutiveData';
 import { getExecutiveAgendaEventsForDay, getExecutiveTodayDayId } from './data/executiveAgendaData';
 import { connectorPremiumStyles, mobileLÍAFixStyles, styles } from './styles/liaOsStyles';
-import { AgendaCalendar } from './components/AgendaCalendar';
+import { ExecutiveAgendaTimeline } from './components/ExecutiveAgendaTimeline';
 import { ExecutiveNextMoveCard } from './components/ExecutiveNextMoveCard';
 import { ExecutivePredictivePanel } from './components/ExecutivePredictivePanel';
 import { PremiumAlertsView } from './components/PremiumAlertsView';
@@ -650,7 +650,7 @@ export default function App() {
           </section>
         )}
 
-        {view === 'agenda' && <AgendaCalendar />}
+        {view === 'agenda' && <ExecutiveAgendaTimeline />}
 
         {view === 'tracking' && <TrackingCommandView legacyTracking={tracking} />}
 
