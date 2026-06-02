@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState, type FormEvent } from 'react';
 
 type AgendaPriority = 'Alta' | 'Media' | 'Baja';
 type AgendaTone = 'critico' | 'alto' | 'medio' | 'seguimiento' | 'movilidad' | 'libre' | 'neutral';
+type AgendaSource = 'demo_agenda' | 'local_agenda';
+type AgendaStatus = 'scheduled';
 
 type ExecutiveEvent = {
   id: string;
@@ -16,6 +18,8 @@ type ExecutiveEvent = {
   goal: string;
   context: string;
   recommendedExit: string;
+  source?: AgendaSource;
+  status?: AgendaStatus;
 };
 
 type EventDraft = {
@@ -26,6 +30,37 @@ type EventDraft = {
   priority: AgendaPriority;
   location: string;
   goal: string;
+};
+
+type AgendaLocalBlock = {
+  id: string;
+  dateKey: string;
+  title: string;
+  start: string;
+  end: string;
+  priority: AgendaPriority;
+  owner: string;
+  location: string;
+  objective: string;
+  createdAt: string;
+  source: 'local_agenda';
+  status: 'scheduled';
+};
+
+type AgendaLocalActivity = {
+  id: string;
+  type: 'agenda_block_created';
+  blockId: string;
+  dateKey: string;
+  title: string;
+  createdAt: string;
+  message: string;
+};
+
+type AgendaLocalStorageState = {
+  version: 1;
+  blocks: AgendaLocalBlock[];
+  activityLog: AgendaLocalActivity[];
 };
 
 type MonthCell =
@@ -58,6 +93,7 @@ const monthLabels = [
 const weekdayLabels = ['LUN', 'MAR', 'MIE', 'JUE', 'VIE', 'SAB', 'DOM'];
 const hours = Array.from({ length: 24 }, (_, hour) => `${String(hour).padStart(2, '0')}:00`);
 const freeWindowLabels = ['Foco', 'Seguimiento', 'Preparación', 'Cierre'];
+const localStorageKey = 'lia.os.agenda.local.v1';
 const priorityToTone: Record<AgendaPriority, AgendaTone> = {
   Alta: 'alto',
   Media: 'medio',
@@ -130,6 +166,133 @@ const createDraft = (): EventDraft => ({
   priority: 'Media',
   location: 'Sala ejecutiva',
   goal: '',
+});
+
+const isAgendaPriority = (value: unknown): value is AgendaPriority =>
+  value === 'Alta' || value === 'Media' || value === 'Baja';
+
+const isLocalBlock = (value: unknown): value is AgendaLocalBlock => {
+  if (!value || typeof value !== 'object') {
+    return false;
+  }
+
+  const block = value as Partial<AgendaLocalBlock>;
+
+  return (
+    typeof block.id === 'string' &&
+    typeof block.dateKey === 'string' &&
+    typeof block.title === 'string' &&
+    typeof block.start === 'string' &&
+    typeof block.end === 'string' &&
+    isAgendaPriority(block.priority) &&
+    typeof block.owner === 'string' &&
+    typeof block.location === 'string' &&
+    typeof block.objective === 'string' &&
+    typeof block.createdAt === 'string' &&
+    block.source === 'local_agenda' &&
+    block.status === 'scheduled'
+  );
+};
+
+const isLocalActivity = (value: unknown): value is AgendaLocalActivity => {
+  if (!value || typeof value !== 'object') {
+    return false;
+  }
+
+  const activity = value as Partial<AgendaLocalActivity>;
+
+  return (
+    typeof activity.id === 'string' &&
+    activity.type === 'agenda_block_created' &&
+    typeof activity.blockId === 'string' &&
+    typeof activity.dateKey === 'string' &&
+    typeof activity.title === 'string' &&
+    typeof activity.createdAt === 'string' &&
+    typeof activity.message === 'string'
+  );
+};
+
+const createEmptyLocalAgendaState = (): AgendaLocalStorageState => ({
+  version: 1,
+  blocks: [],
+  activityLog: [],
+});
+
+const parseLocalAgendaState = (value: unknown): AgendaLocalStorageState => {
+  if (!value || typeof value !== 'object') {
+    return createEmptyLocalAgendaState();
+  }
+
+  const state = value as Partial<AgendaLocalStorageState>;
+  if (state.version !== 1 || !Array.isArray(state.blocks) || !Array.isArray(state.activityLog)) {
+    return createEmptyLocalAgendaState();
+  }
+
+  return {
+    version: 1,
+    blocks: state.blocks.filter(isLocalBlock),
+    activityLog: state.activityLog.filter(isLocalActivity),
+  };
+};
+
+const readLocalAgendaState = (): AgendaLocalStorageState => {
+  try {
+    if (typeof window === 'undefined' || !window.localStorage) {
+      return createEmptyLocalAgendaState();
+    }
+
+    const rawValue = window.localStorage.getItem(localStorageKey);
+    if (!rawValue) {
+      return createEmptyLocalAgendaState();
+    }
+
+    return parseLocalAgendaState(JSON.parse(rawValue));
+  } catch {
+    return createEmptyLocalAgendaState();
+  }
+};
+
+const writeLocalAgendaState = (state: AgendaLocalStorageState) => {
+  try {
+    if (typeof window === 'undefined' || !window.localStorage) {
+      return false;
+    }
+
+    window.localStorage.setItem(localStorageKey, JSON.stringify(state));
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+const clearLocalAgendaState = () => {
+  try {
+    if (typeof window === 'undefined' || !window.localStorage) {
+      return false;
+    }
+
+    window.localStorage.removeItem(localStorageKey);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+const mapLocalBlockToEvent = (block: AgendaLocalBlock): ExecutiveEvent => ({
+  id: block.id,
+  dateKey: block.dateKey,
+  start: block.start,
+  end: block.end,
+  title: block.title,
+  owner: block.owner,
+  priority: block.priority,
+  tone: priorityToTone[block.priority],
+  location: block.location,
+  goal: block.objective,
+  context: 'Bloque guardado en este navegador, listo para operar sin conexión externa.',
+  recommendedExit: 'Confirmar salida y responsable al cerrar el bloque.',
+  source: block.source,
+  status: block.status,
 });
 
 const createDemoEvents = (anchorDate: Date): ExecutiveEvent[] => {
@@ -260,7 +423,8 @@ export function ExecutiveAgendaTimeline() {
   const [now, setNow] = useState(() => new Date());
   const [visibleMonth, setVisibleMonth] = useState(() => getMonthStart(getBrowserToday()));
   const [selectedDate, setSelectedDate] = useState(() => getBrowserToday());
-  const [events, setEvents] = useState<ExecutiveEvent[]>(() => createDemoEvents(getBrowserToday()));
+  const [demoEvents] = useState<ExecutiveEvent[]>(() => createDemoEvents(getBrowserToday()));
+  const [localAgendaState, setLocalAgendaState] = useState<AgendaLocalStorageState>(() => readLocalAgendaState());
   const [draft, setDraft] = useState<EventDraft>(() => createDraft());
   const [actionFeedback, setActionFeedback] = useState<string | null>(null);
   const [formOpen, setFormOpen] = useState(false);
@@ -278,6 +442,11 @@ export function ExecutiveAgendaTimeline() {
     return () => window.clearInterval(interval);
   }, []);
 
+  const localEvents = useMemo(
+    () => localAgendaState.blocks.map(mapLocalBlockToEvent),
+    [localAgendaState.blocks],
+  );
+  const events = useMemo(() => [...demoEvents, ...localEvents], [demoEvents, localEvents]);
   const selectedKey = formatDateKey(selectedDate);
   const selectedEvents = useMemo(
     () =>
@@ -350,6 +519,7 @@ export function ExecutiveAgendaTimeline() {
   const criticalCount = selectedEvents.filter((event) => event.priority === 'Alta').length;
   const criticalBlockCount = selectedEvents.filter((event) => event.tone === 'critico' || event.priority === 'Alta').length;
   const followUpCount = selectedEvents.filter((event) => event.tone === 'seguimiento' || event.tone === 'movilidad').length;
+  const localBlockCount = selectedEvents.filter((event) => event.source === 'local_agenda').length;
   const occupiedHours = selectedEvents.reduce((total, event) => {
     return total + Math.max(0, minutesFromTime(event.end) - minutesFromTime(event.start)) / 60;
   }, 0);
@@ -362,9 +532,14 @@ export function ExecutiveAgendaTimeline() {
     selectedEvents.length === 0 ? 'Día libre' : criticalCount > 0 ? 'Atención alta' : 'Ritmo controlado';
   const executiveReading =
     selectedEvents.length > 0
-      ? `Día con ${selectedEvents.length} eventos, ${followUpCount} seguimientos y ${criticalBlockCount} bloques críticos. LÍA sugiere preparar traslados y cierres antes de las horas clave.`
+      ? `Día con ${selectedEvents.length} eventos, ${followUpCount} seguimientos y ${criticalBlockCount} bloques críticos. ${localBlockCount > 0 ? `${localBlockCount} guardado localmente. ` : ''}LÍA sugiere preparar traslados y cierres antes de las horas clave.`
       : 'Día libre para planeación, seguimiento o trabajo profundo.';
-  const readingChips = selectedEvents.length > 0 ? ['Preparar', 'Confirmar', 'Cerrar'] : ['Planear', 'Seguimiento', 'Cierre'];
+  const readingChips =
+    localBlockCount > 0
+      ? ['Sesión local', 'Sin conexión externa', 'Cerrar']
+      : selectedEvents.length > 0
+        ? ['Preparar', 'Confirmar', 'Cerrar']
+        : ['Planear', 'Seguimiento', 'Cierre'];
 
   const moveMonth = (direction: number) => {
     setVisibleMonth((current) => new Date(current.getFullYear(), current.getMonth() + direction, 1));
@@ -382,30 +557,62 @@ export function ExecutiveAgendaTimeline() {
       return;
     }
 
-    setEvents((current) => [
-      ...current,
-      {
-        id: `${selectedKey}-${Date.now()}`,
-        dateKey: selectedKey,
-        start: draft.start,
-        end: draft.end,
-        title: cleanTitle,
-        owner: draft.owner.trim() || 'Dirección',
-        priority: draft.priority,
-        tone: priorityToTone[draft.priority],
-        location: draft.location.trim() || 'Por definir',
-        goal: draft.goal.trim() || 'Definir objetivo, responsable y salida esperada.',
-        context: 'Evento agregado en estado local de esta sesión.',
-        recommendedExit: 'Confirmar salida y responsable al cerrar el bloque.',
-      },
-    ]);
-    setActionFeedback(`Bloque local agregado: ${cleanTitle}`);
+    const createdAt = new Date().toISOString();
+    const blockId = `local-${selectedKey}-${Date.now()}`;
+    const block: AgendaLocalBlock = {
+      id: blockId,
+      dateKey: selectedKey,
+      title: cleanTitle,
+      start: draft.start,
+      end: draft.end,
+      priority: draft.priority,
+      owner: draft.owner.trim() || 'Dirección',
+      location: draft.location.trim() || 'Por definir',
+      objective: draft.goal.trim() || 'Definir objetivo, responsable y salida esperada.',
+      createdAt,
+      source: 'local_agenda',
+      status: 'scheduled',
+    };
+    const activity: AgendaLocalActivity = {
+      id: `activity-${blockId}`,
+      type: 'agenda_block_created',
+      blockId,
+      dateKey: selectedKey,
+      title: cleanTitle,
+      createdAt,
+      message: `Bloque guardado localmente: ${cleanTitle}`,
+    };
+    const nextState: AgendaLocalStorageState = {
+      version: 1,
+      blocks: [...localAgendaState.blocks, block],
+      activityLog: [activity, ...localAgendaState.activityLog].slice(0, 50),
+    };
+    const didPersist = writeLocalAgendaState(nextState);
+
+    setLocalAgendaState(nextState);
+    setActionFeedback(didPersist ? 'Bloque guardado localmente' : 'Bloque agregado a esta sesión local');
     setDraft(createDraft());
     setFormOpen(false);
   };
 
   const handleEventAction = (title: string, action: string) => {
     setActionFeedback(`${action}: ${title}`);
+  };
+
+  const handleClearLocalBlocks = () => {
+    if (localAgendaState.blocks.length === 0) {
+      setActionFeedback('No hay bloques locales por limpiar');
+      return;
+    }
+
+    const confirmed = window.confirm('¿Limpiar bloques locales guardados en este navegador?');
+    if (!confirmed) {
+      return;
+    }
+
+    clearLocalAgendaState();
+    setLocalAgendaState(createEmptyLocalAgendaState());
+    setActionFeedback('Bloques locales limpiados');
   };
 
   const selectedReadableDate = formatReadableDate(selectedDate);
@@ -530,7 +737,7 @@ export function ExecutiveAgendaTimeline() {
             <div className="lia-agenda-v400-header-chips">
               <b className={`lia-agenda-v400-chip-${dayTone}`}>{dayLoadLabel}</b>
               <b>Timeline 24h</b>
-              <b>Estado local</b>
+              <b>{localBlockCount > 0 ? `${localBlockCount} locales` : 'Sesión local'}</b>
             </div>
             <div className="lia-agenda-v400-day-pulse" aria-label="Pulso del día">
               <article>
@@ -597,16 +804,22 @@ export function ExecutiveAgendaTimeline() {
           <section className="lia-agenda-v400-form-compact">
             <button type="button" onClick={() => setFormOpen(true)}>
               <span>+ Agendar bloque</span>
-              <small>Estado local</small>
+              <small>Guardado local</small>
             </button>
-            <p>Formulario compacto listo cuando necesites capturar un bloque nuevo.</p>
+            <p>Sesión local en este navegador, sin conexión externa.</p>
+            {localAgendaState.blocks.length > 0 && (
+              <button className="lia-agenda-v400-form-secondary" type="button" onClick={handleClearLocalBlocks}>
+                <span>Limpiar bloques locales</span>
+                <small>{localAgendaState.blocks.length} guardados</small>
+              </button>
+            )}
           </section>
         ) : (
           <form className="lia-agenda-v400-form lia-agenda-v400-form-expanded" onSubmit={handleSubmit}>
             <div className="lia-agenda-v400-form-head">
             <div>
               <p>NUEVO BLOQUE LOCAL</p>
-              <strong>Agrega una decisión, seguimiento o ventana ejecutiva sin persistencia.</strong>
+              <strong>Agrega una decisión, seguimiento o ventana ejecutiva guardada en este navegador.</strong>
             </div>
             <span>{selectedReadableDate}</span>
           </div>
@@ -672,7 +885,7 @@ export function ExecutiveAgendaTimeline() {
           </button>
           <button type="submit">
             <span>Agregar bloque</span>
-            <small>Solo sesión local</small>
+            <small>Guardar local</small>
           </button>
         </form>
         )}
@@ -730,7 +943,7 @@ export function ExecutiveAgendaTimeline() {
                             {toneCopy[agendaEvent.tone].shortLabel}
                           </span>
                           <span>{agendaEvent.priority}</span>
-                          <span>Local</span>
+                          {agendaEvent.source === 'local_agenda' && <span>Guardado local</span>}
                         </div>
                         <div className="lia-agenda-v400-event-actions">
                           <button
