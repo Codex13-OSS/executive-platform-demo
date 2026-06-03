@@ -23,7 +23,7 @@ export default function App() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [liaState, setLÍAState] = useState('En línea');
   const [message, setMessage] = useState('');
-  const [liaLog, setLÍALog] = useState([
+  const [, setLÍALog] = useState([
     'Núcleo cognitivo iniciado.',
     'Centro ejecutivo listo.',
     'Esperando instrucción ejecutiva.',
@@ -35,7 +35,7 @@ export default function App() {
   const [liaMessages, setLÍAMessages] = useState<Array<{ role: 'user' | 'assistant'; text: string }>>([
     {
       role: 'assistant',
-      text: 'En línea. Lista para agenda, documentos y alertas.',
+      text: 'Centro ejecutivo listo. Puedo ayudarte con agenda, prioridades y seguimiento.',
     },
   ]);
   const [mobileOrbListening, setMobileOrbListening] = useState(false);
@@ -696,27 +696,85 @@ export default function App() {
 
       </section>
 
-      <aside className="lia-panel lia-panel-compact-v087 lia-executive-copilot-v088 lia-cognitive-rail-v112">
-        <div className="lia-orb">
-          <NeuralCore />
+      <aside className="lia-panel lia-panel-compact-v087 lia-executive-copilot-v088 lia-cognitive-rail-v112 lia-voice-ready-panel-v411">
+        <div className="lia-voice-core-v411">
+          <div className="lia-orb">
+            <NeuralCore />
+          </div>
+          <div className="lia-voice-title-v411">
+            <p className="eyebrow">ASISTENTE EJECUTIVO</p>
+            <h3>LÍA en línea</h3>
+            <span>Lista para escuchar y asistir.</span>
+          </div>
         </div>
-        <p className="eyebrow">ESTADO DE LÍA</p>
-        <h3>{liaState}</h3>
-        <div className={`lia-state ${liaState.toLowerCase().replace(/\s+/g, '-')}`}>
-          <span />
-          {liaState === 'En línea'
-            ? 'Listo para recibir instrucciones'
-            : liaState === 'Leyendo contexto'
-              ? 'Leyendo intención y contexto'
-              : liaState === 'Registrando acción'
-                ? 'Acción ejecutiva en registro'
-                : 'Acción registrada correctamente'}
-        </div>
-        <p className="muted">
-          Prioridades, documentos, alertas y seguimiento bajo una sola lectura ejecutiva.
-        </p>
 
-        <div className="lia-presence-matrix-v112">
+        <section className={`lia-listen-state-v411 ${liaState.toLowerCase().replace(/\s+/g, '-')}`}>
+          <span />
+          <div>
+            <strong>Modo escucha preparado</strong>
+            <small>Activación por voz en próxima fase.</small>
+          </div>
+        </section>
+
+        <div className="lia-voice-command-v411">
+          <div className="lia-input">
+            <input
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && sendLÍA()}
+              placeholder="Habla con LÍA..."
+            />
+            <button aria-label="Preparar instrucción para LÍA" onClick={sendLÍA}>↗</button>
+          </div>
+          <small>Escribe o prepara una instrucción.</small>
+        </div>
+
+        <section className="lia-response-panel-v411">
+          <p className="eyebrow">ÚLTIMA RESPUESTA</p>
+          <strong>Centro ejecutivo listo.</strong>
+          <span>Puedo ayudarte con agenda, prioridades y seguimiento.</span>
+        </section>
+
+        <div className="quick-actions lia-context-actions-v411">
+          <button
+            className={`lia-simulated-feedback-v090 ${activeLiaAction === 'Preparar resumen' ? 'cockpit-action-active-v090' : ''}`}
+            onClick={() =>
+              runLÍAAction(
+                'Preparar resumen',
+                'Resumen listo: prioridades, riesgos, responsables y cierre sugerido.',
+                () => addActivity('Resumen ejecutivo del día preparado.')
+              )
+            }
+          >
+            Preparar resumen
+          </button>
+          <button
+            className={`lia-simulated-feedback-v090 ${activeLiaAction === 'Revisar agenda' ? 'cockpit-action-active-v090' : ''}`}
+            onClick={() =>
+              runLÍAAction(
+                'Revisar agenda',
+                'Agenda revisada: bloques clave, prioridad y siguiente movimiento preparados.',
+                () => addActivity('Agenda ejecutiva revisada por LÍA.')
+              )
+            }
+          >
+            Revisar agenda
+          </button>
+          <button
+            className={`lia-simulated-feedback-v090 ${activeLiaAction === 'Crear seguimiento' ? 'cockpit-action-active-v090' : ''}`}
+            onClick={() =>
+              runLÍAAction(
+                'Crear seguimiento',
+                'Seguimiento preparado: responsable, riesgo y cierre sugerido listos.',
+                () => addActivity('Seguimiento ejecutivo preparado.')
+              )
+            }
+          >
+            Crear seguimiento
+          </button>
+        </div>
+
+        <div className="lia-presence-matrix-v112 lia-operational-compact-v411">
           <article>
             <span>Agenda</span>
             <strong>Activa</strong>
@@ -726,92 +784,9 @@ export default function App() {
             <strong>Medio</strong>
           </article>
           <article>
-            <span>Movilidad</span>
-            <strong>Lista</strong>
+            <span>Acciones</span>
+            <strong>Listas</strong>
           </article>
-          <article>
-            <span>Acción</span>
-            <strong>Lista</strong>
-          </article>
-        </div>
-
-        <div className="lia-chat">
-          <p className="eyebrow">ASISTENTE</p>
-          <div className="lia-chat-stream">
-            {liaMessages.map((item, index) => (
-              <div className={`lia-bubble ${item.role} ${item.role === 'assistant' && index === liaMessages.length - 1 ? 'lia-action-response-v090' : ''}`} key={`${item.role}-${index}-${item.text}`}>
-                {item.text}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="quick-actions">
-          <button
-            className={`lia-simulated-feedback-v090 ${activeLiaAction === 'Resumen' ? 'cockpit-action-active-v090' : ''}`}
-            onClick={() =>
-              runLÍAAction(
-                'Resumen',
-                'Resumen listo: prioridades, riesgos, responsables y cierre sugerido.',
-                () => addActivity('Resumen ejecutivo del día preparado.')
-              )
-            }
-          >
-            Resumen
-          </button>
-          <button
-            className={`lia-simulated-feedback-v090 ${activeLiaAction === 'Recordatorio' ? 'cockpit-action-active-v090' : ''}`}
-            onClick={() =>
-              runLÍAAction(
-                'Recordatorio',
-                'Recordatorio preparado con validación pendiente.',
-                () => addAlert('Recordatorio ejecutivo preparado')
-              )
-            }
-          >
-            Recordatorio
-          </button>
-          <button
-            className={`lia-simulated-feedback-v090 ${activeLiaAction === 'Documento' ? 'cockpit-action-active-v090' : ''}`}
-            onClick={() =>
-              runLÍAAction(
-                'Documento',
-                'Documento ejecutivo preparado para validación y cierre.',
-                () => addDocument('Documento listo para revisión')
-              )
-            }
-          >
-            Documento
-          </button>
-          <button
-            className={`lia-simulated-feedback-v090 ${activeLiaAction === 'Estado' ? 'cockpit-action-active-v090' : ''}`}
-            onClick={() =>
-              runLÍAAction(
-                'Estado',
-                'Estado ejecutivo actualizado: prioridad, riesgo y siguiente movimiento.',
-                () => addActivity('Estado operativo general actualizado.')
-              )
-            }
-          >
-            Estado
-          </button>
-        </div>
-
-        <div className="lia-log">
-          <p className="eyebrow">RESUMEN DEL DÍA</p>
-          {liaLog.map((item, index) => (
-            <div className={`lia-log-item ${index === 0 ? 'lia-live-activity-v090' : ''}`} key={`${item}-${index}`}>{item}</div>
-          ))}
-        </div>
-
-        <div className="lia-input">
-          <input
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && sendLÍA()}
-            placeholder="Habla con LÍA..."
-          />
-          <button onClick={sendLÍA}>↑</button>
         </div>
       </aside>
     </main>
