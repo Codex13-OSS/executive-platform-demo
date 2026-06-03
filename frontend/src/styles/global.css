@@ -62,7 +62,11 @@
 }
 
 * { box-sizing: border-box; }
-html, body, #root { min-height: 100%; }
+html, body, #root {
+  min-height: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
 
 body {
   margin: 0;
@@ -74,6 +78,22 @@ body {
     radial-gradient(50rem 30rem at 110% -6%, var(--brand-red-glow), transparent 70%),
     var(--bg-base);
   transition: background var(--duration-slow) var(--ease-smooth), color var(--duration-base) var(--ease-smooth);
+}
+
+#root,
+main,
+section,
+aside,
+header,
+footer,
+.page-shell,
+.dashboard-layout,
+.glass-panel,
+.os-shell,
+.main-panel,
+.sidebar,
+.lia-panel {
+  min-width: 0;
 }
 
 h1, h2, h3, p, ul { margin: 0; }
@@ -10793,5 +10813,1615 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
   .lia-agenda-v400-form-compact {
     align-items: flex-start;
     flex-direction: column;
+  }
+}
+
+/* lia-ipad-air-responsive-hotfix-v411 */
+@media (min-width: 768px) and (max-width: 1180px) {
+  html,
+  body,
+  #root {
+    height: auto !important;
+    min-height: 100dvh !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body {
+    min-width: 0 !important;
+  }
+
+  #root > *,
+  .lia-login-premium > *,
+  .legacy-login-layout > *,
+  .os-shell > *,
+  .main-panel > *,
+  .lia-panel > *,
+  .lia-agenda-v400-shell > *,
+  .lia-agenda-v400-left > *,
+  .lia-agenda-v400-main > * {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .login-screen,
+  .lia-login-premium {
+    height: auto !important;
+    min-height: 100dvh !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .login-screen {
+    min-height: 100dvh !important;
+  }
+
+  .legacy-login-layout,
+  .lia-login-premium {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: none !important;
+  }
+
+  .lia-login-premium {
+    align-content: start !important;
+    gap: 18px !important;
+    padding: clamp(16px, 3vw, 28px) !important;
+  }
+
+  .login-brand-premium,
+  .login-system-status,
+  .login-sync-panel,
+  .login-orb-stage,
+  .executive-access-panel,
+  .login-security-footer {
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+  }
+
+  .login-brand-premium {
+    order: 1;
+  }
+
+  .login-system-status {
+    order: 2;
+    justify-self: start !important;
+  }
+
+  .login-sync-panel {
+    order: 3;
+    align-self: start !important;
+    max-width: min(100%, 640px) !important;
+    gap: 12px !important;
+  }
+
+  .login-sync-panel h1 {
+    font-size: clamp(2rem, 6vw, 3.2rem) !important;
+    line-height: 0.98 !important;
+  }
+
+  .login-sync-panel p {
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
+  }
+
+  .executive-access-panel {
+    order: 4;
+    justify-self: center !important;
+    align-self: start !important;
+    width: min(100%, 460px) !important;
+    padding: clamp(18px, 2.5vw, 26px) !important;
+  }
+
+  .login-form-column {
+    min-height: auto !important;
+    padding: clamp(16px, 3vw, 28px) !important;
+  }
+
+  .login-form-panel {
+    width: min(100%, 520px) !important;
+    max-width: 100% !important;
+  }
+
+  .login-hero {
+    min-height: auto !important;
+    align-content: start !important;
+    padding: clamp(18px, 3vw, 32px) !important;
+  }
+
+  .login-orb-stage {
+    order: 5;
+    align-self: start !important;
+    width: 100% !important;
+    max-height: none !important;
+    padding-block: 4px !important;
+  }
+
+  .orb-halo-system {
+    width: min(58vw, 340px) !important;
+    max-width: 100% !important;
+  }
+
+  .login-security-footer {
+    order: 6;
+    align-self: start !important;
+    padding-bottom: 16px !important;
+  }
+
+  .mobile-nav-toggle,
+  .mobile-nav-layer {
+    display: none !important;
+  }
+
+  .os-shell {
+    grid-template-columns: 78px minmax(0, 1fr) !important;
+    grid-template-rows: auto auto !important;
+    height: auto !important;
+    min-height: 100dvh !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sidebar {
+    display: flex !important;
+    grid-column: 1 !important;
+    grid-row: 1 / -1 !important;
+    width: 78px !important;
+    min-width: 0 !important;
+    max-width: 78px !important;
+    overflow: hidden !important;
+    padding: 18px 10px !important;
+  }
+
+  .sidebar nav,
+  .sidebar button {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  .sidebar button {
+    justify-content: center !important;
+    overflow: hidden !important;
+    padding-inline: 8px !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  .main-panel {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    min-width: 0 !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    -webkit-overflow-scrolling: touch;
+    padding: 18px !important;
+  }
+
+  .lia-panel {
+    display: flex !important;
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    border-left: 0 !important;
+    border-top: 1px solid rgba(125, 211, 252, 0.14) !important;
+  }
+
+  .lia-orb {
+    width: 150px !important;
+    height: 150px !important;
+    min-width: 150px !important;
+    min-height: 150px !important;
+  }
+
+  .quick-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .lia-input {
+    min-width: 0 !important;
+  }
+
+  .lia-input input {
+    min-width: 0 !important;
+  }
+
+  .lia-agenda-v400-shell {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+
+  .lia-agenda-v400-left,
+  .lia-agenda-v400-main,
+  .lia-agenda-v400-calendar-panel,
+  .lia-agenda-v400-stats,
+  .lia-agenda-v400-upcoming,
+  .lia-agenda-v400-day-header,
+  .lia-agenda-v400-lia-alert,
+  .lia-agenda-v400-reading,
+  .lia-agenda-v400-form-compact,
+  .lia-agenda-v400-form,
+  .lia-agenda-v400-timeline {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .lia-agenda-v400-left {
+    grid-template-columns: minmax(280px, 1fr) minmax(260px, 0.72fr);
+    align-items: start;
+  }
+
+  .lia-agenda-v400-calendar-panel {
+    grid-row: span 2;
+  }
+
+  .lia-agenda-v400-month-grid,
+  .lia-agenda-v400-weekdays {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+
+  .lia-agenda-v400-day {
+    min-height: 40px;
+    min-width: 0;
+    padding: 0;
+  }
+
+  .lia-agenda-v400-month-controls button,
+  .lia-agenda-v400-upcoming button,
+  .lia-agenda-v400-form button,
+  .lia-agenda-v400-form-compact button,
+  .lia-agenda-v400-event-actions button {
+    min-height: 40px;
+  }
+
+  .lia-agenda-v400-day-header,
+  .lia-agenda-v400-lia-alert,
+  .lia-agenda-v400-reading,
+  .lia-agenda-v400-form-compact {
+    gap: 12px;
+  }
+
+  .lia-agenda-v400-day-header {
+    min-height: auto;
+    padding: 22px;
+  }
+
+  .lia-agenda-v400-day-header h1 {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .lia-agenda-v400-day-pulse {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    max-width: 100%;
+  }
+
+  .lia-agenda-v400-lia-alert > span {
+    max-width: 46%;
+  }
+
+  .lia-agenda-v400-reading {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lia-agenda-v400-reading-chips {
+    justify-content: flex-start;
+  }
+
+  .lia-agenda-v400-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .lia-agenda-v400-form-wide,
+  .lia-agenda-v400-form-head {
+    grid-column: 1 / -1;
+  }
+
+  .lia-agenda-v400-form input,
+  .lia-agenda-v400-form select {
+    min-width: 0;
+    min-height: 44px;
+  }
+
+  .lia-agenda-v400-timeline {
+    overflow-x: hidden;
+    overflow-y: visible;
+    padding-inline: 12px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .lia-agenda-v400-hour-row {
+    grid-template-columns: 52px minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .lia-agenda-v400-hour-content,
+  .lia-agenda-v400-event-card {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .lia-agenda-v400-event-card h3,
+  .lia-agenda-v400-event-card p,
+  .lia-agenda-v400-event-goal,
+  .lia-agenda-v400-event-mobility b,
+  .lia-agenda-v400-upcoming button > span small {
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .main-panel {
+    padding: 14px !important;
+  }
+
+  .lia-panel {
+    padding: 16px !important;
+  }
+
+  .lia-agenda-v400-left {
+    grid-template-columns: 1fr;
+  }
+
+  .lia-agenda-v400-calendar-panel {
+    grid-row: auto;
+  }
+
+  .lia-agenda-v400-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lia-agenda-v400-upcoming {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lia-agenda-v400-day-header,
+  .lia-agenda-v400-lia-alert {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .lia-agenda-v400-lia-alert > span {
+    max-width: 100%;
+  }
+
+  .lia-agenda-v400-day-pulse {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) and (max-width: 900px) {
+  .os-shell {
+    grid-template-columns: 66px minmax(0, 1fr) !important;
+  }
+
+  .sidebar {
+    width: 66px !important;
+    max-width: 66px !important;
+    padding-inline: 8px !important;
+  }
+
+  .lia-agenda-v400-day {
+    min-height: 38px;
+    border-radius: 10px;
+  }
+
+  .lia-agenda-v400-form,
+  .lia-agenda-v400-upcoming {
+    grid-template-columns: 1fr !important;
+  }
+
+  .lia-agenda-v400-form-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .lia-agenda-v400-hour-row {
+    grid-template-columns: 46px minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .lia-agenda-v400-event-actions button {
+    flex: 1 1 140px;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1180px) and (max-height: 900px) {
+  html,
+  body,
+  #root {
+    height: auto !important;
+    min-height: 100dvh !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .login-screen,
+  .lia-login-premium,
+  .os-shell {
+    height: auto !important;
+    min-height: 100dvh !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .lia-login-premium {
+    grid-template-columns: minmax(280px, 0.92fr) minmax(340px, 1fr) !important;
+    grid-template-rows: auto auto auto !important;
+    align-content: start !important;
+    gap: 14px 18px !important;
+    padding: 16px 20px !important;
+  }
+
+  .login-brand-premium,
+  .login-system-status,
+  .login-sync-panel,
+  .login-orb-stage,
+  .executive-access-panel,
+  .login-security-footer {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .login-brand-premium {
+    grid-column: 1 / 2 !important;
+    grid-row: 1 !important;
+    order: 0;
+  }
+
+  .login-system-status {
+    grid-column: 2 / 3 !important;
+    grid-row: 1 !important;
+    justify-self: end !important;
+    order: 0;
+  }
+
+  .login-sync-panel {
+    grid-column: 1 / 2 !important;
+    grid-row: 2 !important;
+    align-self: start !important;
+    gap: 10px !important;
+    order: 0;
+  }
+
+  .login-sync-panel h1 {
+    font-size: clamp(1.8rem, 4.2vw, 2.8rem) !important;
+  }
+
+  .login-sync-stack {
+    gap: 8px !important;
+  }
+
+  .login-sync-stack div {
+    padding: 9px 11px !important;
+  }
+
+  .login-orb-stage {
+    grid-column: 1 / 2 !important;
+    grid-row: 3 !important;
+    justify-self: start !important;
+    order: 0;
+  }
+
+  .orb-halo-system {
+    width: min(30vw, 230px) !important;
+  }
+
+  .executive-access-panel {
+    grid-column: 2 / 3 !important;
+    grid-row: 2 / 4 !important;
+    align-self: start !important;
+    justify-self: stretch !important;
+    width: 100% !important;
+    padding: 18px !important;
+    order: 0;
+  }
+
+  .login-weather-integrated {
+    margin: 12px 0 !important;
+  }
+
+  .login-security-footer {
+    grid-column: 1 / -1 !important;
+    grid-row: 4 !important;
+    order: 0;
+  }
+
+  .legacy-login-layout {
+    min-height: 100dvh !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .login-hero,
+  .login-form-column {
+    min-height: auto !important;
+    padding: 18px !important;
+  }
+
+  .os-shell {
+    grid-template-columns: 70px minmax(0, 1fr) !important;
+    grid-template-rows: auto auto !important;
+  }
+
+  .sidebar {
+    width: 70px !important;
+    max-width: 70px !important;
+  }
+
+  .main-panel {
+    min-width: 0 !important;
+    overflow-x: hidden !important;
+  }
+
+  .lia-panel {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
+}
+
+/* lia-ipad-shell-home-fix-v411 */
+@media (min-width: 768px) and (max-width: 1180px) {
+  .os-shell {
+    grid-template-columns: 72px minmax(0, 1fr) !important;
+    gap: 10px !important;
+    padding: 10px !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .sidebar,
+  .os-shell:has(.lia-visual-density-v097) .sidebar {
+    width: 72px !important;
+    min-width: 72px !important;
+    max-width: 72px !important;
+    padding: 14px 8px !important;
+    overflow: hidden !important;
+    align-items: center !important;
+  }
+
+  .sidebar > div:first-child {
+    width: 100% !important;
+    display: grid !important;
+    place-items: center !important;
+  }
+
+  .logo,
+  .os-shell:has(.lia-visual-density-v097) .logo {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    font-size: 12px !important;
+    line-height: 1.05 !important;
+    text-align: center !important;
+    text-overflow: clip !important;
+    white-space: normal !important;
+  }
+
+  .side-sub,
+  .os-shell:has(.lia-visual-density-v097) .side-sub {
+    display: none !important;
+  }
+
+  .sidebar nav,
+  .os-shell:has(.lia-visual-density-v097) .sidebar nav {
+    width: 100% !important;
+    display: grid !important;
+    justify-items: center !important;
+    gap: 9px !important;
+  }
+
+  .nav-item,
+  .os-shell:has(.lia-visual-density-v097) .nav-item {
+    width: 44px !important;
+    min-width: 44px !important;
+    max-width: 44px !important;
+    min-height: 44px !important;
+    display: grid !important;
+    place-items: center !important;
+    gap: 0 !important;
+    overflow: hidden !important;
+    border-radius: 16px !important;
+    padding: 0 !important;
+    font-size: 11px !important;
+    line-height: 1.12 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+  }
+
+  .nav-item span,
+  .os-shell:has(.lia-visual-density-v097) .nav-item span {
+    display: grid !important;
+    place-items: center !important;
+    width: 18px !important;
+    height: 18px !important;
+    opacity: 0.8 !important;
+    color: rgba(125, 211, 252, 0.92) !important;
+    font-size: 12px !important;
+    line-height: 1 !important;
+    transform: none !important;
+  }
+
+  .nav-item.active span {
+    color: rgba(240, 249, 255, 0.98) !important;
+  }
+
+  .system-status,
+  .os-shell:has(.lia-visual-density-v097) .system-status {
+    width: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    display: grid !important;
+    place-items: center !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    font-size: 10px !important;
+    line-height: 1.08 !important;
+    border-radius: 16px !important;
+  }
+
+  .system-status .dot,
+  .dot {
+    width: 10px !important;
+    height: 10px !important;
+    margin: 0 !important;
+  }
+
+  .main-panel,
+  .os-shell:has(.lia-visual-density-v097) .main-panel {
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    border-inline: 0 !important;
+    overflow-x: hidden !important;
+  }
+
+  .main-panel > *,
+  .executive-cockpit-layout-v088,
+  .executive-cockpit-layout-v112,
+  .dashboard-command-strip-v112,
+  .dashboard-command-strip-v120,
+  .kpi-grid,
+  .executive-cockpit-main-v088,
+  .cockpit-secondary-grid-v088,
+  .lia-agenda-v400-shell {
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+  }
+
+  .topbar,
+  .os-shell:has(.lia-visual-density-v097) .topbar {
+    width: 100% !important;
+    max-width: none !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(180px, 230px) auto !important;
+    align-items: center !important;
+    gap: 10px !important;
+    min-height: 0 !important;
+    margin-bottom: 12px !important;
+    padding: 12px !important;
+  }
+
+  .topbar > div:first-child {
+    min-width: 0 !important;
+  }
+
+  .topbar h2 {
+    overflow-wrap: anywhere !important;
+  }
+
+  .topbar .executive-environment-card.compact {
+    width: 100% !important;
+    min-width: 0 !important;
+    transform: none !important;
+  }
+
+  .topbar > .secondary {
+    min-width: 42px !important;
+    min-height: 42px !important;
+    white-space: nowrap !important;
+  }
+
+  .dashboard-command-strip-v120,
+  .executive-cockpit-main-v088,
+  .cockpit-secondary-grid-v088 {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .executive-cockpit-layout-v112 .kpi-grid,
+  .kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  .card,
+  .panel,
+  .executive-next-move-card,
+  .executive-predictive-panel,
+  .cognitive-compact-stage-v088,
+  .cockpit-decision-core-v088,
+  .cockpit-secondary-grid-v088 .panel {
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .cognitive-compact-stage-v088 {
+    justify-items: stretch !important;
+    min-height: auto !important;
+    overflow: hidden !important;
+  }
+
+  .cognitive-space-engine-v130,
+  .cse-orbital-v130 {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .cse-orbital-v130 {
+    min-height: clamp(240px, 34vw, 320px) !important;
+    margin-inline: auto !important;
+  }
+
+  .track,
+  .bar,
+  .document-progress {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .lia-panel,
+  .lia-panel.lia-executive-copilot-v088,
+  .lia-cognitive-rail-v112,
+  .os-shell:has(.lia-visual-density-v097) .lia-panel {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    justify-self: stretch !important;
+    align-self: start !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    display: grid !important;
+    grid-template-columns: minmax(120px, 0.4fr) minmax(0, 1fr) minmax(220px, 0.8fr) !important;
+    align-items: start !important;
+    gap: 12px !important;
+    padding: 16px !important;
+    overflow-x: hidden !important;
+  }
+
+  .lia-panel .lia-orb,
+  .lia-cognitive-rail-v112 .lia-orb,
+  .os-shell:has(.lia-visual-density-v097) .lia-panel .lia-orb {
+    grid-column: 1 !important;
+    grid-row: 1 / span 4 !important;
+    width: 118px !important;
+    height: 118px !important;
+    min-width: 118px !important;
+    min-height: 118px !important;
+    margin: 0 auto !important;
+  }
+
+  .lia-panel > .eyebrow,
+  .lia-panel h3,
+  .lia-panel .lia-state,
+  .lia-panel > .muted {
+    grid-column: 2 !important;
+    max-width: none !important;
+    margin-inline: 0 !important;
+    text-align: left !important;
+  }
+
+  .lia-panel > .muted {
+    display: block !important;
+  }
+
+  .lia-presence-matrix-v112 {
+    grid-column: 3 !important;
+    grid-row: 1 / span 3 !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    width: 100% !important;
+  }
+
+  .lia-chat {
+    grid-column: 1 / span 2 !important;
+    width: 100% !important;
+  }
+
+  .quick-actions {
+    grid-column: 3 !important;
+    width: 100% !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .lia-log {
+    grid-column: 1 / span 2 !important;
+    width: 100% !important;
+  }
+
+  .lia-input {
+    grid-column: 3 !important;
+    width: 100% !important;
+    align-self: end !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 900px) {
+  .os-shell {
+    grid-template-columns: 64px minmax(0, 1fr) !important;
+    gap: 8px !important;
+    padding: 8px !important;
+  }
+
+  .sidebar,
+  .os-shell:has(.lia-visual-density-v097) .sidebar {
+    width: 64px !important;
+    min-width: 64px !important;
+    max-width: 64px !important;
+    padding-inline: 6px !important;
+  }
+
+  .logo,
+  .os-shell:has(.lia-visual-density-v097) .logo {
+    font-size: 11px !important;
+  }
+
+  .nav-item,
+  .os-shell:has(.lia-visual-density-v097) .nav-item,
+  .system-status,
+  .os-shell:has(.lia-visual-density-v097) .system-status {
+    width: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    min-height: 40px !important;
+  }
+
+  .topbar,
+  .os-shell:has(.lia-visual-density-v097) .topbar {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+  }
+
+  .topbar .executive-environment-card.compact {
+    grid-column: 1 / -1 !important;
+    justify-self: stretch !important;
+  }
+
+  .executive-cockpit-layout-v112 .kpi-grid,
+  .kpi-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .lia-panel,
+  .lia-panel.lia-executive-copilot-v088,
+  .lia-cognitive-rail-v112,
+  .os-shell:has(.lia-visual-density-v097) .lia-panel {
+    grid-template-columns: 1fr !important;
+  }
+
+  .lia-panel .lia-orb,
+  .lia-cognitive-rail-v112 .lia-orb,
+  .os-shell:has(.lia-visual-density-v097) .lia-panel .lia-orb,
+  .lia-panel > .eyebrow,
+  .lia-panel h3,
+  .lia-panel .lia-state,
+  .lia-panel > .muted,
+  .lia-presence-matrix-v112,
+  .lia-chat,
+  .quick-actions,
+  .lia-log,
+  .lia-input {
+    grid-column: 1 !important;
+  }
+
+  .lia-panel > .eyebrow,
+  .lia-panel h3,
+  .lia-panel .lia-state,
+  .lia-panel > .muted {
+    text-align: center !important;
+    margin-inline: auto !important;
+  }
+}
+
+/* lia-ipad-executive-shell-corrective-v411 */
+@media (min-width: 768px) and (max-width: 1180px) {
+  .os-shell {
+    max-width: 100% !important;
+    min-height: 100dvh !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sidebar,
+  .os-shell:has(.lia-visual-density-v097) .sidebar {
+    display: flex !important;
+    align-items: stretch !important;
+    overflow: hidden !important;
+    border-right: 1px solid rgba(125, 211, 252, 0.12) !important;
+  }
+
+  .sidebar > div:first-child,
+  .sidebar nav,
+  .os-shell:has(.lia-visual-density-v097) .sidebar nav {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .logo,
+  .os-shell:has(.lia-visual-density-v097) .logo {
+    width: 100% !important;
+    overflow: visible !important;
+    color: rgba(240, 249, 255, 0.96) !important;
+    font-weight: 950 !important;
+    text-align: left !important;
+    white-space: normal !important;
+  }
+
+  .nav-item,
+  .os-shell:has(.lia-visual-density-v097) .nav-item {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 7px !important;
+    overflow: hidden !important;
+    padding: 9px 8px !important;
+    color: rgba(226, 232, 240, 0.78) !important;
+    font-size: 11px !important;
+    font-weight: 780 !important;
+    line-height: 1.12 !important;
+    text-align: left !important;
+    white-space: normal !important;
+    text-overflow: clip !important;
+  }
+
+  .nav-item span,
+  .os-shell:has(.lia-visual-density-v097) .nav-item span {
+    flex: 0 0 auto !important;
+    display: inline-grid !important;
+    place-items: center !important;
+    width: 12px !important;
+    height: 12px !important;
+    color: rgba(125, 211, 252, 0.82) !important;
+    font-size: 8px !important;
+    line-height: 1 !important;
+    transform: none !important;
+  }
+
+  .nav-item.active,
+  .os-shell:has(.lia-visual-density-v097) .nav-item.active {
+    color: rgba(248, 250, 252, 0.98) !important;
+    border-color: rgba(125, 211, 252, 0.28) !important;
+    background:
+      radial-gradient(circle at 12% 50%, rgba(34, 211, 238, 0.18), transparent 40%),
+      linear-gradient(90deg, rgba(14, 165, 233, 0.2), rgba(15, 23, 42, 0.28)) !important;
+  }
+
+  .system-status,
+  .os-shell:has(.lia-visual-density-v097) .system-status {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 6px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    min-height: 38px !important;
+    overflow: hidden !important;
+    padding: 8px !important;
+    font-size: 10px !important;
+    line-height: 1.12 !important;
+    white-space: normal !important;
+  }
+
+  .system-status .dot,
+  .dot {
+    flex: 0 0 auto !important;
+  }
+
+  .main-panel,
+  .os-shell:has(.lia-visual-density-v097) .main-panel {
+    min-width: 0 !important;
+    max-width: none !important;
+    overflow-x: hidden !important;
+  }
+
+  .dashboard-command-strip-v120,
+  .executive-cockpit-main-v088,
+  .cockpit-secondary-grid-v088,
+  .lia-agenda-v400-shell {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .executive-cockpit-layout-v088,
+  .executive-cockpit-layout-v112 {
+    gap: 12px !important;
+  }
+
+  .topbar,
+  .os-shell:has(.lia-visual-density-v097) .topbar {
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .topbar h2,
+  .card,
+  .panel,
+  .executive-next-copy h3,
+  .executive-prediction-card h4,
+  .lia-agenda-v400-event-card h3 {
+    overflow-wrap: anywhere !important;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1180px) and (orientation: landscape) {
+  .os-shell {
+    grid-template-columns: 144px minmax(0, 1fr) 270px !important;
+    grid-template-rows: minmax(0, 1fr) !important;
+    gap: 10px !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    padding: 10px !important;
+    overflow: hidden !important;
+  }
+
+  .sidebar,
+  .os-shell:has(.lia-visual-density-v097) .sidebar {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    width: 144px !important;
+    min-width: 144px !important;
+    max-width: 144px !important;
+    height: calc(100dvh - 20px) !important;
+    padding: 14px 10px !important;
+  }
+
+  .logo,
+  .os-shell:has(.lia-visual-density-v097) .logo {
+    font-size: 18px !important;
+    line-height: 1 !important;
+    letter-spacing: -0.04em !important;
+  }
+
+  .side-sub,
+  .os-shell:has(.lia-visual-density-v097) .side-sub {
+    display: block !important;
+    max-width: 100% !important;
+    margin-top: 4px !important;
+    color: rgba(186, 230, 253, 0.42) !important;
+    font-size: 8px !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+  }
+
+  .sidebar nav,
+  .os-shell:has(.lia-visual-density-v097) .sidebar nav {
+    align-content: start !important;
+    gap: 8px !important;
+  }
+
+  .nav-item,
+  .os-shell:has(.lia-visual-density-v097) .nav-item {
+    min-height: 39px !important;
+    border-radius: 14px !important;
+    padding: 8px 9px !important;
+    font-size: 10.5px !important;
+  }
+
+  .system-status,
+  .os-shell:has(.lia-visual-density-v097) .system-status {
+    font-size: 10px !important;
+  }
+
+  .main-panel,
+  .os-shell:has(.lia-visual-density-v097) .main-panel {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+    height: calc(100dvh - 20px) !important;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .lia-panel,
+  .lia-panel.lia-executive-copilot-v088,
+  .lia-cognitive-rail-v112,
+  .os-shell:has(.lia-visual-density-v097) .lia-panel {
+    grid-column: 3 !important;
+    grid-row: 1 !important;
+    width: 270px !important;
+    min-width: 250px !important;
+    max-width: 290px !important;
+    height: calc(100dvh - 20px) !important;
+    max-height: calc(100dvh - 20px) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 9px !important;
+    padding: 13px 12px !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    border-top: 0 !important;
+    border-left: 1px solid rgba(125, 211, 252, 0.14) !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .lia-panel .lia-orb,
+  .lia-cognitive-rail-v112 .lia-orb,
+  .os-shell:has(.lia-visual-density-v097) .lia-panel .lia-orb {
+    width: 112px !important;
+    height: 112px !important;
+    min-width: 112px !important;
+    min-height: 112px !important;
+    margin: 0 auto 2px !important;
+  }
+
+  .lia-panel > .eyebrow,
+  .lia-panel h3,
+  .lia-panel .lia-state,
+  .lia-panel > .muted {
+    max-width: 100% !important;
+    margin-inline: auto !important;
+    text-align: center !important;
+  }
+
+  .lia-panel h3,
+  .os-shell:has(.lia-visual-density-v097) .lia-panel h3 {
+    font-size: 20px !important;
+  }
+
+  .lia-panel > .muted {
+    display: block !important;
+    font-size: 10.5px !important;
+    line-height: 1.35 !important;
+  }
+
+  .lia-presence-matrix-v112,
+  .quick-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    width: 100% !important;
+  }
+
+  .lia-chat-stream {
+    max-height: 96px !important;
+  }
+
+  .lia-log {
+    max-height: 108px !important;
+  }
+
+  .lia-input {
+    margin-top: auto !important;
+    width: 100% !important;
+  }
+
+  .topbar,
+  .os-shell:has(.lia-visual-density-v097) .topbar {
+    grid-template-columns: minmax(0, 1fr) minmax(158px, 210px) auto !important;
+    gap: 8px !important;
+    padding: 10px !important;
+  }
+
+  .topbar h2 {
+    font-size: clamp(1.05rem, 2.1vw, 1.3rem) !important;
+  }
+
+  .topbar .executive-environment-card.compact {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .topbar > .secondary {
+    min-height: 38px !important;
+    padding-inline: 10px !important;
+  }
+
+  .dashboard-command-strip-v120 {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .executive-cockpit-layout-v112 .kpi-grid,
+  .kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .executive-cockpit-main-v088 {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .cockpit-secondary-grid-v088 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .cockpit-secondary-grid-v088 .activity {
+    grid-column: 1 / -1 !important;
+  }
+
+  .cse-orbital-v130 {
+    min-height: 250px !important;
+    max-height: 300px !important;
+  }
+
+  .lia-agenda-v400-left {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .lia-agenda-v400-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 899px), (min-width: 900px) and (max-width: 1180px) and (orientation: portrait) {
+  .os-shell {
+    grid-template-columns: 132px minmax(0, 1fr) !important;
+    grid-template-rows: auto auto !important;
+    gap: 10px !important;
+    padding: 10px !important;
+  }
+
+  .sidebar,
+  .os-shell:has(.lia-visual-density-v097) .sidebar {
+    grid-column: 1 !important;
+    grid-row: 1 / -1 !important;
+    width: 132px !important;
+    min-width: 132px !important;
+    max-width: 132px !important;
+    padding: 14px 9px !important;
+  }
+
+  .logo,
+  .os-shell:has(.lia-visual-density-v097) .logo {
+    font-size: 17px !important;
+    line-height: 1 !important;
+  }
+
+  .side-sub,
+  .os-shell:has(.lia-visual-density-v097) .side-sub {
+    display: none !important;
+  }
+
+  .nav-item,
+  .os-shell:has(.lia-visual-density-v097) .nav-item {
+    min-height: 42px !important;
+    padding: 8px !important;
+    font-size: 10.5px !important;
+  }
+
+  .main-panel,
+  .os-shell:has(.lia-visual-density-v097) .main-panel {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .lia-panel,
+  .lia-panel.lia-executive-copilot-v088,
+  .lia-cognitive-rail-v112,
+  .os-shell:has(.lia-visual-density-v097) .lia-panel {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    justify-self: stretch !important;
+    width: 100% !important;
+    max-width: none !important;
+    display: grid !important;
+    grid-template-columns: minmax(112px, 0.34fr) minmax(0, 1fr) !important;
+    gap: 12px !important;
+    padding: 16px !important;
+    border-left: 0 !important;
+    border-top: 1px solid rgba(125, 211, 252, 0.14) !important;
+  }
+
+  .lia-panel .lia-orb,
+  .lia-cognitive-rail-v112 .lia-orb,
+  .os-shell:has(.lia-visual-density-v097) .lia-panel .lia-orb {
+    grid-column: 1 !important;
+    width: 112px !important;
+    height: 112px !important;
+    min-width: 112px !important;
+    min-height: 112px !important;
+    margin: 0 auto !important;
+  }
+
+  .lia-panel > .eyebrow,
+  .lia-panel h3,
+  .lia-panel .lia-state,
+  .lia-panel > .muted,
+  .lia-presence-matrix-v112,
+  .lia-chat,
+  .quick-actions,
+  .lia-log,
+  .lia-input {
+    grid-column: 2 !important;
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  .topbar,
+  .os-shell:has(.lia-visual-density-v097) .topbar {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+  }
+
+  .topbar .executive-environment-card.compact {
+    grid-column: 1 / -1 !important;
+  }
+
+  .dashboard-command-strip-v120,
+  .executive-cockpit-main-v088,
+  .cockpit-secondary-grid-v088,
+  .executive-cockpit-layout-v112 .kpi-grid,
+  .kpi-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* lia-right-panel-voice-ready-v411 */
+.lia-voice-ready-panel-v411 {
+  gap: 12px !important;
+  align-content: start !important;
+}
+
+.lia-voice-core-v411 {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.lia-voice-ready-panel-v411 .lia-orb {
+  margin-bottom: 0 !important;
+}
+
+.lia-voice-title-v411 {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+}
+
+.lia-voice-title-v411 h3 {
+  margin: 0;
+  color: rgba(240, 249, 255, 0.98);
+  font-size: clamp(1.25rem, 1.7vw, 1.75rem);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  text-align: center;
+}
+
+.lia-voice-title-v411 span,
+.lia-listen-state-v411 small,
+.lia-voice-command-v411 > small,
+.lia-response-panel-v411 span {
+  color: rgba(203, 213, 225, 0.68);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.lia-listen-state-v411,
+.lia-response-panel-v411 {
+  border: 1px solid rgba(125, 211, 252, 0.14);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(34, 211, 238, 0.1), transparent 42%),
+    rgba(2, 6, 23, 0.34);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045);
+}
+
+.lia-listen-state-v411 {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  padding: 10px 11px;
+}
+
+.lia-listen-state-v411 > span {
+  width: 11px;
+  height: 11px;
+  border-radius: 999px;
+  background: rgba(34, 211, 238, 0.94);
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.45);
+}
+
+.lia-listen-state-v411 strong {
+  display: block;
+  color: rgba(240, 249, 255, 0.94);
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.lia-listen-state-v411 small {
+  display: block;
+  margin-top: 2px;
+}
+
+.lia-voice-command-v411 {
+  display: grid;
+  gap: 7px;
+}
+
+.lia-voice-command-v411 .lia-input {
+  margin-top: 0 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  border-radius: 18px !important;
+  padding: 7px !important;
+  background:
+    linear-gradient(135deg, rgba(15, 23, 42, 0.72), rgba(2, 8, 23, 0.46)),
+    rgba(2, 6, 23, 0.38) !important;
+  border: 1px solid rgba(125, 211, 252, 0.18) !important;
+}
+
+.lia-voice-command-v411 .lia-input input {
+  min-width: 0 !important;
+  min-height: 40px !important;
+  margin-top: 0 !important;
+  border-radius: 14px !important;
+  background: rgba(2, 6, 23, 0.56) !important;
+}
+
+.lia-voice-command-v411 .lia-input button {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  border-radius: 14px !important;
+  font-size: 18px !important;
+  line-height: 1 !important;
+}
+
+.lia-response-panel-v411 {
+  display: grid;
+  gap: 5px;
+  padding: 12px;
+}
+
+.lia-response-panel-v411 p {
+  margin: 0;
+}
+
+.lia-response-panel-v411 strong {
+  color: rgba(240, 249, 255, 0.95);
+  font-size: 13px;
+  line-height: 1.25;
+}
+
+.lia-context-actions-v411 {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 8px !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.lia-context-actions-v411 button {
+  min-height: 38px !important;
+  border-radius: 999px !important;
+  padding: 8px 11px !important;
+  color: rgba(226, 232, 240, 0.9) !important;
+  font-size: 11px !important;
+  font-weight: 850 !important;
+  text-align: center !important;
+  white-space: normal !important;
+}
+
+.lia-operational-compact-v411 {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 7px !important;
+}
+
+.lia-operational-compact-v411 article {
+  min-width: 0;
+  padding: 8px !important;
+}
+
+.lia-operational-compact-v411 span {
+  font-size: 8px !important;
+}
+
+.lia-operational-compact-v411 strong {
+  font-size: 11px !important;
+}
+
+@media (min-width: 900px) and (max-width: 1180px) and (orientation: landscape) {
+  .lia-voice-ready-panel-v411,
+  .lia-panel.lia-voice-ready-panel-v411,
+  .os-shell:has(.lia-visual-density-v097) .lia-voice-ready-panel-v411 {
+    grid-column: 3 !important;
+    grid-row: 1 !important;
+    width: 270px !important;
+    min-width: 250px !important;
+    max-width: 290px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    padding: 13px 12px !important;
+  }
+
+  .lia-voice-ready-panel-v411 .lia-orb {
+    width: 104px !important;
+    height: 104px !important;
+    min-width: 104px !important;
+    min-height: 104px !important;
+  }
+
+  .lia-voice-title-v411 h3 {
+    font-size: 20px !important;
+  }
+
+  .lia-listen-state-v411,
+  .lia-response-panel-v411 {
+    padding: 10px !important;
+  }
+
+  .lia-context-actions-v411 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .lia-operational-compact-v411 {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 899px), (min-width: 900px) and (max-width: 1180px) and (orientation: portrait) {
+  .lia-voice-ready-panel-v411,
+  .lia-panel.lia-voice-ready-panel-v411,
+  .os-shell:has(.lia-visual-density-v097) .lia-voice-ready-panel-v411 {
+    width: 100% !important;
+    max-width: none !important;
+    display: grid !important;
+    grid-template-columns: minmax(112px, 0.34fr) minmax(0, 1fr) !important;
+    align-items: start !important;
+    gap: 12px !important;
+  }
+
+  .lia-voice-core-v411 {
+    grid-column: 1 !important;
+    grid-row: 1 / span 4 !important;
+  }
+
+  .lia-voice-ready-panel-v411 .lia-orb {
+    width: 112px !important;
+    height: 112px !important;
+    min-width: 112px !important;
+    min-height: 112px !important;
+  }
+
+  .lia-listen-state-v411,
+  .lia-voice-command-v411,
+  .lia-response-panel-v411,
+  .lia-context-actions-v411,
+  .lia-operational-compact-v411 {
+    grid-column: 2 !important;
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  .lia-context-actions-v411,
+  .lia-operational-compact-v411 {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   }
 }
