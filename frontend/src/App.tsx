@@ -483,7 +483,7 @@ export default function App() {
               <div className="login-brand-mark">LÍA</div>
               <div>
                 <strong>LÍA O.S</strong>
-                <span>Command Center</span>
+                <span>Centro ejecutivo</span>
               </div>
               <button
                 type="button"
@@ -792,9 +792,10 @@ export default function App() {
     </main>
     <button className={`mobile-lia-orb ${mobileOrbListening ? 'listening' : ''}`} onClick={activateMobileOrb}>
       <NeuralCore />
+      <span className="mobile-lia-orb-label">Hablar</span>
     </button>
     <div className="mobile-lia-chip">
-      <strong>{mobileOrbListening ? 'Escuchando...' : 'En línea'}</strong>
+      <strong>{mobileOrbListening ? 'Escuchando...' : 'LÍA lista'}</strong>
     </div>
     {mobileLÍAOpen && (
       <section className="mobile-lia-panel" role="dialog" aria-label="LÍA móvil">
