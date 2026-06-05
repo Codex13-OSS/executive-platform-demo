@@ -11,6 +11,7 @@ import { PremiumAlertsView } from './components/PremiumAlertsView';
 import { TrackingCommandView } from './components/TrackingCommandView';
 import { ExecutiveEnvironmentCard } from './components/ExecutiveEnvironmentCard';
 import { DynamicCommandLayer } from './components/DynamicCommandLayer';
+import { LiaAgentBridgeStatusCard } from './components/LiaAgentBridgeStatusCard';
 
 type View = 'dashboard' | 'agenda' | 'tracking' | 'documents' | 'alerts';
 
@@ -620,6 +621,7 @@ export default function App() {
                 }
               />
 
+              <LiaAgentBridgeStatusCard />
 
               <div className="panel cockpit-agenda-card-v088">
                 <p className="eyebrow">AGENDA EJECUTIVA</p>
