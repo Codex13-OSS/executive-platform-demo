@@ -2,8 +2,10 @@ import { useEffect, useMemo, useState, type FormEvent } from 'react';
 
 type AgendaPriority = 'Alta' | 'Media' | 'Baja';
 type AgendaTone = 'critico' | 'alto' | 'medio' | 'seguimiento' | 'movilidad' | 'libre' | 'neutral';
-type AgendaSource = 'demo_agenda' | 'local_agenda';
+type AgendaSource = 'seed_agenda' | 'local_agenda';
 type AgendaStatus = 'scheduled';
+type AgendaActionStatus = 'pending' | 'done' | 'snoozed';
+type AgendaActionKind = 'context' | 'owner' | 'mobility' | 'followup' | 'exit';
 
 type ExecutiveEvent = {
   id: string;
@@ -63,6 +65,25 @@ type AgendaLocalStorageState = {
   activityLog: AgendaLocalActivity[];
 };
 
+type AgendaActionQueueItem = {
+  id: string;
+  dateKey: string;
+  eventId: string;
+  kind: AgendaActionKind;
+  title: string;
+  detail: string;
+  time: string;
+  status: AgendaActionStatus;
+  tone: AgendaTone;
+  priority: AgendaPriority;
+};
+
+type AgendaActionQueueStorageState = {
+  version: 1;
+  days: Record<string, AgendaActionQueueItem[]>;
+  updatedAt: string;
+};
+
 type MonthCell =
   | { id: string; isBlank: true }
   | {
@@ -94,10 +115,17 @@ const weekdayLabels = ['LUN', 'MAR', 'MIE', 'JUE', 'VIE', 'SAB', 'DOM'];
 const hours = Array.from({ length: 24 }, (_, hour) => `${String(hour).padStart(2, '0')}:00`);
 const freeWindowLabels = ['Foco', 'Seguimiento', 'Preparación', 'Cierre'];
 const localStorageKey = 'lia.os.agenda.local.v1';
+const actionQueueStorageKey = 'lia.os.agenda.actionQueue.v1';
 const priorityToTone: Record<AgendaPriority, AgendaTone> = {
   Alta: 'alto',
   Media: 'medio',
   Baja: 'seguimiento',
+};
+
+const actionStatusCopy: Record<AgendaActionStatus, string> = {
+  pending: 'Pendiente',
+  done: 'Lista',
+  snoozed: 'Pospuesta',
 };
 
 const toneCopy: Record<AgendaTone, { label: string; shortLabel: string }> = {
@@ -171,6 +199,21 @@ const createDraft = (): EventDraft => ({
 const isAgendaPriority = (value: unknown): value is AgendaPriority =>
   value === 'Alta' || value === 'Media' || value === 'Baja';
 
+const isAgendaActionStatus = (value: unknown): value is AgendaActionStatus =>
+  value === 'pending' || value === 'done' || value === 'snoozed';
+
+const isAgendaActionKind = (value: unknown): value is AgendaActionKind =>
+  value === 'context' || value === 'owner' || value === 'mobility' || value === 'followup' || value === 'exit';
+
+const isAgendaTone = (value: unknown): value is AgendaTone =>
+  value === 'critico' ||
+  value === 'alto' ||
+  value === 'medio' ||
+  value === 'seguimiento' ||
+  value === 'movilidad' ||
+  value === 'libre' ||
+  value === 'neutral';
+
 const isLocalBlock = (value: unknown): value is AgendaLocalBlock => {
   if (!value || typeof value !== 'object') {
     return false;
@@ -235,6 +278,61 @@ const parseLocalAgendaState = (value: unknown): AgendaLocalStorageState => {
   };
 };
 
+const createEmptyActionQueueState = (): AgendaActionQueueStorageState => ({
+  version: 1,
+  days: {},
+  updatedAt: '',
+});
+
+const isActionQueueItem = (value: unknown): value is AgendaActionQueueItem => {
+  if (!value || typeof value !== 'object') {
+    return false;
+  }
+
+  const item = value as Partial<AgendaActionQueueItem>;
+
+  return (
+    typeof item.id === 'string' &&
+    typeof item.dateKey === 'string' &&
+    typeof item.eventId === 'string' &&
+    isAgendaActionKind(item.kind) &&
+    typeof item.title === 'string' &&
+    typeof item.detail === 'string' &&
+    typeof item.time === 'string' &&
+    isAgendaActionStatus(item.status) &&
+    isAgendaTone(item.tone) &&
+    isAgendaPriority(item.priority)
+  );
+};
+
+const parseActionQueueState = (value: unknown): AgendaActionQueueStorageState => {
+  if (!value || typeof value !== 'object') {
+    return createEmptyActionQueueState();
+  }
+
+  const state = value as Partial<AgendaActionQueueStorageState>;
+  if (state.version !== 1 || !state.days || typeof state.days !== 'object') {
+    return createEmptyActionQueueState();
+  }
+
+  const days = Object.entries(state.days as Record<string, unknown>).reduce<Record<string, AgendaActionQueueItem[]>>(
+    (acc, [dateKey, dayItems]) => {
+      if (Array.isArray(dayItems)) {
+        acc[dateKey] = dayItems.filter(isActionQueueItem).slice(0, 5);
+      }
+
+      return acc;
+    },
+    {},
+  );
+
+  return {
+    version: 1,
+    days,
+    updatedAt: typeof state.updatedAt === 'string' ? state.updatedAt : '',
+  };
+};
+
 const readLocalAgendaState = (): AgendaLocalStorageState => {
   try {
     if (typeof window === 'undefined' || !window.localStorage) {
@@ -259,6 +357,36 @@ const writeLocalAgendaState = (state: AgendaLocalStorageState) => {
     }
 
     window.localStorage.setItem(localStorageKey, JSON.stringify(state));
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+const readActionQueueState = (): AgendaActionQueueStorageState => {
+  try {
+    if (typeof window === 'undefined' || !window.localStorage) {
+      return createEmptyActionQueueState();
+    }
+
+    const rawValue = window.localStorage.getItem(actionQueueStorageKey);
+    if (!rawValue) {
+      return createEmptyActionQueueState();
+    }
+
+    return parseActionQueueState(JSON.parse(rawValue));
+  } catch {
+    return createEmptyActionQueueState();
+  }
+};
+
+const writeActionQueueState = (state: AgendaActionQueueStorageState) => {
+  try {
+    if (typeof window === 'undefined' || !window.localStorage) {
+      return false;
+    }
+
+    window.localStorage.setItem(actionQueueStorageKey, JSON.stringify(state));
     return true;
   } catch {
     return false;
@@ -295,7 +423,90 @@ const mapLocalBlockToEvent = (block: AgendaLocalBlock): ExecutiveEvent => ({
   status: block.status,
 });
 
-const createDemoEvents = (anchorDate: Date): ExecutiveEvent[] => {
+const createActionQueueFromEvents = (dateKey: string, dayEvents: ExecutiveEvent[]): AgendaActionQueueItem[] => {
+  if (dayEvents.length === 0) {
+    return [];
+  }
+
+  const sortedEvents = [...dayEvents].sort((a, b) => minutesFromTime(a.start) - minutesFromTime(b.start));
+  const firstEvent = sortedEvents[0];
+  if (!firstEvent) {
+    return [];
+  }
+
+  const highFocusEvent = sortedEvents.find((event) => event.tone === 'critico' || event.priority === 'Alta') ?? firstEvent;
+  const mobilityEvent =
+    sortedEvents.find((event) => event.tone === 'movilidad') ??
+    sortedEvents.find((event) => event.location.toLowerCase() !== 'remoto') ??
+    sortedEvents[Math.min(1, sortedEvents.length - 1)] ??
+    firstEvent;
+  const followUpEvent =
+    sortedEvents.find((event) => event.tone === 'seguimiento') ??
+    sortedEvents[Math.max(0, sortedEvents.length - 2)] ??
+    firstEvent;
+  const lastEvent = sortedEvents[sortedEvents.length - 1] ?? firstEvent;
+  const contextAction: Omit<AgendaActionQueueItem, 'id' | 'dateKey' | 'status'> = {
+    eventId: firstEvent.id,
+    kind: 'context',
+    title: 'Preparar contexto',
+    detail: `${firstEvent.title} · ${firstEvent.start}`,
+    time: firstEvent.start,
+    tone: firstEvent.tone,
+    priority: firstEvent.priority,
+  };
+  const ownerAction: Omit<AgendaActionQueueItem, 'id' | 'dateKey' | 'status'> = {
+    eventId: highFocusEvent.id,
+    kind: 'owner',
+    title: 'Confirmar responsable',
+    detail: `${highFocusEvent.owner} · ${highFocusEvent.title}`,
+    time: highFocusEvent.start,
+    tone: highFocusEvent.tone,
+    priority: highFocusEvent.priority,
+  };
+  const mobilityAction: Omit<AgendaActionQueueItem, 'id' | 'dateKey' | 'status'> = {
+    eventId: mobilityEvent.id,
+    kind: 'mobility',
+    title: 'Revisar traslado',
+    detail: `${mobilityEvent.location} · ${mobilityEvent.start}`,
+    time: mobilityEvent.start,
+    tone: mobilityEvent.tone,
+    priority: mobilityEvent.priority,
+  };
+  const followUpAction: Omit<AgendaActionQueueItem, 'id' | 'dateKey' | 'status'> = {
+    eventId: followUpEvent.id,
+    kind: 'followup',
+    title: 'Marcar seguimiento',
+    detail: `${followUpEvent.title} · ${followUpEvent.owner}`,
+    time: followUpEvent.end,
+    tone: followUpEvent.tone,
+    priority: followUpEvent.priority,
+  };
+  const exitAction: Omit<AgendaActionQueueItem, 'id' | 'dateKey' | 'status'> = {
+    eventId: lastEvent.id,
+    kind: 'exit',
+    title: 'Cerrar salida esperada',
+    detail: `${lastEvent.title} · ${lastEvent.end}`,
+    time: lastEvent.end,
+    tone: lastEvent.tone,
+    priority: lastEvent.priority,
+  };
+  const baseActions = [contextAction, ownerAction, mobilityAction, followUpAction, exitAction];
+  const orderedActions =
+    sortedEvents.length <= 1
+      ? [contextAction, ownerAction, exitAction]
+      : sortedEvents.length === 2
+        ? [contextAction, ownerAction, followUpAction, exitAction]
+        : baseActions;
+
+  return orderedActions.map((item) => ({
+    ...item,
+    id: `queue-${dateKey}-${item.kind}-${item.eventId}`,
+    dateKey,
+    status: 'pending',
+  }));
+};
+
+const createSeedEvents = (anchorDate: Date): ExecutiveEvent[] => {
   const todayKey = formatDateKey(anchorDate);
   const tomorrowKey = formatDateKey(addDays(anchorDate, 1));
   const secondDayKey = formatDateKey(addDays(anchorDate, 2));
@@ -304,7 +515,7 @@ const createDemoEvents = (anchorDate: Date): ExecutiveEvent[] => {
 
   return [
     {
-      id: 'demo-today-0830',
+      id: 'seed-today-0830',
       dateKey: todayKey,
       start: '08:30',
       end: '09:10',
@@ -318,7 +529,7 @@ const createDemoEvents = (anchorDate: Date): ExecutiveEvent[] => {
       recommendedExit: 'Llegar 10 min antes con prioridades cerradas.',
     },
     {
-      id: 'demo-today-1100',
+      id: 'seed-today-1100',
       dateKey: todayKey,
       start: '11:00',
       end: '12:00',
@@ -332,7 +543,7 @@ const createDemoEvents = (anchorDate: Date): ExecutiveEvent[] => {
       recommendedExit: 'Entrar con 3 decisiones límite y criterio de escalamiento.',
     },
     {
-      id: 'demo-today-1430',
+      id: 'seed-today-1430',
       dateKey: todayKey,
       start: '14:30',
       end: '15:20',
@@ -346,7 +557,7 @@ const createDemoEvents = (anchorDate: Date): ExecutiveEvent[] => {
       recommendedExit: 'Preparar versión final y responsable de firma.',
     },
     {
-      id: 'demo-today-1730',
+      id: 'seed-today-1730',
       dateKey: todayKey,
       start: '17:30',
       end: '18:00',
@@ -360,7 +571,7 @@ const createDemoEvents = (anchorDate: Date): ExecutiveEvent[] => {
       recommendedExit: 'Cerrar minuta y enviar responsables antes de las 18:20.',
     },
     {
-      id: 'demo-plus-1-0920',
+      id: 'seed-plus-1-0920',
       dateKey: tomorrowKey,
       start: '09:20',
       end: '10:00',
@@ -374,7 +585,7 @@ const createDemoEvents = (anchorDate: Date): ExecutiveEvent[] => {
       recommendedExit: 'Reservar salida 25 min antes del siguiente bloque.',
     },
     {
-      id: 'demo-plus-2-1210',
+      id: 'seed-plus-2-1210',
       dateKey: secondDayKey,
       start: '12:10',
       end: '12:45',
@@ -388,7 +599,7 @@ const createDemoEvents = (anchorDate: Date): ExecutiveEvent[] => {
       recommendedExit: 'Salir con 3 responsables y fecha de confirmación.',
     },
     {
-      id: 'demo-plus-3-1600',
+      id: 'seed-plus-3-1600',
       dateKey: thirdDayKey,
       start: '16:00',
       end: '16:50',
@@ -402,7 +613,7 @@ const createDemoEvents = (anchorDate: Date): ExecutiveEvent[] => {
       recommendedExit: 'Enviar confirmación ejecutiva antes de las 17:20.',
     },
     {
-      id: 'demo-plus-5-1030',
+      id: 'seed-plus-5-1030',
       dateKey: fifthDayKey,
       start: '10:30',
       end: '11:30',
@@ -423,8 +634,9 @@ export function ExecutiveAgendaTimeline() {
   const [now, setNow] = useState(() => new Date());
   const [visibleMonth, setVisibleMonth] = useState(() => getMonthStart(getBrowserToday()));
   const [selectedDate, setSelectedDate] = useState(() => getBrowserToday());
-  const [demoEvents] = useState<ExecutiveEvent[]>(() => createDemoEvents(getBrowserToday()));
+  const [baseEvents] = useState<ExecutiveEvent[]>(() => createSeedEvents(getBrowserToday()));
   const [localAgendaState, setLocalAgendaState] = useState<AgendaLocalStorageState>(() => readLocalAgendaState());
+  const [actionQueueState, setActionQueueState] = useState<AgendaActionQueueStorageState>(() => readActionQueueState());
   const [draft, setDraft] = useState<EventDraft>(() => createDraft());
   const [actionFeedback, setActionFeedback] = useState<string | null>(null);
   const [formOpen, setFormOpen] = useState(false);
@@ -446,7 +658,7 @@ export function ExecutiveAgendaTimeline() {
     () => localAgendaState.blocks.map(mapLocalBlockToEvent),
     [localAgendaState.blocks],
   );
-  const events = useMemo(() => [...demoEvents, ...localEvents], [demoEvents, localEvents]);
+  const events = useMemo(() => [...baseEvents, ...localEvents], [baseEvents, localEvents]);
   const selectedKey = formatDateKey(selectedDate);
   const selectedEvents = useMemo(
     () =>
@@ -455,6 +667,46 @@ export function ExecutiveAgendaTimeline() {
         .sort((a, b) => minutesFromTime(a.start) - minutesFromTime(b.start)),
     [events, selectedKey],
   );
+  const generatedActionQueue = useMemo(
+    () => createActionQueueFromEvents(selectedKey, selectedEvents),
+    [selectedEvents, selectedKey],
+  );
+  const selectedActionQueue = actionQueueState.days[selectedKey] ?? generatedActionQueue;
+  const actionQueueCounts = useMemo(
+    () =>
+      selectedActionQueue.reduce(
+        (acc, item) => {
+          acc[item.status] += 1;
+          return acc;
+        },
+        { pending: 0, done: 0, snoozed: 0 } as Record<AgendaActionStatus, number>,
+      ),
+    [selectedActionQueue],
+  );
+
+  useEffect(() => {
+    if (generatedActionQueue.length === 0) {
+      return;
+    }
+
+    setActionQueueState((current) => {
+      if ((current.days[selectedKey] ?? []).length > 0) {
+        return current;
+      }
+
+      const nextState: AgendaActionQueueStorageState = {
+        version: 1,
+        days: {
+          ...current.days,
+          [selectedKey]: generatedActionQueue,
+        },
+        updatedAt: new Date().toISOString(),
+      };
+
+      writeActionQueueState(nextState);
+      return nextState;
+    });
+  }, [generatedActionQueue, selectedKey]);
 
   const eventsByDate = useMemo(
     () =>
@@ -599,6 +851,44 @@ export function ExecutiveAgendaTimeline() {
     setActionFeedback(`${action}: ${title}`);
   };
 
+  const handleActionQueueStatus = (queueItem: AgendaActionQueueItem, status: AgendaActionStatus) => {
+    setActionQueueState((current) => {
+      const currentDayQueue = current.days[selectedKey] ?? generatedActionQueue;
+      const nextDayQueue = currentDayQueue.map((item) => (item.id === queueItem.id ? { ...item, status } : item));
+      const nextState: AgendaActionQueueStorageState = {
+        version: 1,
+        days: {
+          ...current.days,
+          [selectedKey]: nextDayQueue,
+        },
+        updatedAt: new Date().toISOString(),
+      };
+
+      writeActionQueueState(nextState);
+      return nextState;
+    });
+
+    setActionFeedback(
+      status === 'done' ? `Movimiento listo: ${queueItem.title}` : `Movimiento pospuesto: ${queueItem.title}`,
+    );
+  };
+
+  const handleRestoreActionQueue = () => {
+    const nextQueue = createActionQueueFromEvents(selectedKey, selectedEvents);
+    const nextState: AgendaActionQueueStorageState = {
+      version: 1,
+      days: {
+        ...actionQueueState.days,
+        [selectedKey]: nextQueue,
+      },
+      updatedAt: new Date().toISOString(),
+    };
+
+    writeActionQueueState(nextState);
+    setActionQueueState(nextState);
+    setActionFeedback(nextQueue.length > 0 ? 'Cola ejecutiva restaurada' : 'Sin eventos para preparar cola');
+  };
+
   const handleClearLocalBlocks = () => {
     if (localAgendaState.blocks.length === 0) {
       setActionFeedback('No hay bloques locales por limpiar');
@@ -617,6 +907,7 @@ export function ExecutiveAgendaTimeline() {
 
   const selectedReadableDate = formatReadableDate(selectedDate);
   const monthTitle = `${monthLabels[visibleMonth.getMonth()]} ${visibleMonth.getFullYear()}`;
+  const compactHiddenActionCount = Math.max(0, selectedActionQueue.length - 3);
 
   return (
     <section className="lia-agenda-v400-shell" aria-label="Agenda ejecutiva mensual con timeline">
@@ -889,6 +1180,78 @@ export function ExecutiveAgendaTimeline() {
           </button>
         </form>
         )}
+
+        <section className="lia-agenda-v420-action-queue" aria-label="Cola ejecutiva">
+          <div className="lia-agenda-v420-action-head">
+            <div>
+              <p>COLA EJECUTIVA</p>
+              <strong>LÍA ya preparó los siguientes movimientos del día</strong>
+            </div>
+            <button type="button" onClick={handleRestoreActionQueue}>
+              Restaurar cola del día
+            </button>
+          </div>
+
+          <div className="lia-agenda-v420-action-counts" aria-label="Estado de la cola ejecutiva">
+            <span>
+              <b>{actionQueueCounts.pending}</b>
+              Pendientes
+            </span>
+            <span>
+              <b>{actionQueueCounts.done}</b>
+              Listas
+            </span>
+            <span>
+              <b>{actionQueueCounts.snoozed}</b>
+              Pospuestas
+            </span>
+          </div>
+
+          {selectedActionQueue.length > 0 ? (
+            <div className="lia-agenda-v420-action-list">
+              {selectedActionQueue.map((queueItem, index) => (
+                <article className={`lia-agenda-v420-action-card is-${queueItem.status}`} key={queueItem.id}>
+                  <span className="lia-agenda-v420-action-index">{String(index + 1).padStart(2, '0')}</span>
+                  <div className="lia-agenda-v420-action-copy">
+                    <small className={`lia-agenda-v420-action-status is-${queueItem.status}`}>
+                      {actionStatusCopy[queueItem.status]}
+                    </small>
+                    <strong>{queueItem.title}</strong>
+                    <p>{queueItem.detail}</p>
+                  </div>
+                  <div className="lia-agenda-v420-action-buttons">
+                    <button
+                      type="button"
+                      onClick={() => handleActionQueueStatus(queueItem, 'done')}
+                      disabled={queueItem.status === 'done'}
+                      aria-label={`Marcar como listo: ${queueItem.title}`}
+                    >
+                      Listo
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleActionQueueStatus(queueItem, 'snoozed')}
+                      disabled={queueItem.status === 'snoozed'}
+                      aria-label={`Posponer: ${queueItem.title}`}
+                    >
+                      Posponer
+                    </button>
+                  </div>
+                </article>
+              ))}
+              {compactHiddenActionCount > 0 && (
+                <div className="lia-agenda-v420b-action-more">
+                  +{compactHiddenActionCount} movimientos más preparados
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="lia-agenda-v420-action-empty">
+              <strong>Día sin movimientos preparados</strong>
+              <span>Agrega un bloque para activar la cola.</span>
+            </div>
+          )}
+        </section>
 
         <section className="lia-agenda-v400-timeline" aria-label="Línea de tiempo de 24 horas">
           {hours.map((hour) => {
