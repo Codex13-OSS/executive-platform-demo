@@ -1,0 +1,11 @@
+{
+  "name": "lia-agent-backend",
+  "version": "4.4.0-b",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "health": "node health.mjs",
+    "self-check": "node self-check.mjs"
+  }
+}
