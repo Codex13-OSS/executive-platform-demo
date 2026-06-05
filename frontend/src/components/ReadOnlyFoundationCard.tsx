@@ -10,6 +10,12 @@ export function ReadOnlyFoundationCard() {
   const degradedCount = adapters.filter((adapter) => adapter.status === 'degraded').length;
   const mockCount = adapters.filter((adapter) => adapter.status === 'mock').length;
   const readinessCount = adapters.filter((adapter) => adapter.status === 'configured' || adapter.status === 'connected_readonly_future').length;
+  const statusLabels: Record<string, string> = {
+    connected_readonly_future: 'lectura futura',
+    configured: 'configurado',
+    degraded: 'degradado',
+    mock: 'preparado',
+  };
 
   return (
     <section className={`read-only-foundation-card-v160 ${selfCheck.status === 'safe' ? 'is-safe' : 'is-warning'}`}>
@@ -20,23 +26,23 @@ export function ReadOnlyFoundationCard() {
       </div>
 
       <div className="read-only-foundation-grid-v160">
-        <article><small>Adapter simulation</small><strong>active</strong></article>
-        <article><small>Domains</small><strong>{adapters.length} prepared</strong></article>
-        <article><small>Writes</small><strong>disabled</strong></article>
-        <article><small>Real connections</small><strong>off</strong></article>
+        <article><small>Lectura preparada</small><strong>activa</strong></article>
+        <article><small>Dominios</small><strong>{adapters.length} preparados</strong></article>
+        <article><small>Escrituras</small><strong>desactivadas</strong></article>
+        <article><small>Conexiones reales</small><strong>inactivas</strong></article>
       </div>
 
       <div className="read-only-foundation-chips-v170">
-        <span className="chip-readiness">readiness {readinessCount}</span>
-        <span className="chip-degraded">degraded {degradedCount}</span>
-        <span className="chip-mock">mock {mockCount}</span>
+        <span className="chip-readiness">preparación {readinessCount}</span>
+        <span className="chip-degraded">degradado {degradedCount}</span>
+        <span className="chip-mock">preparado {mockCount}</span>
       </div>
 
       <ul className="read-only-foundation-domains-v170">
         {adapters.map((adapter) => (
           <li key={adapter.id}>
             <span>{adapter.domain}</span>
-            <b className={`state-${adapter.status}`}>{adapter.status.replace(/_/g, ' ')}</b>
+            <b className={`state-${adapter.status}`}>{statusLabels[adapter.status] ?? adapter.status.replace(/_/g, ' ')}</b>
           </li>
         ))}
       </ul>
