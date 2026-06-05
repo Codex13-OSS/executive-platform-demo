@@ -54,7 +54,7 @@ export default function LoginView({ onSubmit, theme, onToggleTheme }: LoginViewP
           </div>
 
           <h2>Ingresar al entorno de demostración</h2>
-          <p className="muted">Credenciales locales para demo controlada.</p>
+          <p className="muted">Credenciales locales para sesión ejecutiva.</p>
 
           <form onSubmit={handleSubmit} className="auth-form">
             <label>

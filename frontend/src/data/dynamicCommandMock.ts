@@ -42,7 +42,7 @@ export const dynamicCommandMock: DynamicCommand[] = [
     priority: 'medium',
     type: 'document',
     requiresConfirmation: false,
-    feedback: 'Preparado en modo mock',
+    feedback: 'Preparado para revisión',
   },
   {
     id: 'sync-agenda',
@@ -72,6 +72,6 @@ export const dynamicCommandMock: DynamicCommand[] = [
     priority: 'high',
     type: 'followup',
     requiresConfirmation: true,
-    feedback: 'Preparado en modo mock',
+    feedback: 'Preparado para revisión',
   },
 ];

@@ -74,10 +74,10 @@ export default function TrackingView({
           <>
             <ThemeToggle theme={theme} onToggle={onToggleTheme} />
             <button type="button" className="btn-secondary" onClick={onReset}>
-              Resetear demo
+              Reiniciar sesión
             </button>
             <button type="button" className="btn-primary" onClick={onFinish}>
-              Finalizar demo
+              Finalizar sesión
             </button>
           </>
         }
