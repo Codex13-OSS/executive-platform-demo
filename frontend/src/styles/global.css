@@ -14463,3 +14463,162 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* lia-agent-backend-status-bridge-v450 */
+.lia-agent-backend-status-card-v450 {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-height: 220px;
+  color: rgba(234, 246, 255, 0.94);
+  background:
+    radial-gradient(circle at 16% 0%, rgba(125, 211, 252, 0.16), transparent 34%),
+    radial-gradient(circle at 94% 14%, rgba(34, 197, 94, 0.1), transparent 30%),
+    linear-gradient(155deg, rgba(3, 16, 31, 0.96), rgba(2, 8, 23, 0.92)) !important;
+  border-color: rgba(103, 232, 249, 0.22) !important;
+  box-shadow:
+    0 22px 58px rgba(0, 8, 24, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+}
+
+.lia-agent-backend-status-card-v450 * {
+  letter-spacing: 0;
+}
+
+.lia-agent-backend-status-head-v450 {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.lia-agent-backend-status-head-v450 h3 {
+  margin: 0;
+  color: #eaf6ff;
+  font-size: clamp(1.05rem, 1.4vw, 1.28rem);
+  line-height: 1.08;
+}
+
+.lia-agent-backend-status-head-v450 span {
+  display: block;
+  margin-top: 4px;
+  color: rgba(186, 230, 253, 0.64);
+  font-size: 0.76rem;
+  line-height: 1.2;
+}
+
+.lia-agent-backend-status-head-v450 strong {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 6px 9px;
+  border: 1px solid rgba(34, 211, 238, 0.25);
+  border-radius: 12px;
+  background: rgba(34, 211, 238, 0.09);
+  color: #67e8f9;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.lia-agent-backend-status-card-v450.is-connected_safe .lia-agent-backend-status-head-v450 strong {
+  border-color: rgba(34, 197, 94, 0.3);
+  background: rgba(34, 197, 94, 0.11);
+  color: #86efac;
+}
+
+.lia-agent-backend-status-card-v450.is-degraded_safe .lia-agent-backend-status-head-v450 strong {
+  border-color: rgba(251, 191, 36, 0.32);
+  background: rgba(251, 191, 36, 0.1);
+  color: #fde68a;
+}
+
+.lia-agent-backend-status-main-v450 {
+  display: grid;
+  gap: 9px;
+  padding: 10px;
+  border: 1px solid rgba(125, 211, 252, 0.12);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.lia-agent-backend-status-main-v450 div {
+  display: grid;
+  gap: 3px;
+}
+
+.lia-agent-backend-status-main-v450 span {
+  color: rgba(186, 230, 253, 0.62);
+  font-size: 0.72rem;
+  line-height: 1.15;
+}
+
+.lia-agent-backend-status-main-v450 b {
+  color: rgba(240, 249, 255, 0.96);
+  font-size: 0.86rem;
+  line-height: 1.18;
+  overflow-wrap: anywhere;
+}
+
+.lia-agent-backend-status-main-v450 p {
+  color: rgba(234, 246, 255, 0.7);
+  font-size: 0.78rem;
+  line-height: 1.36;
+}
+
+.lia-agent-backend-status-chips-v450 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.lia-agent-backend-status-chips-v450 span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 26px;
+  max-width: 100%;
+  padding: 6px 8px;
+  border: 1px solid rgba(125, 211, 252, 0.13);
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.56);
+  color: rgba(234, 246, 255, 0.78);
+  font-size: 0.71rem;
+  line-height: 1.12;
+}
+
+.lia-agent-backend-status-chips-v450 i {
+  width: 7px;
+  height: 7px;
+  min-width: 7px;
+  border-radius: 999px;
+  background: #22c55e;
+  box-shadow: 0 0 14px rgba(34, 197, 94, 0.64);
+}
+
+.lia-agent-backend-status-chips-v450 b {
+  color: rgba(240, 249, 255, 0.95);
+  font-weight: 800;
+}
+
+@media (max-width: 1180px) {
+  .lia-agent-backend-status-card-v450 {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 760px) {
+  .lia-agent-backend-status-card-v450 {
+    gap: 10px;
+  }
+
+  .lia-agent-backend-status-head-v450 {
+    align-items: stretch;
+  }
+
+  .lia-agent-backend-status-chips-v450 {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
