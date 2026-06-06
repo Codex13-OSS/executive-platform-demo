@@ -14468,16 +14468,16 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
 .lia-agent-backend-status-card-v450 {
   display: grid;
   align-content: start;
-  gap: 12px;
-  min-height: 220px;
+  gap: 10px;
+  min-height: 204px;
   color: rgba(234, 246, 255, 0.94);
   background:
-    radial-gradient(circle at 16% 0%, rgba(125, 211, 252, 0.16), transparent 34%),
-    radial-gradient(circle at 94% 14%, rgba(34, 197, 94, 0.1), transparent 30%),
-    linear-gradient(155deg, rgba(3, 16, 31, 0.96), rgba(2, 8, 23, 0.92)) !important;
-  border-color: rgba(103, 232, 249, 0.22) !important;
+    radial-gradient(circle at 16% 0%, rgba(125, 211, 252, 0.13), transparent 34%),
+    radial-gradient(circle at 94% 14%, rgba(34, 197, 94, 0.075), transparent 30%),
+    linear-gradient(155deg, rgba(3, 16, 31, 0.94), rgba(2, 8, 23, 0.9)) !important;
+  border-color: rgba(103, 232, 249, 0.2) !important;
   box-shadow:
-    0 22px 58px rgba(0, 8, 24, 0.42),
+    0 18px 48px rgba(0, 8, 24, 0.36),
     inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
 }
 
@@ -14489,37 +14489,38 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
   display: flex;
   align-items: start;
   justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
 }
 
 .lia-agent-backend-status-head-v450 h3 {
   margin: 0;
   color: #eaf6ff;
-  font-size: clamp(1.05rem, 1.4vw, 1.28rem);
+  font-size: clamp(1.03rem, 1.34vw, 1.2rem);
   line-height: 1.08;
 }
 
 .lia-agent-backend-status-head-v450 span {
   display: block;
   margin-top: 4px;
-  color: rgba(186, 230, 253, 0.64);
-  font-size: 0.76rem;
+  color: rgba(186, 230, 253, 0.68);
+  font-size: 0.74rem;
   line-height: 1.2;
 }
 
 .lia-agent-backend-status-head-v450 strong {
   display: inline-flex;
   align-items: center;
-  min-height: 28px;
-  padding: 6px 9px;
+  min-height: 30px;
+  max-width: 132px;
+  padding: 6px 10px;
   border: 1px solid rgba(34, 211, 238, 0.25);
   border-radius: 12px;
   background: rgba(34, 211, 238, 0.09);
   color: #67e8f9;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 800;
-  line-height: 1;
-  white-space: nowrap;
+  line-height: 1.12;
+  text-align: right;
 }
 
 .lia-agent-backend-status-card-v450.is-connected_safe .lia-agent-backend-status-head-v450 strong {
@@ -14536,11 +14537,11 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
 
 .lia-agent-backend-status-main-v450 {
   display: grid;
-  gap: 9px;
-  padding: 10px;
+  gap: 8px;
+  padding: 9px 10px;
   border: 1px solid rgba(125, 211, 252, 0.12);
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.035);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .lia-agent-backend-status-main-v450 div {
@@ -14550,56 +14551,51 @@ label { color: var(--text-secondary); font-size: 13px; font-weight: 600; }
 
 .lia-agent-backend-status-main-v450 span {
   color: rgba(186, 230, 253, 0.62);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   line-height: 1.15;
 }
 
 .lia-agent-backend-status-main-v450 b {
   color: rgba(240, 249, 255, 0.96);
-  font-size: 0.86rem;
+  font-size: 0.82rem;
   line-height: 1.18;
   overflow-wrap: anywhere;
 }
 
 .lia-agent-backend-status-main-v450 p {
-  color: rgba(234, 246, 255, 0.7);
-  font-size: 0.78rem;
-  line-height: 1.36;
+  color: rgba(234, 246, 255, 0.68);
+  font-size: 0.74rem;
+  line-height: 1.34;
 }
 
 .lia-agent-backend-status-chips-v450 {
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
+  gap: 6px;
 }
 
 .lia-agent-backend-status-chips-v450 span {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  min-height: 26px;
+  gap: 5px;
+  min-height: 23px;
   max-width: 100%;
-  padding: 6px 8px;
-  border: 1px solid rgba(125, 211, 252, 0.13);
-  border-radius: 12px;
-  background: rgba(15, 23, 42, 0.56);
-  color: rgba(234, 246, 255, 0.78);
-  font-size: 0.71rem;
+  padding: 4px 7px;
+  border: 1px solid rgba(125, 211, 252, 0.11);
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.48);
+  color: rgba(234, 246, 255, 0.74);
+  font-size: 0.68rem;
   line-height: 1.12;
 }
 
 .lia-agent-backend-status-chips-v450 i {
-  width: 7px;
-  height: 7px;
-  min-width: 7px;
+  width: 6px;
+  height: 6px;
+  min-width: 6px;
   border-radius: 999px;
   background: #22c55e;
-  box-shadow: 0 0 14px rgba(34, 197, 94, 0.64);
-}
-
-.lia-agent-backend-status-chips-v450 b {
-  color: rgba(240, 249, 255, 0.95);
-  font-weight: 800;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.58);
 }
 
 @media (max-width: 1180px) {
